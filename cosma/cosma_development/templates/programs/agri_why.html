@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Why Agriculture — HopeForward{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item">Our Programs</li>
+      <li class="breadcrumb-item active">Why Agriculture?</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-flower1"></i> Agriculture Program</div>
+    <h1>Why Agriculture?</h1>
+    <p>Over 70% of Ugandans depend on agriculture. It is the engine of food security, income, and community resilience.</p>
+  </div>
+</section>
+<section class="sec-pad">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 reveal-left">
+        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=700&q=80" alt="Agriculture" class="img-fluid rounded-4" style="box-shadow:20px 20px 0 var(--green);"/>
+      </div>
+      <div class="col-lg-6 reveal-right">
+        <div class="section-label text-green"><span class="dot bg-green"></span>The Challenge</div>
+        <h2 class="section-title mb-3">Feeding Families, <em class="text-red">Building Futures</em></h2>
+        <div class="title-bar bg-red mb-4"></div>
+        <p class="text-muted mb-3" style="line-height:1.8;">Smallholder farmers in Uganda face low yields, unpredictable weather, limited market access, and lack of affordable inputs. These challenges trap families in cycles of poverty.</p>
+        <p class="text-muted mb-4" style="line-height:1.8;">HopeForward's agriculture programme equips farmers with modern techniques, climate-smart practices, and market connections to break that cycle permanently.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="{% url 'cosma_development:agri_approach' %}" class="btn btn-green rounded-pill px-4 py-2 fw-semibold">Our Approach <i class="bi bi-arrow-right ms-1"></i></a>
+          <a href="{% url 'cosma_development:agri_support' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">Support a Farmer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="row g-4 text-center">
+      <div class="col-md-4 reveal"><div class="hf-card p-4"><i class="bi bi-people-fill fs-1 mb-3 d-block text-green"></i><h3 style="font-family:var(--font-display);font-size:2.2rem;font-weight:700;color:var(--red);">4,200+</h3><p class="text-muted mb-0">Farmers Supported</p></div></div>
+      <div class="col-md-4 reveal" style="transition-delay:100ms"><div class="hf-card p-4"><i class="bi bi-graph-up-arrow fs-1 mb-3 d-block text-red"></i><h3 style="font-family:var(--font-display);font-size:2.2rem;font-weight:700;color:var(--green);">60%</h3><p class="text-muted mb-0">Average Yield Increase</p></div></div>
+      <div class="col-md-4 reveal" style="transition-delay:200ms"><div class="hf-card p-4"><i class="bi bi-geo-alt-fill fs-1 mb-3 d-block text-green"></i><h3 style="font-family:var(--font-display);font-size:2.2rem;font-weight:700;color:var(--red);">8</h3><p class="text-muted mb-0">Districts Covered</p></div></div>
+    </div>
+  </div>
+</section>
+{% endblock %}

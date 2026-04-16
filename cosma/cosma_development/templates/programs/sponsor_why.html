@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Why Sponsorship — HopeForward{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item">Our Programs</li>
+      <li class="breadcrumb-item active">Why Sponsorship?</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-mortarboard"></i> Sponsorship Program</div>
+    <h1>Why Sponsorship?</h1>
+    <p>Education is the most powerful tool we can give a child to change their world.</p>
+  </div>
+</section>
+<section class="sec-pad">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 reveal-left">
+        <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=700&q=80" alt="Children" class="img-fluid rounded-4" style="box-shadow:20px 20px 0 var(--red);"/>
+      </div>
+      <div class="col-lg-6 reveal-right">
+        <div class="section-label text-red"><span class="dot bg-red"></span>The Need</div>
+        <h2 class="section-title mb-3">Every Child Deserves a <em class="text-green">Chance to Learn</em></h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <p class="text-muted mb-3" style="line-height:1.8;">In Uganda, thousands of children drop out of school each year due to school fees, lack of materials, and family economic pressures. Sponsorship breaks this barrier directly.</p>
+        <p class="text-muted mb-4" style="line-height:1.8;">Each sponsored child receives school fees, uniforms, books, mentorship, and psychosocial support — giving them the foundation to thrive.</p>
+        <a href="{% url 'cosma_development:sponsor_child' %}" class="btn btn-red rounded-pill px-4 py-2 fw-semibold"><i class="bi bi-person-plus me-2"></i>Sponsor a Child</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

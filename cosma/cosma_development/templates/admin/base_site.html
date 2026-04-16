@@ -1,0 +1,153 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | cosma Admin{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+  <a href="{% url 'admin:index' %}">
+    cosma <span style="color:#3BAD6E;font-weight:300;">Uganda</span>
+  </a>
+</h1>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  /* ── GLOBAL FONT ── */
+  body, input, select, textarea, button {
+    font-family: 'Outfit', system-ui, sans-serif !important;
+  }
+
+  /* ── HEADER ── */
+  #header {
+    background: #111 !important;
+    border-bottom: 3px solid #8E0005 !important;
+    padding: .9rem 1.5rem !important;
+  }
+  #branding h1 a { color: #fff !important; font-weight: 700 !important; font-size: 1.25rem !important; letter-spacing: -.3px; }
+  #user-tools { font-size: .83rem !important; }
+  #user-tools a, #user-tools a:visited { color: rgba(255,255,255,.75) !important; }
+  #user-tools a:hover { color: #3BAD6E !important; }
+
+  /* ── BREADCRUMBS ── */
+  div.breadcrumbs {
+    background: #8E0005 !important;
+    padding: .6rem 1.5rem !important;
+    font-size: .83rem !important;
+    font-weight: 500 !important;
+  }
+  div.breadcrumbs a { color: rgba(255,255,255,.8) !important; }
+  div.breadcrumbs a:hover { color: #fff !important; }
+
+  /* ── SIDEBAR ── */
+  #nav-sidebar { background: #1a1a1a !important; min-width: 220px; }
+  #nav-sidebar .current-app .section:first-child > a,
+  #nav-sidebar .current-app .section:first-child { background: rgba(142,0,5,.3) !important; color: #fff !important; }
+  #nav-sidebar a:link, #nav-sidebar a:visited { color: rgba(255,255,255,.7) !important; font-size: .88rem; }
+  #nav-sidebar a:hover { color: #3BAD6E !important; background: rgba(59,173,110,.1) !important; }
+  #nav-sidebar .current-app a { color: #fff !important; }
+  .sidebar-toggle-button { background: #111 !important; border-color: #333 !important; }
+  #nav-sidebar h2 { color: #8E0005 !important; font-size: .7rem !important; letter-spacing: .12em !important; text-transform: uppercase !important; padding: 1rem 1rem .3rem !important; }
+
+  /* ── MAIN CONTENT AREA ── */
+  #main { background: #F3F4F6 !important; }
+  #content-main { padding: 0 !important; }
+
+  /* ── CHANGE LIST (table views) ── */
+  #changelist { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.07); border: 1px solid #E5E7EB; overflow: hidden; }
+  #changelist table thead th { background: #F9FAFB !important; color: #6B7280 !important; font-size: .75rem !important; font-weight: 700 !important; letter-spacing: .06em !important; text-transform: uppercase !important; padding: .75rem 1rem !important; border-bottom: 2px solid #E5E7EB !important; }
+  #changelist table thead th a { color: #6B7280 !important; }
+  #changelist table thead th a:hover { color: #8E0005 !important; }
+  #changelist table tbody tr:hover { background: #F9FAFB !important; }
+  #changelist table tbody td { padding: .75rem 1rem !important; border-bottom: 1px solid #F3F4F6 !important; font-size: .88rem !important; vertical-align: middle !important; }
+  #changelist table tbody tr:last-child td { border-bottom: none !important; }
+  #changelist .action-checkbox-column { width: 1.5rem; }
+
+  /* ── SEARCH BAR ── */
+  #toolbar { background: #F9FAFB !important; border-bottom: 1px solid #E5E7EB !important; padding: .75rem 1rem !important; }
+  #searchbar { border: 1px solid #D1D5DB !important; border-radius: 8px !important; padding: .5rem .9rem !important; font-size: .88rem !important; font-family: 'Outfit', sans-serif !important; width: 280px !important; }
+  #searchbar:focus { border-color: #3BAD6E !important; outline: none !important; box-shadow: 0 0 0 3px rgba(59,173,110,.15) !important; }
+  input[type=submit]#searchbar+input { background: #8E0005 !important; }
+
+  /* ── FILTER SIDEBAR ── */
+  #changelist-filter { background: #fff !important; border-left: 1px solid #E5E7EB !important; min-width: 180px !important; }
+  #changelist-filter h2 { background: #F9FAFB !important; color: #374151 !important; font-size: .75rem !important; font-weight: 700 !important; letter-spacing: .1em !important; text-transform: uppercase !important; padding: .75rem 1rem !important; border-bottom: 1px solid #E5E7EB !important; margin: 0 !important; }
+  #changelist-filter h3 { font-size: .78rem !important; color: #8E0005 !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: .08em !important; padding: .6rem 1rem .2rem !important; margin: 0 !important; }
+  #changelist-filter li { padding: .2rem 1rem !important; font-size: .85rem !important; }
+  #changelist-filter li a { color: #374151 !important; text-decoration: none; }
+  #changelist-filter li a:hover, #changelist-filter li.selected a { color: #3BAD6E !important; font-weight: 600 !important; }
+
+  /* ── ACTIONS BAR ── */
+  .actions { background: #F9FAFB !important; border: 1px solid #E5E7EB !important; border-radius: 8px !important; padding: .6rem 1rem !important; margin-bottom: .75rem !important; display: flex; align-items: center; gap: .75rem !important; }
+  .actions label { font-size: .83rem !important; color: #6B7280 !important; font-weight: 500 !important; }
+  select[name=action] { border: 1px solid #D1D5DB !important; border-radius: 6px !important; font-family: 'Outfit', sans-serif !important; font-size: .83rem !important; padding: .35rem .6rem !important; }
+  button[name=index] { background: #8E0005 !important; color: #fff !important; border: none !important; border-radius: 6px !important; padding: .4rem .9rem !important; font-family: 'Outfit', sans-serif !important; font-size: .83rem !important; cursor: pointer !important; }
+  button[name=index]:hover { background: #6A0004 !important; }
+
+  /* ── PAGINATION ── */
+  .paginator { font-size: .85rem !important; color: #6B7280 !important; }
+  .paginator a { color: #8E0005 !important; }
+  .paginator .this-page { background: #8E0005 !important; color: #fff !important; border-radius: 4px; padding: 2px 8px; }
+
+  /* ── ADD/CHANGE FORMS ── */
+  #content { padding: 1.5rem !important; }
+  .module { background: #fff !important; border-radius: 12px !important; box-shadow: 0 1px 4px rgba(0,0,0,.07) !important; border: 1px solid #E5E7EB !important; margin-bottom: 1.2rem !important; overflow: hidden !important; }
+  .module h2 { background: #F9FAFB !important; color: #374151 !important; font-size: .8rem !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: .1em !important; padding: .75rem 1.2rem !important; border-bottom: 1px solid #E5E7EB !important; margin: 0 !important; }
+  .form-row { padding: .8rem 1.2rem !important; border-bottom: 1px solid #F3F4F6 !important; }
+  .form-row:last-child { border-bottom: none !important; }
+  label { font-size: .85rem !important; font-weight: 600 !important; color: #374151 !important; }
+  .help { font-size: .78rem !important; color: #9CA3AF !important; }
+  input[type=text], input[type=email], input[type=url], input[type=number],
+  input[type=password], select, textarea {
+    border: 1px solid #D1D5DB !important;
+    border-radius: 8px !important;
+    padding: .5rem .8rem !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: .88rem !important;
+    transition: border-color .2s !important;
+  }
+  input[type=text]:focus, input[type=email]:focus, input[type=url]:focus,
+  input[type=number]:focus, select:focus, textarea:focus {
+    border-color: #3BAD6E !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(59,173,110,.15) !important;
+  }
+
+  /* ── SUBMIT BUTTONS ── */
+  input[type=submit], .submit-row input {
+    background: #8E0005 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: .6rem 1.4rem !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: .88rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: background .2s !important;
+  }
+  input[type=submit]:hover, .submit-row input:hover { background: #6A0004 !important; }
+  .submit-row { background: #F9FAFB !important; border-top: 1px solid #E5E7EB !important; border-radius: 0 0 12px 12px !important; padding: .8rem 1.2rem !important; }
+  .deletelink { color: #DC2626 !important; }
+  .addlink    { color: #3BAD6E !important; }
+
+  /* ── SUCCESS / ERROR MESSAGES ── */
+  .messagelist .success { background: #D1FAE5 !important; color: #065F46 !important; border: 1px solid #A7F3D0 !important; border-radius: 8px !important; }
+  .messagelist .error   { background: #FEE2E2 !important; color: #991B1B !important; border: 1px solid #FECACA !important; border-radius: 8px !important; }
+  .messagelist .warning { background: #FEF3C7 !important; color: #92400E !important; border: 1px solid #FDE68A !important; border-radius: 8px !important; }
+  li.success, li.error, li.warning { padding: .7rem 1rem !important; font-size: .88rem !important; margin-bottom: .5rem !important; list-style: none !important; }
+
+  /* ── OBJECT TOOLS ── */
+  .object-tools li a { background: #3BAD6E !important; border-radius: 6px !important; font-family: 'Outfit', sans-serif !important; font-size: .82rem !important; }
+  .object-tools li a:hover { background: #2A8A54 !important; }
+
+  /* ── DATE HIERARCHY ── */
+  .xfull { background: #F9FAFB; border-bottom: 1px solid #E5E7EB; padding: .5rem 1rem; font-size: .82rem; }
+
+  /* ── INLINE ADMIN ── */
+  .inline-group { border: 1px solid #E5E7EB !important; border-radius: 10px !important; overflow: hidden !important; margin-bottom: 1rem !important; }
+  .inline-group h2 { background: #F9FAFB !important; font-size: .75rem !important; text-transform: uppercase !important; letter-spacing: .1em !important; border-bottom: 1px solid #E5E7EB !important; padding: .6rem 1rem !important; color: #374151 !important; }
+</style>
+{% endblock %}

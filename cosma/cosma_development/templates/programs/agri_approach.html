@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Our Approach — Agriculture — HopeForward{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item">Our Programs</li>
+      <li class="breadcrumb-item active">Our Approach</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-diagram-3"></i> Agriculture Program</div>
+    <h1>Our Approach</h1>
+    <p>Evidence-based, farmer-led, and climate-smart — how we deliver lasting agricultural transformation.</p>
+  </div>
+</section>
+<section class="sec-pad">
+  <div class="container">
+    <div class="row g-4">
+      {% for step in approach_steps %}
+      <div class="col-md-6 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+        <div class="hf-card p-4 d-flex gap-4">
+          <div class="flex-shrink-0 rounded-3 d-flex align-items-center justify-content-center fw-bold" style="width:52px;height:52px;background:{% cycle 'rgba(142,0,5,.1)' 'rgba(59,173,110,.1)' %};font-family:var(--font-display);font-size:1.5rem;color:{% cycle 'var(--red)' 'var(--green)' %};">{{ forloop.counter }}</div>
+          <div>
+            <h5 class="mb-1">{{ step.title }}</h5>
+            <p class="text-muted mb-0" style="font-size:.92rem;line-height:1.7;">{{ step.desc }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5 reveal">
+      <a href="{% url 'cosma_development:agri_support' %}" class="btn btn-green rounded-pill px-4 py-2 fw-semibold me-3">Support a Farmer</a>
+      <a href="{% url 'cosma_development:agri_impact' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">See Impact Stories</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

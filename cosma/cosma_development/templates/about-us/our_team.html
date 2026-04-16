@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Our Team — cosma development{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:about-us' %}">About Us</a></li>
+      <li class="breadcrumb-item active">Our Team</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-people"></i> The People Behind the Work</div>
+    <h1>Meet Our Team</h1>
+    <p>Passionate Ugandans and global allies united by a common purpose.</p>
+  </div>
+</section>
+
+<section class="sec-pad">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>Leadership</div>
+      <h2 class="section-title">Our <em class="text-green">Leadership Team</em></h2>
+      <div class="title-bar bg-green mx-auto mt-2"></div>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% for member in team %}
+      <div class="col-sm-6 col-lg-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+        <div class="hf-card text-center overflow-hidden">
+          <div style="overflow:hidden;height:260px;">
+            <img src="{{ member.image }}" alt="{{ member.name }}" class="w-100 h-100" style="object-fit:cover;transition:transform .5s;"/>
+          </div>
+          <div class="p-4">
+            <h5 class="mb-0">{{ member.name }}</h5>
+            <p class="mb-2" style="color:var(--red);font-size:.88rem;font-weight:600;">{{ member.role }}</p>
+            <p class="text-muted mb-3" style="font-size:.88rem;line-height:1.6;">{{ member.bio }}</p>
+            <div class="d-flex justify-content-center gap-2">
+              <a href="#" class="social-btn" style="width:34px;height:34px;font-size:.9rem;"><i class="bi bi-linkedin"></i></a>
+              <a href="#" class="social-btn" style="width:34px;height:34px;font-size:.9rem;"><i class="bi bi-twitter-x"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="sec-pad bg-cream">
+  <div class="container text-center reveal">
+    <h2 class="section-title mb-3">Want to <em class="text-red">Join Our Team?</em></h2>
+    <p class="text-muted mx-auto mb-4" style="max-width:480px;">We are always looking for passionate individuals who want to make a difference. Check our open positions or send a spontaneous application.</p>
+    <a href="{% url 'cosma_development:contact' %}" class="btn btn-red rounded-pill px-4 py-2 fw-semibold">
+      <i class="bi bi-envelope me-2"></i>Get In Touch
+    </a>
+  </div>
+</section>
+{% endblock %}

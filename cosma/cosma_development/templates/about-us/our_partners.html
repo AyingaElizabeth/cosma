@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Our Partners — cosma development{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:about-us' %}">About Us</a></li>
+      <li class="breadcrumb-item active">Our Partners</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-handshake"></i> Collaboration</div>
+    <h1>Our Partners</h1>
+    <p>Trusted global and local organisations that stand with us in the work of transformation.</p>
+  </div>
+</section>
+
+<section class="sec-pad">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <h2 class="section-title">Who Stands <em class="text-red">With Us</em></h2>
+      <div class="title-bar bg-green mx-auto mt-2"></div>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% for p in partners %}
+      <div class="col-6 col-md-4 col-lg-3 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+        <div class="hf-card p-4 text-center">
+          <img src="{{ p.get_logo }}" alt="{{ p.name }}" style="height:55px;object-fit:contain;margin-bottom:1rem;filter:grayscale(1);opacity:.6;transition:.3s;" class="partner-img"/>
+          <p class="fw-semibold mb-0" style="font-size:.9rem;">{{ p.name }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="sec-pad" style="background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);">
+  <div class="container text-center text-white reveal">
+    <h2 class="section-title mb-3" style="color:#fff;">Become a <em>Partner</em></h2>
+    <p class="mx-auto mb-4" style="max-width:480px;opacity:.9;">Whether you are a corporate organisation, NGO, government body, or individual — there are many ways to partner with HopeForward.</p>
+    <a href="{% url 'cosma_development:contact' %}" class="btn btn-light rounded-pill px-4 py-2 fw-semibold" style="color:var(--green);">
+      <i class="bi bi-envelope me-2"></i>Let's Talk Partnership
+    </a>
+  </div>
+</section>
+{% endblock %}
+{% block extra_css %}
+.partner-img:hover{filter:none!important;opacity:1!important;}
+{% endblock %}

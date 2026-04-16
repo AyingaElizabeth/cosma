@@ -1,0 +1,479 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}Dashboard — HopeForward Admin{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  /* ── GLOBAL OVERRIDES ── */
+  :root {
+    --red:   #8E0005;
+    --green: #3BAD6E;
+    --blue:  #2563EB;
+    --gold:  #D97706;
+    --bg:    #F3F4F6;
+    --card:  #ffffff;
+    --text:  #111827;
+    --muted: #6B7280;
+    --border:#E5E7EB;
+    --font:  'Outfit', system-ui, sans-serif;
+  }
+  body, #content, #content-main { font-family: var(--font) !important; background: var(--bg) !important; }
+  #header { background: #111 !important; border-bottom: 3px solid var(--red) !important; }
+  #branding h1, #branding h1 a:link, #branding h1 a:visited { color: #fff !important; font-family: var(--font) !important; font-size: 1.3rem !important; font-weight: 700 !important; }
+  #user-tools { font-family: var(--font) !important; font-size: .85rem !important; }
+  #user-tools a { color: rgba(255,255,255,.75) !important; }
+  #user-tools a:hover { color: #fff !important; }
+  div.breadcrumbs { background: var(--red) !important; color: #fff !important; font-family: var(--font) !important; }
+  div.breadcrumbs a { color: rgba(255,255,255,.8) !important; }
+  #nav-sidebar { background: #1a1a1a !important; }
+  .sidebar-toggle-button { background: #111 !important; }
+  .main { background: var(--bg) !important; }
+
+  /* ── LAYOUT ── */
+  .dash-wrap { padding: 1.5rem 2rem; max-width: 1400px; }
+  .dash-greeting { margin-bottom: 1.8rem; }
+  .dash-greeting h2 { font-size: 1.6rem; font-weight: 700; color: var(--text); margin: 0 0 .2rem; }
+  .dash-greeting p  { color: var(--muted); font-size: .92rem; margin: 0; }
+
+  /* ── KPI CARDS ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1rem; margin-bottom: 1.6rem; }
+  .kpi-card {
+    background: var(--card); border-radius: 14px;
+    padding: 1.3rem 1.4rem; border: 1px solid var(--border);
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    display: flex; flex-direction: column; gap: .4rem;
+    position: relative; overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .kpi-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: var(--accent, var(--green));
+  }
+  .kpi-icon { font-size: 1.6rem; margin-bottom: .2rem; }
+  .kpi-val  { font-size: 2rem; font-weight: 700; color: var(--text); line-height: 1; }
+  .kpi-lbl  { font-size: .8rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; }
+  .kpi-sub  { font-size: .78rem; margin-top: .2rem; }
+  .kpi-sub.up   { color: #059669; }
+  .kpi-sub.down { color: #DC2626; }
+  .kpi-sub.neutral { color: var(--muted); }
+
+  /* ── SECTION HEADERS ── */
+  .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: .9rem; }
+  .section-head h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin: 0; }
+  .section-head a  { font-size: .82rem; color: var(--green); text-decoration: none; font-weight: 500; }
+  .section-head a:hover { text-decoration: underline; }
+
+  /* ── MAIN GRID ── */
+  .dash-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.2rem; margin-bottom: 1.2rem; }
+  .dash-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; margin-bottom: 1.2rem; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card); border-radius: 14px;
+    border: 1px solid var(--border); box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    overflow: hidden;
+  }
+  .card-body { padding: 1.3rem 1.4rem; }
+  .card-body-sm { padding: 1rem 1.2rem; }
+
+  /* ── TABLES ── */
+  .dash-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  .dash-table th { color: var(--muted); font-weight: 600; font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; padding: .6rem .8rem; border-bottom: 2px solid var(--border); text-align: left; }
+  .dash-table td { padding: .7rem .8rem; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
+  .dash-table tr:last-child td { border-bottom: none; }
+  .dash-table tr:hover td { background: #F9FAFB; }
+  .dash-table a { color: var(--green); text-decoration: none; }
+  .dash-table a:hover { text-decoration: underline; }
+
+  /* ── BADGES ── */
+  .badge { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 50px; font-size: .72rem; font-weight: 600; }
+  .badge-red    { background: #FEE2E2; color: #991B1B; }
+  .badge-green  { background: #D1FAE5; color: #065F46; }
+  .badge-orange { background: #FEF3C7; color: #92400E; }
+  .badge-blue   { background: #DBEAFE; color: #1E40AF; }
+  .badge-gray   { background: #F3F4F6; color: #374151; }
+
+  /* ── ACTIVITY LIST ── */
+  .activity-item { display: flex; align-items: flex-start; gap: .8rem; padding: .75rem 0; border-bottom: 1px solid var(--border); }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .9rem; flex-shrink: 0; }
+  .activity-body { flex: 1; min-width: 0; }
+  .activity-title { font-size: .88rem; font-weight: 500; color: var(--text); margin-bottom: .1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .activity-meta  { font-size: .76rem; color: var(--muted); }
+
+  /* ── UNREAD DOT ── */
+  .unread-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); display: inline-block; margin-right: 5px; }
+
+  /* ── QUICK ACTIONS ── */
+  .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+  .quick-btn {
+    display: flex; align-items: center; gap: .6rem;
+    padding: .75rem 1rem; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--card);
+    text-decoration: none; color: var(--text); font-size: .88rem; font-weight: 500;
+    transition: all .2s;
+  }
+  .quick-btn:hover { background: #F9FAFB; border-color: var(--green); color: var(--green); transform: translateY(-1px); }
+  .quick-btn-icon { font-size: 1.2rem; }
+
+  /* ── CHART CONTAINER ── */
+  .chart-wrap { position: relative; height: 240px; }
+
+  /* ── PROGRESS BARS ── */
+  .prog-row { margin-bottom: .9rem; }
+  .prog-label { display: flex; justify-content: space-between; font-size: .82rem; margin-bottom: .3rem; }
+  .prog-label span:first-child { font-weight: 500; }
+  .prog-label span:last-child  { color: var(--muted); }
+  .prog-bar { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+
+  /* ── AMOUNT COLOURS ── */
+  .amt-high { color: #059669; font-weight: 600; }
+  .amt-mid  { color: #D97706; font-weight: 600; }
+  .amt-low  { color: #DC2626; font-weight: 500; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:900px){
+    .dash-grid,.dash-grid-3{grid-template-columns:1fr;}
+    .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media(max-width:540px){
+    .kpi-grid{grid-template-columns:1fr;}
+    .quick-actions{grid-template-columns:1fr;}
+  }
+</style>
+{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<div class="dash-wrap">
+
+  <!-- Greeting -->
+  <div class="dash-greeting">
+    <h2>Good {% now "G" as h %}{% if h < 12 %}Morning{% elif h < 17 %}Afternoon{% else %}Evening{% endif %}, {{ request.user.first_name|default:request.user.username }} 👋</h2>
+    <p>Here's what's happening at HopeForward today — {% now "l, j F Y" %}</p>
+  </div>
+
+  <!-- ── KPI CARDS ── -->
+  <div class="kpi-grid">
+
+    <div class="kpi-card" style="--accent:#8E0005;">
+      <div class="kpi-icon">💰</div>
+      <div class="kpi-val">UGX {{ total_donations|floatformat:0 }}</div>
+      <div class="kpi-lbl">Total Donations Received</div>
+      <div class="kpi-sub neutral">{{ donation_count }} donation{{ donation_count|pluralize }}</div>
+    </div>
+
+    <div class="kpi-card" style="--accent:#3BAD6E;">
+      <div class="kpi-icon">📅</div>
+      <div class="kpi-val">UGX {{ month_donations|floatformat:0 }}</div>
+      <div class="kpi-lbl">This Month's Donations</div>
+      <div class="kpi-sub {% if mom_pct >= 0 %}up{% else %}down{% endif %}">
+        {% if mom_pct >= 0 %}▲{% else %}▼{% endif %} {{ mom_pct|floatformat:1 }}% vs last month
+      </div>
+    </div>
+
+    <div class="kpi-card" style="--accent:#8E0005;">
+      <div class="kpi-icon">✉️</div>
+      <div class="kpi-val">{{ unread_messages }}</div>
+      <div class="kpi-lbl">Unread Messages</div>
+      <div class="kpi-sub neutral">{{ total_messages }} total received</div>
+    </div>
+
+    <div class="kpi-card" style="--accent:#3BAD6E;">
+      <div class="kpi-icon">📖</div>
+      <div class="kpi-val">{{ featured_stories }}</div>
+      <div class="kpi-lbl">Featured Stories</div>
+      <div class="kpi-sub neutral">{{ total_stories }} total stories</div>
+    </div>
+
+    <div class="kpi-card" style="--accent:#2563EB;">
+      <div class="kpi-icon">🌱</div>
+      <div class="kpi-val">{{ active_programs }}</div>
+      <div class="kpi-lbl">Active Programmes</div>
+      <div class="kpi-sub neutral">{{ total_partners }} partners</div>
+    </div>
+
+    <div class="kpi-card" style="--accent:#D97706;">
+      <div class="kpi-icon">👥</div>
+      <div class="kpi-val">{{ total_users }}</div>
+      <div class="kpi-lbl">Admin Users</div>
+      <div class="kpi-sub neutral">Staff accounts</div>
+    </div>
+
+  </div>
+
+  <!-- ── CHARTS ROW ── -->
+  <div class="dash-grid">
+
+    <!-- Donation trend chart -->
+    <div class="card">
+      <div class="card-body">
+        <div class="section-head">
+          <h3>📈 Donation Trend (Last 6 Months)</h3>
+          <a href="{% url 'admin:cosma_development_donationlead_changelist' %}">View all →</a>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="donationChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Story tags doughnut -->
+    <div class="card">
+      <div class="card-body">
+        <div class="section-head">
+          <h3>🏷 Stories by Category</h3>
+          <a href="{% url 'admin:cosma_development_impactstory_changelist' %}">View all →</a>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="tagChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── TABLES ROW ── -->
+  <div class="dash-grid">
+
+    <!-- Recent donations -->
+    <div class="card">
+      <div class="card-body-sm">
+        <div class="section-head">
+          <h3>💳 Recent Donations</h3>
+          <a href="{% url 'admin:cosma_development_donationlead_changelist' %}">See all →</a>
+        </div>
+        <table class="dash-table">
+          <thead><tr>
+            <th>Donor</th><th>Amount</th><th>Programme</th><th>Date</th>
+          </tr></thead>
+          <tbody>
+            {% for d in recent_donations %}
+            <tr>
+              <td>
+                <div style="font-weight:500;">{{ d.name }}</div>
+                <div style="font-size:.75rem;color:var(--muted);">{{ d.email }}</div>
+              </td>
+              <td>
+                {% if d.amount >= 100000 %}
+                  <span class="amt-high">UGX {{ d.amount|floatformat:0 }}</span>
+                {% elif d.amount >= 50000 %}
+                  <span class="amt-mid">UGX {{ d.amount|floatformat:0 }}</span>
+                {% else %}
+                  <span class="amt-low">UGX {{ d.amount|floatformat:0 }}</span>
+                {% endif %}
+              </td>
+              <td><span class="badge badge-blue">{{ d.message|default:"General"|truncatechars:18 }}</span></td>
+              <td style="color:var(--muted);font-size:.8rem;">{{ d.created_at|date:"d M Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" style="color:var(--muted);text-align:center;padding:1.5rem;">No donations yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Unread messages -->
+    <div class="card">
+      <div class="card-body-sm">
+        <div class="section-head">
+          <h3>✉️ Recent Messages
+            {% if unread_messages %}<span class="badge badge-red ms-2">{{ unread_messages }} new</span>{% endif %}
+          </h3>
+          <a href="{% url 'admin:cosma_development_contactmessage_changelist' %}">See all →</a>
+        </div>
+        {% for msg in recent_messages %}
+        <div class="activity-item">
+          <div class="activity-avatar" style="background:{% cycle '#FEE2E2' '#D1FAE5' '#DBEAFE' '#FEF3C7' %};">
+            {{ msg.name|first|upper }}
+          </div>
+          <div class="activity-body">
+            <div class="activity-title">
+              {% if not msg.is_read %}<span class="unread-dot"></span>{% endif %}
+              <a href="{% url 'admin:home_contactmessage_change' msg.pk %}">{{ msg.subject|truncatechars:38 }}</a>
+            </div>
+            <div class="activity-meta">{{ msg.name }} · {{ msg.created_at|date:"d M, H:i" }}</div>
+          </div>
+          {% if not msg.is_read %}
+          <span class="badge badge-red" style="flex-shrink:0;">New</span>
+          {% endif %}
+        </div>
+        {% empty %}
+        <p style="color:var(--muted);font-size:.88rem;padding:.5rem 0;">No messages yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── BOTTOM ROW ── -->
+  <div class="dash-grid-3">
+
+    <!-- Recent stories -->
+    <div class="card">
+      <div class="card-body-sm">
+        <div class="section-head">
+          <h3>📖 Latest Stories</h3>
+          <a href="{% url 'admin:cosma_development_impactstory_changelist' %}">See all →</a>
+        </div>
+        {% for s in recent_stories %}
+        <div class="activity-item">
+          {% if s.image %}
+          <img src="{{ s.image.url }}" style="width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0;"/>
+          {% else %}
+          <div class="activity-avatar" style="background:#F3F4F6;">👤</div>
+          {% endif %}
+          <div class="activity-body">
+            <div class="activity-title">
+              <a href="{% url 'admin:home_impactstory_change' s.pk %}">{{ s.name }}</a>
+            </div>
+            <div class="activity-meta">{{ s.location }} · {{ s.tag }}</div>
+          </div>
+          {% if s.is_featured %}
+          <span class="badge badge-green" style="flex-shrink:0;">Featured</span>
+          {% endif %}
+        </div>
+        {% empty %}
+        <p style="color:var(--muted);font-size:.88rem;">No stories yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Programme performance -->
+    <div class="card">
+      <div class="card-body-sm">
+        <div class="section-head">
+          <h3>🌱 Programmes</h3>
+          <a href="{% url 'admin:cosma_development_program_changelist' %}">Edit →</a>
+        </div>
+        <div class="prog-row">
+          <div class="prog-label"><span>Education</span><span>2,400+ learners</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:85%;background:#3BAD6E;"></div></div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-label"><span>Agriculture</span><span>3,200+ farmers</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:72%;background:#8E0005;"></div></div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-label"><span>Health</span><span>15,000+ visits</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:68%;background:#3BAD6E;"></div></div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-label"><span>Sponsorship</span><span>1,500+ children</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:60%;background:#8E0005;"></div></div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-label"><span>Clean Water</span><span>40+ sites</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:55%;background:#3BAD6E;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick actions -->
+    <div class="card">
+      <div class="card-body-sm">
+        <div class="section-head"><h3>⚡ Quick Actions</h3></div>
+        <div class="quick-actions">
+          <a class="quick-btn" href="{% url 'admin:cosma_development_impactstory_add' %}">
+            <span class="quick-btn-icon">📝</span>Add Story
+          </a>
+          <a class="quick-btn" href="{% url 'admin:cosma_development_program_add' %}">
+            <span class="quick-btn-icon">🌱</span>Add Programme
+          </a>
+          <a class="quick-btn" href="{% url 'admin:cosma_development_partner_add' %}">
+            <span class="quick-btn-icon">🤝</span>Add Partner
+          </a>
+          <a class="quick-btn" href="{% url 'admin:cosma_development_contactmessage_changelist' %}?is_read__exact=0">
+            <span class="quick-btn-icon">📨</span>Unread Mail
+          </a>
+          <a class="quick-btn" href="{% url 'admin:cosma_development_donationlead_changelist' %}">
+            <span class="quick-btn-icon">💰</span>All Donations
+          </a>
+          <a class="quick-btn" href="{% url 'admin:auth_user_changelist' %}">
+            <span class="quick-btn-icon">👤</span>Manage Users
+          </a>
+          <a class="quick-btn" href="/" target="_blank">
+            <span class="quick-btn-icon">🌐</span>View Website
+          </a>
+          <a class="quick-btn" href="/sitemap.xml" target="_blank">
+            <span class="quick-btn-icon">🗺</span>Sitemap
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// ── Donation trend chart ──────────────────────────────
+const dlCtx = document.getElementById('donationChart').getContext('2d');
+new Chart(dlCtx, {
+  type: 'bar',
+  data: {
+    labels: {{ chart_labels|safe }},
+    datasets: [{
+      label: 'Donations (UGX)',
+      data: {{ chart_data|safe }},
+      backgroundColor: ctx => {
+        const g = ctx.chart.ctx.createLinearGradient(0,0,0,240);
+        g.addColorStop(0,'rgba(142,0,5,.8)'); g.addColorStop(1,'rgba(142,0,5,.1)');
+        return g;
+      },
+      borderColor: '#8E0005',
+      borderWidth: 2,
+      borderRadius: 6,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ' UGX ' + ctx.raw.toLocaleString() } }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { family: 'Outfit', size: 11 } } },
+      y: { grid: { color: '#F3F4F6' }, ticks: { font: { family: 'Outfit', size: 11 },
+        callback: v => 'UGX ' + (v/1000).toFixed(0) + 'K'
+      }}
+    }
+  }
+});
+
+// ── Tag doughnut chart ────────────────────────────────
+const tagCtx = document.getElementById('tagChart').getContext('2d');
+new Chart(tagCtx, {
+  type: 'doughnut',
+  data: {
+    labels: {{ tag_labels|safe }},
+    datasets: [{
+      data: {{ tag_data|safe }},
+      backgroundColor: ['#8E0005','#3BAD6E','#2563EB','#D97706','#7C3AED','#0891B2','#059669'],
+      borderWidth: 0, hoverOffset: 6,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    cutout: '65%',
+    plugins: {
+      legend: { position: 'right', labels: { font: { family: 'Outfit', size: 11 }, padding: 12, boxWidth: 12 } }
+    }
+  }
+});
+
+// ── Animate progress bars on load ────────────────────
+document.querySelectorAll('.prog-fill').forEach(el => {
+  const w = el.style.width; el.style.width = '0';
+  setTimeout(() => el.style.width = w, 200);
+});
+</script>
+{% endblock %}

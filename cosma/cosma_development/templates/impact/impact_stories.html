@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Impact Stories — HopeForward{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item active">Impact Stories</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-chat-quote"></i> Real People, Real Change</div>
+    <h1>Impact Stories</h1>
+    <p>Behind every statistic is a person. These are their stories.</p>
+  </div>
+</section>
+<section class="sec-pad">
+  <div class="container">
+    <div class="row g-4">
+      {% for story in stories %}
+      <div class="col-md-6 col-lg-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+        <div class="hf-card overflow-hidden">
+          <div style="overflow:hidden;height:230px;"><img src="{{ story.image }}" alt="{{ story.name }}" class="w-100 h-100" style="object-fit:cover;transition:transform .5s;"/></div>
+          <div class="p-4">
+            <span class="badge rounded-pill mb-2" style="background:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' %};">{{ story.tag }}</span>
+            <p style="font-style:italic;font-size:.98rem;line-height:1.65;color:#333;" class="mb-3">"{{ story.story }}"</p>
+            <div class="d-flex align-items-center gap-2">
+              <img src="{{ story.image }}" alt="" style="width:38px;height:38px;border-radius:50%;object-fit:cover;"/>
+              <div>
+                <div class="fw-semibold" style="font-size:.9rem;">{{ story.name }}</div>
+                <div class="text-muted" style="font-size:.8rem;"><i class="bi bi-geo-alt me-1"></i>{{ story.location }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

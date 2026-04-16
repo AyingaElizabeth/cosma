@@ -1,0 +1,652 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home — Cosma Development{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* ═══════════════════════ HERO ═══════════════════════ */
+  #hero { min-height:100vh; position:relative; display:flex; align-items:center; overflow:hidden; }
+
+  .hero-slider { position:absolute; inset:0; z-index:0; }
+  .hero-slide {
+    position:absolute; inset:0;
+    background-size:cover; background-position:center;
+    opacity:0; transition:opacity 1.5s ease-in-out;
+    filter: contrast(1.1) brightness(0.9) saturate(1.1);
+  }
+  .hero-slide.active { opacity:1; animation: zoomout 1s ease-in-out forwards; }
+  @keyframes zoomHero {
+    from { transform: scale(1); }
+    to   { transform: scale(1.08); }
+  }
+  .hero-slide::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(120deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.15) 70%);
+  }
+  .hero-content { position:relative; z-index:2; color:#fff; }
+  .hero-eyebrow {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--green); color:#fff;
+    font-size:.75rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+    padding:6px 18px; border-radius:50px; margin-bottom:1.3rem;
+    animation:fadeUp .8s .2s both;
+  }
+  .hero-title {
+    font-size:clamp(2.8rem,6vw,5.6rem); font-weight:700; line-height:1.06;
+    animation:fadeUp .8s .4s both;
+  }
+  .hero-title em { color:var(--green-light); font-style:italic; }
+  .hero-sub {
+    font-size:1.1rem; font-weight:300; max-width:530px; line-height:1.75; opacity:.92;
+    animation:fadeUp .8s .6s both;
+  }
+  .hero-ctas { animation:fadeUp .8s .8s both; }
+
+  .hero-dots { position:absolute; bottom:5.8rem; left:50%; transform:translateX(-50%); z-index:3; display:flex; gap:10px; }
+  .hero-dot {
+    width:10px; height:10px; border-radius:50%; cursor:pointer; border:none;
+    background:rgba(255,255,255,.35); transition:background .3s, transform .3s;
+  }
+  .hero-dot.active { background:var(--green); transform:scale(1.35); }
+
+  .hero-stats {
+    position:absolute; bottom:0; left:0; right:0; z-index:3;
+    background:rgba(0,0,0,.35); backdrop-filter:blur(14px);
+    border-top:1px solid rgba(255,255,255,.12);
+  }
+  .hero-stat { text-align:center; padding:1.1rem 0; color:#fff; }
+  .hero-stat .val {
+    display:block; font-family:var(--font-display);
+    font-size:2.1rem; font-weight:700; color:var(--green-light);
+  }
+  .hero-stat .lbl { font-size:.73rem; text-transform:uppercase; letter-spacing:.1em; opacity:.82; }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(30px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* ═══════════════════════ ABOUT ═══════════════════════ */
+  .about-img-wrap { position:relative; }
+  .about-img { width:100%; height:460px; object-fit:cover; border-radius:18px; box-shadow:22px 22px 0 var(--red); }
+  .about-badge {
+    position:absolute; bottom:-20px; right:-20px;
+    background:var(--green); color:#fff; border-radius:14px; padding:1.1rem 1.6rem;
+    text-align:center; box-shadow:0 10px 28px rgba(59,173,110,.35);
+  }
+  .about-badge .num { font-family:var(--font-display); font-size:2.6rem; font-weight:700; display:block; }
+  .about-badge .lbl { font-size:.75rem; letter-spacing:.08em; opacity:.9; }
+  .icon-box {
+    width:46px; height:46px; border-radius:12px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:1.3rem;
+  }
+
+  /* ═══════════════════════ STORIES ═══════════════════════ */
+  .story-card {
+    border:none; border-radius:18px; overflow:hidden;
+    box-shadow:0 4px 24px rgba(0,0,0,.08); height:100%;
+    transition:transform .3s, box-shadow .3s;
+  }
+  .story-card:hover { transform:translateY(-7px); box-shadow:0 14px 40px rgba(0,0,0,.14); }
+  .story-img { width:100%; height:240px; object-fit:cover; transition:transform .5s; }
+  .story-card:hover .story-img { transform:scale(1.05); }
+  .story-tag {
+    display:inline-block; font-size:.7rem; font-weight:600;
+    letter-spacing:.1em; text-transform:uppercase; padding:4px 14px; border-radius:50px;
+  }
+  .story-quote { font-size:1rem; font-style:italic; line-height:1.65; color:#333; }
+  .story-avatar { width:42px; height:42px; border-radius:50%; object-fit:cover; }
+
+  /* ═══════════════════════ PROGRAMS ═══════════════════════ */
+  .program-card {
+    border:none; border-radius:18px; padding:2.2rem 1.8rem;
+    background:#fff; height:100%;
+    box-shadow:0 2px 18px rgba(0,0,0,.07);
+    transition:transform .3s, box-shadow .3s;
+    position:relative; overflow:hidden;
+  }
+  .program-card:hover { transform:translateY(-6px); box-shadow:0 12px 36px rgba(0,0,0,.13); }
+  .prog-icon-wrap {
+    width:60px; height:60px; border-radius:16px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.7rem; margin-bottom:1.3rem;
+  }
+  .prog-stat-pill {
+    display:inline-block; font-size:.75rem; font-weight:600;
+    padding:4px 14px; border-radius:50px; margin-top:1rem; letter-spacing:.05em;
+  }
+  .prog-bottom-bar { position:absolute; bottom:0; left:0; right:0; height:4px; }
+  .program-theme-green .prog-icon-wrap { background:rgba(59,173,110,.125); color:var(--green); }
+  .program-theme-green .prog-stat-pill { background:rgba(59,173,110,.09); color:var(--green); }
+  .program-theme-green .prog-bottom-bar { background:var(--green); }
+  .program-theme-red .prog-icon-wrap { background:rgba(142,0,5,.125); color:var(--red); }
+  .program-theme-red .prog-stat-pill { background:rgba(142,0,5,.09); color:var(--red); }
+  .program-theme-red .prog-bottom-bar { background:var(--red); }
+
+  /* ═══════════════════════ PARTNERS ═══════════════════════ */
+  .partners-track-wrap { overflow:hidden; }
+  .partners-track {
+    display:flex; align-items:center; gap:4rem;
+    animation:scroll-x 20s linear infinite; width:max-content;
+  }
+  .partners-track:hover { animation-play-state:paused; }
+  .partner-logo { height:50px; filter:grayscale(1); opacity:.5; transition:filter .3s,opacity .3s; }
+  .partner-logo:hover { filter:none; opacity:1; }
+  @keyframes scroll-x {
+    from { transform:translateX(0); }
+    to   { transform:translateX(-50%); }
+  }
+
+  /* ═══════════════════════ DONATE ═══════════════════════ */
+  #donate {
+    background:linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    position:relative; overflow:hidden;
+  }
+  #donate::before {
+    content:''; position:absolute; top:-100px; right:-100px;
+    width:420px; height:420px; border-radius:50%; background:rgba(255,255,255,.05);
+  }
+  #donate::after {
+    content:''; position:absolute; bottom:-120px; left:-60px;
+    width:320px; height:320px; border-radius:50%; background:rgba(59,173,110,.14);
+  }
+  .donate-title { font-size:clamp(2rem,5vw,4rem); font-weight:700; color:#fff; }
+  .donate-title em { color:var(--green-light); font-style:italic; }
+  .donate-panel {
+    background:rgba(255,255,255,.1); backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.2); border-radius:22px; padding:2.4rem;
+    position:relative; z-index:1;
+  }
+  .amount-chip {
+    background:rgba(255,255,255,.15); border:2px solid rgba(255,255,255,.35);
+    color:#fff; border-radius:50px; padding:.5rem 1.3rem;
+    font-weight:600; cursor:pointer; transition:all .25s; font-family:var(--font-body); font-size:.9rem;
+  }
+  .amount-chip:hover, .amount-chip.active { background:var(--green); border-color:var(--green); }
+  .donate-field {
+    width:100%; border-radius:50px; padding:.75rem 1.4rem;
+    border:2px solid rgba(255,255,255,.3); background:rgba(255,255,255,.12);
+    color:#fff; font-family:var(--font-body); font-size:.95rem;
+    transition:border-color .2s, background .2s;
+  }
+  .donate-field::placeholder { color:rgba(255,255,255,.55); }
+  .donate-field:focus { outline:none; border-color:var(--green-light); background:rgba(255,255,255,.18); }
+  .donate-field option { color: var(--charcoal); }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- ══════════════════════════ HERO ══════════════════════════ -->
+<section id="hero">
+  <div class="hero-slider" id="heroSlider">
+    <div class="hero-slide active" style="background-image:url('{% static "imgs/kids.png" %}')"></div>
+    <div class="hero-slide"        style="background-image:url('{% static "imgs/hero2.jpg" %}')"></div>
+    <div class="hero-slide"        style="background-image:url('{% static "imgs/hero3.jpg" %}')"></div>
+    <div class="hero-slide"        style="background-image:url('{% static "imgs/hero5.png" %}')"></div>
+  </div>
+
+  <div class="container hero-content py-5 mt-5">
+    <div class="row">
+      <div class="col-lg-8 col-xl-7">
+        <div class="hero-eyebrow">
+          <i class="bi bi-globe-africa"></i> Serving Uganda Since 2006
+        </div>
+        <h1 class="hero-title mb-4">
+          Building <em>Brighter</em><br>Futures Together
+        </h1>
+        <p class="hero-sub mb-5">
+          We partner with communities across Uganda to deliver education, healthcare, livelihoods, and clean water — transforming lives from the ground up.
+        </p>
+        <div class="hero-ctas d-flex flex-wrap gap-3">
+          <a href="#donate" class="btn btn-green btn-lg rounded-pill px-4 fw-semibold">
+            <i class="bi bi-heart-fill me-2"></i>Donate Now
+          </a>
+          <a href="#about" class="btn btn-outline-light btn-lg rounded-pill px-4">
+            Our Story&nbsp;<i class="bi bi-arrow-down"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-dots" id="heroDots"></div>
+
+  <div class="hero-stats">
+    <div class="container">
+      <div class="row">
+        {% for s in stats %}
+        <div class="col">
+          <div class="hero-stat {% if not forloop.last %}border-end border-white border-opacity-10{% endif %}">
+            <span class="val">{{ s.value }}</span>
+            <span class="lbl">{{ s.label }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ ABOUT US ══════════════════════════ -->
+<section id="about" class="sec-pad bg-cream">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5 reveal-left">
+        <div class="about-img-wrap pe-3 pb-3">
+          <img src="{% static 'imgs/about-us.jpeg' %}" alt="Community outreach" class="about-img"/>
+          <div class="about-badge">
+            <span class="num">25+</span>
+            <span class="lbl">Years of Impact</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7 reveal-right">
+        <div class="section-label text-red"><span class="dot bg-red"></span>Who We Are</div>
+        <h2 class="section-title">A Community-Driven<br><em class="text-red">Force for Change</em></h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <div class="mb-4">
+          <h4 class="text-red fw-bold mb-2">Our Mission</h4>
+          <p class="text-muted" style="font-size:1.05rem;line-height:1.8;">
+            To increase household incomes by providing sustainable agricultural solutions and education programs through the village Cooperatives model.
+          </p>
+        </div>
+        <div class="mb-4">
+          <h4 class="text-green fw-bold mb-2">Our Vision</h4>
+          <p class="text-muted" style="font-size:1.05rem;line-height:1.8;">
+            Prosperous and self-reliant rural communities in Uganda.
+          </p>
+        </div>
+        <div class="mb-4">
+          <h4 class="text-red fw-bold mb-3">Core Values</h4>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="icon-box bg-red me-3"><i class="bi bi-arrow-repeat text-white"></i></div>
+                    <h6 class="card-title mb-0 fw-bold">Sustainability</h6>
+                  </div>
+                  <p class="card-text text-muted small mb-0">We create long-lasting impacts through programmes that promote self-sufficiency and environmental stewardship well beyond our direct involvement.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="icon-box bg-green me-3"><i class="bi bi-shield-check text-white"></i></div>
+                    <h6 class="card-title mb-0 fw-bold">Accountability</h6>
+                  </div>
+                  <p class="card-text text-muted small mb-0">Transparency and responsibility are at the heart of everything we do — measuring and communicating our results openly to all stakeholders.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="#programs" class="btn btn-red rounded-pill px-4 py-2 mt-3 fw-semibold">
+          Explore Our Work <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ IMPACT STORIES ══════════════════════════ -->
+<section id="stories" class="sec-pad" style="background:#fff;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-green justify-content-center">
+        <span class="dot bg-green"></span>Real Lives, Real Change
+      </div>
+      <h2 class="section-title">Impact <em class="text-red">Stories</em></h2>
+      <div class="title-bar bg-red mx-auto mb-3"></div>
+      <p class="text-muted mx-auto" style="max-width:520px;">Every number represents a person. Meet a few of the individuals whose lives have been transformed through your support.</p>
+    </div>
+    <div class="row g-4">
+      {% for story in stories %}
+      <div class="col-md-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+        <div class="story-card card">
+          <div style="overflow:hidden;">
+            <img src="{% if story.image %}{{ story.image.url }}{% else %}{{ story.image }}{% endif %}"
+                 alt="{{ story.name }}" class="story-img"/>
+          </div>
+          <div class="card-body p-4">
+            <span class="story-tag text-white mb-3 d-inline-block"
+                  style="background:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' %}">
+              {{ story.tag }}
+            </span>
+            <p class="story-quote mb-3">"{{ story.story }}"</p>
+            <div class="d-flex align-items-center gap-3">
+              <img src="{% if story.image %}{{ story.image.url }}{% else %}{{ story.image }}{% endif %}"
+                   alt="" class="story-avatar"/>
+              <div>
+                <div style="font-size:.93rem;font-weight:600;">{{ story.name }}</div>
+                <div class="text-muted" style="font-size:.82rem;">
+                  <i class="bi bi-geo-alt me-1"></i>{{ story.location }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5 reveal">
+      <a href="{% url 'cosma_development:impact_stories' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">
+        Read More Stories <i class="bi bi-arrow-right ms-1"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ PROGRAMS ══════════════════════════ -->
+<section id="programs" class="sec-pad bg-cream">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-red justify-content-center">
+        <span class="dot bg-red"></span>What We Do
+      </div>
+      <h2 class="section-title">Our <em class="text-green">Programmes</em></h2>
+      <div class="title-bar bg-green mx-auto mb-3"></div>
+      <p class="text-muted mx-auto" style="max-width:520px;">Four pillars, one mission — a Uganda where every individual can reach their full potential.</p>
+    </div>
+    <div class="row g-4">
+      {% for prog in programs %}
+      <div class="col-sm-6 col-lg-3 reveal" style="transition-delay:{{ forloop.counter0 }}20ms">
+        <div class="program-card {% if prog.color == '#8E0005' %}program-theme-red{% else %}program-theme-green{% endif %}">
+          <div class="prog-icon-wrap">
+            <i class="bi {{ prog.icon }}"></i>
+          </div>
+          <h5 class="mb-2" style="font-size:1.25rem;">{{ prog.title }}</h5>
+          <p class="text-muted mb-0" style="font-size:.92rem;line-height:1.65;">{{ prog.description }}</p>
+          <span class="prog-stat-pill">
+            <i class="bi bi-bar-chart-fill me-1"></i>{{ prog.stat_label }}
+          </span>
+          <div class="prog-bottom-bar"></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ PARTNERS ══════════════════════════ -->
+<section id="partners" class="sec-pad" style="background:#fff;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-green justify-content-center">
+        <span class="dot bg-green"></span>Who Stands With Us
+      </div>
+      <h2 class="section-title">Our <em class="text-red">Partners</em></h2>
+      <div class="title-bar bg-red mx-auto mb-3"></div>
+      <p class="text-muted mx-auto" style="max-width:480px;">Trusted by leading global organisations committed to sustainable development.</p>
+    </div>
+    <div class="partners-track-wrap py-3">
+      <div class="partners-track" id="partnerTrack">
+        {% for p in partners %}{% for _ in "xx" %}
+        <a href="{{ p.website|default:'#' }}" target="_blank" rel="noopener" title="{{ p.name }}">
+          <img src="{{ p.get_logo }}" alt="{{ p.name }}" class="partner-logo"/>
+        </a>
+        {% endfor %}{% endfor %}
+      </div>
+    </div>
+    <div class="text-center mt-4 reveal">
+      <a href="{% url 'cosma_development:contact' %}" class="btn btn-outline-green rounded-pill px-4 py-2 fw-semibold">
+        <i class="bi bi-handshake me-1"></i>Become a Partner
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ DONATE ══════════════════════════ -->
+<section id="donate" class="sec-pad">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 reveal-left" style="position:relative;z-index:1;">
+        <div class="section-label" style="color:rgba(255,255,255,.7);">
+          <span class="dot" style="background:var(--green-light);"></span>Make A Difference
+        </div>
+        <h2 class="donate-title mb-4">Your Gift <em>Changes</em><br>a Life Today</h2>
+        <p style="color:rgba(255,255,255,.85);font-size:1.05rem;line-height:1.8;max-width:460px;">
+          Every contribution — no matter the size — helps us reach more families with education, healthcare, and hope.
+        </p>
+        <ul class="list-unstyled mt-4" style="color:rgba(255,255,255,.85);">
+          <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color:var(--green-light);"></i>UGX 50,000 provides school supplies for one child</li>
+          <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color:var(--green-light);"></i>UGX 150,000 funds a maternal health visit</li>
+          <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color:var(--green-light);"></i>UGX 500,000 supports a vocational training month</li>
+        </ul>
+      </div>
+      <div class="col-lg-6 reveal-right">
+        <div class="donate-panel">
+          <h4 style="color:#fff;font-family:var(--font-display);font-size:1.6rem;margin-bottom:1.2rem;">Donate Now</h4>
+          <p style="color:rgba(255,255,255,.75);font-size:.85rem;margin-bottom:.6rem;">Choose an amount (UGX)</p>
+          <div class="d-flex flex-wrap gap-2 mb-3" id="amountChips">
+            <button class="amount-chip active" data-amount="50000">50,000</button>
+            <button class="amount-chip" data-amount="100000">100,000</button>
+            <button class="amount-chip" data-amount="250000">250,000</button>
+            <button class="amount-chip" data-amount="500000">500,000</button>
+            <button class="amount-chip" data-amount="custom">Custom</button>
+          </div>
+          <form id="donateForm" novalidate>
+            {% csrf_token %}
+            <div id="customAmountWrap" class="mb-3 d-none">
+              <input id="customAmount" type="number" class="donate-field" placeholder="Enter amount in UGX" min="1000"/>
+            </div>
+            <div class="mb-3">
+              <input name="name" type="text" class="donate-field" placeholder="Your full name" required/>
+            </div>
+            <div class="mb-3">
+              <input name="email" type="email" class="donate-field" placeholder="Email address" required/>
+            </div>
+            <div class="mb-4">
+              <select name="program" class="donate-field">
+                <option value="">— Allocate to a programme (optional) —</option>
+                {% for prog in programs %}
+                <option>{{ prog.title }}</option>
+                {% endfor %}
+                <option>Where most needed</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-green w-100 rounded-pill py-3 fw-semibold fs-5">
+              <i class="bi bi-heart-fill me-2"></i>Complete Donation
+            </button>
+          </form>
+          <p class="text-center mt-3" style="color:rgba(255,255,255,.5);font-size:.78rem;">
+            <i class="bi bi-lock-fill me-1"></i>Secure &amp; encrypted · 100% goes to programmes
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ CONTACT ══════════════════════════ -->
+<section id="contact" class="sec-pad bg-cream">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7 text-center reveal">
+        <div class="section-label text-red justify-content-center">
+          <span class="dot bg-red"></span>Get In Touch
+        </div>
+        <h2 class="section-title mb-2">Let's <em class="text-green">Talk</em></h2>
+        <div class="title-bar bg-green mx-auto mb-4"></div>
+        <p class="text-muted mb-5">Interested in partnering, volunteering, or learning more about our work? We'd love to hear from you.</p>
+      </div>
+    </div>
+    <div class="row g-4 justify-content-center">
+      <div class="col-lg-4 reveal-left">
+        <div class="d-flex flex-column gap-4">
+          <div class="d-flex align-items-start gap-3">
+            <div class="icon-box bg-red"><i class="bi bi-geo-alt-fill text-white"></i></div>
+            <div>
+              <strong>Our Office</strong>
+              <p class="mb-0 text-muted" style="font-size:.92rem;">Plot 45, Kampala Road,<br>Kampala, Uganda</p>
+            </div>
+          </div>
+          <div class="d-flex align-items-start gap-3">
+            <div class="icon-box bg-green"><i class="bi bi-telephone-fill text-white"></i></div>
+            <div>
+              <strong>Phone</strong>
+              <p class="mb-0 text-muted" style="font-size:.92rem;">+256 700 123 456</p>
+            </div>
+          </div>
+          <div class="d-flex align-items-start gap-3">
+            <div class="icon-box bg-red"><i class="bi bi-envelope-fill text-white"></i></div>
+            <div>
+              <strong>Email</strong>
+              <p class="mb-0 text-muted" style="font-size:.92rem;">info@cosmadevelopments.ug</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7 reveal-right">
+        <form id="contactForm" novalidate class="bg-white p-4 rounded-4 shadow-sm">
+          {% csrf_token %}
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <input name="name" type="text" class="form-control rounded-pill" placeholder="Your name" required/>
+            </div>
+            <div class="col-sm-6">
+              <input name="email" type="email" class="form-control rounded-pill" placeholder="Email address" required/>
+            </div>
+            <div class="col-12">
+              <input name="subject" type="text" class="form-control rounded-pill" placeholder="Subject"/>
+            </div>
+            <div class="col-12">
+              <textarea name="message" class="form-control rounded-4" rows="5" placeholder="Your message..." required></textarea>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-red rounded-pill px-4 py-2 fw-semibold w-100">
+                Send Message <i class="bi bi-send-fill ms-1"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+/* ── Hero slider ── */
+const slides   = document.querySelectorAll('.hero-slide');
+const dotsWrap = document.getElementById('heroDots');
+let current = 0, timer;
+
+slides.forEach((_, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'hero-dot' + (i === 0 ? ' active' : '');
+  btn.addEventListener('click', () => goTo(i));
+  dotsWrap.appendChild(btn);
+});
+
+function goTo(n) {
+  slides[current].classList.remove('active');
+  dotsWrap.children[current].classList.remove('active');
+  current = (n + slides.length) % slides.length;
+  slides[current].classList.add('active');
+  dotsWrap.children[current].classList.add('active');
+  clearInterval(timer);
+  timer = setInterval(() => goTo(current + 1), 5500);
+}
+timer = setInterval(() => goTo(current + 1), 5500);
+
+/* ── Animate stat counters ── */
+const statsObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.classList.contains('counted')) {
+      e.target.classList.add('counted');
+      animateCounter(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.hero-stat .val').forEach(el => statsObserver.observe(el));
+
+function animateCounter(element) {
+  const text = element.textContent.trim();
+  const match = text.match(/(\d+)/);
+  if (!match) return;
+  const target = parseInt(match[1]);
+  const suffix = text.replace(/\d+/g, '').trim();
+  let cur = 0;
+  const start = Date.now();
+  const update = () => {
+    const progress = Math.min((Date.now() - start) / 2000, 1);
+    cur = Math.floor(target * progress);
+    element.textContent = cur.toLocaleString() + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  };
+  update();
+}
+
+/* ── Donation amount chips ── */
+let selectedAmount = 50000;
+document.getElementById('amountChips').addEventListener('click', e => {
+  const btn = e.target.closest('.amount-chip');
+  if (!btn) return;
+  document.querySelectorAll('.amount-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const wrap = document.getElementById('customAmountWrap');
+  if (btn.dataset.amount === 'custom') {
+    wrap.classList.remove('d-none');
+    selectedAmount = null;
+  } else {
+    wrap.classList.add('d-none');
+    selectedAmount = parseInt(btn.dataset.amount);
+  }
+});
+
+/* ── Donate form ── */
+document.getElementById('donateForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const form   = e.target;
+  const custom = document.getElementById('customAmount').value;
+  const amount = selectedAmount || parseInt(custom) || 0;
+  if (!amount || amount < 1000) { showToast('Please enter a valid amount (min UGX 1,000).', 'error'); return; }
+  const payload = {
+    name:    form.querySelector('[name=name]').value,
+    email:   form.querySelector('[name=email]').value,
+    amount,
+    message: form.querySelector('[name=program]').value,
+  };
+  try {
+    const res  = await fetch("{% url 'cosma_development:donate' %}", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrf() },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    showToast(data.message, data.status);
+    if (data.status === 'success') form.reset();
+  } catch { showToast('Something went wrong. Please try again.', 'error'); }
+});
+
+/* ── Contact form ── */
+document.getElementById('contactForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target;
+  const payload = {
+    name:    form.querySelector('[name=name]').value,
+    email:   form.querySelector('[name=email]').value,
+    subject: form.querySelector('[name=subject]').value,
+    message: form.querySelector('[name=message]').value,
+  };
+  try {
+    const res  = await fetch("{% url 'cosma_development:contact_submit' %}", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrf() },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    showToast(data.message, data.status);
+    if (data.status === 'success') form.reset();
+  } catch { showToast('Something went wrong. Please try again.', 'error'); }
+});
+</script>
+{% endblock %}

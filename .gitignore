@@ -1,0 +1,19 @@
+#python
+_pycache__/
+*.pyc
+
+#vitual environment
+venv/
+
+  #Django
+db.sqlite3
+media/
+
+#static files
+staticfiles/
+
+#vs code
+.vscode/
+
+#os generated files
+.DS_Store

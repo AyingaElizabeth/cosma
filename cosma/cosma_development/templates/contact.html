@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Contact Us — cosma development{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item active">Contact</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-envelope"></i> Reach Out</div>
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you — whether you want to partner, volunteer, or learn more.</p>
+  </div>
+</section>
+<section class="sec-pad">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-4 reveal-left">
+        <div class="d-flex flex-column gap-4">
+          <div class="d-flex align-items-start gap-3">
+            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:50px;height:50px;background:rgba(142,0,5,.1);"><i class="bi bi-geo-alt-fill fs-4 text-red"></i></div>
+            <div><strong>Office</strong><p class="mb-0 text-muted" style="font-size:.92rem;">Plot 45, Kampala Road,<br>Kampala, Uganda</p></div>
+          </div>
+          <div class="d-flex align-items-start gap-3">
+            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:50px;height:50px;background:rgba(59,173,110,.1);"><i class="bi bi-telephone-fill fs-4 text-green"></i></div>
+            <div><strong>Phone</strong><p class="mb-0 text-muted" style="font-size:.92rem;">+256 700 123 456</p></div>
+          </div>
+          <div class="d-flex align-items-start gap-3">
+            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:50px;height:50px;background:rgba(142,0,5,.1);"><i class="bi bi-envelope-fill fs-4 text-red"></i></div>
+            <div><strong>Email</strong><p class="mb-0 text-muted" style="font-size:.92rem;">info@hopeforward.ug</p></div>
+          </div>
+          <div class="d-flex align-items-start gap-3">
+            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:50px;height:50px;background:rgba(59,173,110,.1);"><i class="bi bi-clock-fill fs-4 text-green"></i></div>
+            <div><strong>Hours</strong><p class="mb-0 text-muted" style="font-size:.92rem;">Mon–Fri: 8am – 5pm<br>Sat: 9am – 1pm</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 reveal-right">
+        <div class="hf-card p-5">
+          <h3 class="mb-4">Send Us a Message</h3>
+          <form id="contactForm" novalidate>
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-sm-6"><input name="name" type="text" class="form-control rounded-pill" placeholder="Your full name" required/></div>
+              <div class="col-sm-6"><input name="email" type="email" class="form-control rounded-pill" placeholder="Email address" required/></div>
+              <div class="col-sm-6"><input name="phone" type="text" class="form-control rounded-pill" placeholder="Phone number (optional)"/></div>
+              <div class="col-sm-6">
+                <select name="subject" class="form-select rounded-pill">
+                  <option>General Enquiry</option>
+                  <option>Partnership</option>
+                  <option>Volunteering</option>
+                  <option>Donations</option>
+                  <option>Media</option>
+                </select>
+              </div>
+              <div class="col-12"><textarea name="message" class="form-control rounded-4" rows="5" placeholder="Your message..." required></textarea></div>
+              <div class="col-12"><button type="submit" class="btn btn-red rounded-pill px-4 py-2 fw-semibold w-100">Send Message <i class="bi bi-send-fill ms-1"></i></button></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script>
+document.getElementById('contactForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const f=e.target;
+  const payload={name:f.querySelector('[name=name]').value,email:f.querySelector('[name=email]').value,subject:f.querySelector('[name=subject]').value,message:f.querySelector('[name=message]').value};
+  try{
+    const r=await fetch("{% url 'cosma_development:contact' %}",{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':document.querySelector('[name=csrfmiddlewaretoken]').value},body:JSON.stringify(payload)});
+    const d=await r.json();
+    showToast(d.message,d.status);
+    if(d.status==='success')f.reset();
+  }catch{showToast('Something went wrong.','error');}
+});
+</script>
+{% endblock %}

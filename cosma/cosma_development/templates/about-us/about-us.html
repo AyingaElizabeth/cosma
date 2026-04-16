@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}About Us — cosma developments Uganda{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item active">About Us</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-building-heart"></i> Who We Are</div>
+    <h1>About cosma developments</h1>
+    <p>A community-driven force for sustainable change across Uganda since 2006.</p>
+  </div>
+</section>
+
+<section class="sec-pad">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 reveal-left">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&q=80"
+             alt="Our story" class="img-fluid rounded-4" style="box-shadow:20px 20px 0 var(--red);"/>
+      </div>
+      <div class="col-lg-6 reveal-right">
+        <div class="section-label text-red"><span class="dot bg-red"></span>Our Story</div>
+        <h2 class="section-title mb-2">From a Small Idea to <em class="text-green">National Impact</em></h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <p class="text-muted mb-3" style="line-height:1.8;">cosma developments was founded in 2006 by a group of Ugandan educators and community workers who saw firsthand the barriers preventing families from thriving — lack of access to quality education, healthcare, and sustainable livelihoods.</p>
+        <p class="text-muted mb-4" style="line-height:1.8;">What started as a small after-school programme in Kampala has grown into a national organisation working across 12 districts, serving over 125,000 individuals annually.</p>
+        <div class="row g-3">
+          <div class="col-6"><div class="p-3 rounded-3 text-center bg-cream"><div style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--red);">125K+</div><div style="font-size:.8rem;color:var(--muted);">Lives Impacted</div></div></div>
+          <div class="col-6"><div class="p-3 rounded-3 text-center bg-cream"><div style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--green);">12</div><div style="font-size:.8rem;color:var(--muted);">Districts Reached</div></div></div>
+          <div class="col-6"><div class="p-3 rounded-3 text-center bg-cream"><div style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--red);">98%</div><div style="font-size:.8rem;color:var(--muted);">Programme Efficiency</div></div></div>
+          <div class="col-6"><div class="p-3 rounded-3 text-center bg-cream"><div style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--green);">18 yrs</div><div style="font-size:.8rem;color:var(--muted);">Of Service</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <h2 class="section-title">Explore More <em class="text-red">About Us</em></h2>
+      <div class="title-bar bg-green mx-auto mt-2"></div>
+    </div>
+    <div class="row g-4">
+      {% for c in about_cards %}
+      <div class="col-md-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+        <a href="{{ c.url }}" class="text-decoration-none">
+          <div class="hf-card p-4 text-center">
+            <div class="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center" style="width:64px;height:64px;background:{{ c.bg }};"><i class="bi {{ c.icon }} fs-3" style="color:{{ c.color }};"></i></div>
+            <h5>{{ c.title }}</h5>
+            <p class="text-muted mb-0" style="font-size:.9rem;">{{ c.desc }}</p>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

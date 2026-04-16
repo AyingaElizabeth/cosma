@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Core Values & Goals — HopeForward Uganda{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:about-us' %}">About Us</a></li>
+      <li class="breadcrumb-item active">Core Values &amp; Goals</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-stars"></i> What We Stand For</div>
+    <h1>Core Values &amp; Goals</h1>
+    <p>The principles that shape our culture, decisions, and relationships with communities.</p>
+  </div>
+</section>
+
+<!-- Core Values -->
+<section class="sec-pad">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>Our Core Values</div>
+      <h2 class="section-title">What We <em class="text-green">Believe In</em></h2>
+      <div class="title-bar bg-green mx-auto mt-2"></div>
+    </div>
+    <div class="row g-4">
+      {% for v in values %}
+      <div class="col-md-6 col-lg-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+        <div class="hf-card p-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:52px;height:52px;background:{{ v.bg }};"><i class="bi {{ v.icon }}" style="font-size:1.4rem;color:{{ v.color }};"></i></div>
+            <h5 class="mb-0">{{ v.title }}</h5>
+          </div>
+          <p class="text-muted mb-0" style="font-size:.92rem;line-height:1.7;">{{ v.desc }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Goals -->
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-green justify-content-center"><span class="dot bg-green"></span>2025–2030</div>
+      <h2 class="section-title">Our Strategic <em class="text-red">Goals</em></h2>
+      <div class="title-bar bg-red mx-auto mt-2"></div>
+    </div>
+    <div class="row g-4 align-items-stretch">
+      {% for g in goals %}
+      <div class="col-lg-6 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+        <div class="hf-card p-4 d-flex gap-4">
+          <div class="flex-shrink-0 rounded-3 d-flex align-items-center justify-content-center" style="width:56px;height:56px;background:{{ g.bg }};font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:{{ g.color }};">{{ forloop.counter }}</div>
+          <div>
+            <h5 class="mb-1">{{ g.title }}</h5>
+            <p class="text-muted mb-0" style="font-size:.92rem;line-height:1.7;">{{ g.desc }}</p>
+            <div class="mt-2">
+              <div class="progress rounded-pill" style="height:6px;">
+                <div class="progress-bar rounded-pill" style="width:{{ g.progress }}%;background:{{ g.color }};"></div>
+              </div>
+              <small class="text-muted">{{ g.progress }}% towards goal</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
