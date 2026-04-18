@@ -1,4 +1,4 @@
-# HopeForward — Django Landing Page
+# cosma— Django Landing Page
 
 ## Quick Start
 
@@ -23,26 +23,6 @@ Visit **http://127.0.0.1:8000** for the landing page.
 Visit **http://127.0.0.1:8000/admin** to manage content.
 
 ---
-
-## Project Structure
-
-```
-hopeforward/
-├── manage.py
-├── requirements.txt
-├── hopeforward/          ← Django project package
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-└── home/                 ← Main app
-    ├── models.py         ← ImpactStory, Program, Partner, DonationLead, ContactMessage
-    ├── views.py          ← index, donate (POST), contact (POST)
-    ├── urls.py
-    ├── admin.py
-    └── templates/
-        └── home/
-            └── index.html   ← Full Bootstrap 5 landing page
-```
 
 ## Admin — Add Content
 - **Impact Stories** → `/admin/home/impactstory/`
