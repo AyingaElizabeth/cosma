@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ program_title }} - cosma development Uganda{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item">Programs</li>
+      <li class="breadcrumb-item active">{{ program_title }}</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi {{ program_icon }}"></i> {{ program_label }}</div>
+    <h1>{{ program_title }}</h1>
+    <p>Common questions about how the programme works, who it serves, and how impact is tracked.</p>
+  </div>
+</section>
+
+<section class="sec-pad" style="background:#F7F7F7;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <div class="accordion" id="programFaqs">
+          {% for item in faqs %}
+          <div class="accordion-item border-0 mb-3 shadow-sm reveal" style="border-radius:12px;overflow:hidden;">
+            <h2 class="accordion-header">
+              <button class="accordion-button {% if not forloop.first %}collapsed{% endif %} fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq{{ forloop.counter }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                {% if item.question %}{{ item.question }}{% else %}{{ item.q }}{% endif %}
+              </button>
+            </h2>
+            <div id="faq{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" data-bs-parent="#programFaqs">
+              <div class="accordion-body text-muted" style="line-height:1.75;">
+                {% if item.answer %}{{ item.answer|linebreaks }}{% else %}{{ item.a|linebreaks }}{% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

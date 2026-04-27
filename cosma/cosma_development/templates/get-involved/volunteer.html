@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Volunteer With Us — cosma development Uganda{% endblock %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item">Get Involved</li>
+      <li class="breadcrumb-item active">Volunteer With Us</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-person-heart"></i> Get Involved</div>
+    <h1>Volunteer With Us</h1>
+    <p>Make a meaningful, hands-on impact by volunteering with our programs! We welcome individuals who are passionate about helping communities grow and thrive. Whether you're skilled in agriculture, education, project management, or simply eager to make a difference, we’d love for you to join us.</p>
+  </div>
+</section>
+
+<!-- Volunteer roles -->
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>Open Opportunities</div>
+      <h2 class="section-title">How You Can <em class="text-green">Contribute</em></h2>
+      <div class="title-bar bg-green mx-auto mt-2"></div>
+    </div>
+    <div class="row g-4">
+      {% for role in volunteer_roles %}
+      <div class="col-md-6 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+        <div class="hf-card p-4 d-flex gap-4">
+          <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-3" style="width:52px;height:52px;background:{{ role.bg }};"><i class="bi {{ role.icon }} fs-3" style="color:{{ role.color }};"></i></div>
+          <div>
+            <h5 class="mb-1">{{ role.title }}</h5>
+            <p class="text-muted mb-2" style="font-size:.9rem;line-height:1.65;">{{ role.desc }}</p>
+            <span class="badge rounded-pill" style="background:{{ role.bg }};color:{{ role.color }};font-size:.75rem;">{{ role.commitment }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Application form -->
+<section class="sec-pad" style="background:#fff;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="text-center mb-4 reveal">
+          <div class="section-label text-green justify-content-center"><span class="dot bg-green"></span>Ready to Help?</div>
+          <h2 class="section-title">Apply to <em class="text-red">Volunteer</em></h2>
+          <div class="title-bar bg-red mx-auto mt-2"></div>
+        </div>
+        <div class="hf-card p-5 reveal">
+          <form id="volunteerForm" novalidate>
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <input name="name" type="text" class="form-control rounded-pill" placeholder="Full name" required/>
+              </div>
+              <div class="col-sm-6">
+                <input name="email" type="email" class="form-control rounded-pill" placeholder="Email address" required/>
+              </div>
+              <div class="col-sm-6">
+                <input name="phone" type="text" class="form-control rounded-pill" placeholder="Phone number"/>
+              </div>
+              <div class="col-sm-6">
+                <select name="role" class="form-select rounded-pill">
+                  <option value="">Area of interest…</option>
+                  <option>Teaching / Tutoring</option>
+                  <option>Healthcare / Medical</option>
+                  <option>Agriculture / Training</option>
+                  <option>Communications / Media</option>
+                  <option>Fundraising</option>
+                  <option>General Support</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <textarea name="message" class="form-control rounded-4" rows="4" placeholder="Tell us about yourself and your availability…"></textarea>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-green rounded-pill px-4 py-2 fw-semibold w-100">
+                  <i class="bi bi-person-plus-fill me-2"></i>Submit Application
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('volunteerForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = e.target;
+  const payload = {
+    name: f.querySelector('[name=name]').value,
+    email: f.querySelector('[name=email]').value,
+    subject: 'Volunteer Application — ' + (f.querySelector('[name=role]').value || 'General'),
+    message: f.querySelector('[name=message]').value,
+  };
+  try {
+    const r = await fetch("{% url 'cosma_development:contact_submit' %}", {
+      method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':getCsrf()},
+      body: JSON.stringify(payload)
+    });
+    const d = await r.json();
+    showToast(d.message, d.status);
+    if (d.status === 'success') f.reset();
+  } catch { showToast('Something went wrong. Please try again.', 'error'); }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Sign Up for Updates — cosma development Uganda{% endblock %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item">Get Involved</li>
+      <li class="breadcrumb-item active">Sign Up for Updates</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-bell"></i> Stay Connected</div>
+    <h1>Stay Updated</h1>
+    <p>Be the first to hear our impact stories, programme updates, and opportunities to get involved.</p>
+  </div>
+</section>
+
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="row justify-content-center align-items-center g-5">
+      <div class="col-lg-5 reveal-left">
+        <div class="section-label text-red"><span class="dot bg-red"></span>What You'll Receive</div>
+        <h2 class="section-title mb-4">Join Our <em class="text-green">Community</em></h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <div class="d-flex flex-column gap-3">
+          <div class="d-flex align-items-start gap-3">
+            <i class="bi bi-envelope-heart-fill fs-4 text-red flex-shrink-0 mt-1"></i>
+            <div><strong>Monthly Impact Digest</strong><br><span class="text-muted" style="font-size:.9rem;">Stories, photos, and updates from our communities across Uganda.</span></div>
+          </div>
+          <div class="d-flex align-items-start gap-3">
+            <i class="bi bi-megaphone-fill fs-4 text-green flex-shrink-0 mt-1"></i>
+            <div><strong>Programme Announcements</strong><br><span class="text-muted" style="font-size:.9rem;">Be the first to know about new programmes, events, and opportunities.</span></div>
+          </div>
+          <div class="d-flex align-items-start gap-3">
+            <i class="bi bi-gift-fill fs-4 text-red flex-shrink-0 mt-1"></i>
+            <div><strong>Exclusive Invitations</strong><br><span class="text-muted" style="font-size:.9rem;">Invites to field visits, webinars, and annual impact events.</span></div>
+          </div>
+          <div class="d-flex align-items-start gap-3">
+            <i class="bi bi-bar-chart-fill fs-4 text-green flex-shrink-0 mt-1"></i>
+            <div><strong>Annual Reports</strong><br><span class="text-muted" style="font-size:.9rem;">Full transparency on how your support translates to impact.</span></div>
+          </div>
+        </div>
+        <p class="text-muted mt-4" style="font-size:.82rem;"><i class="bi bi-shield-check me-1 text-green"></i>We respect your privacy. Unsubscribe at any time. No spam — ever.</p>
+      </div>
+      <div class="col-lg-5 reveal-right">
+        <div class="hf-card p-5" style="border-top:4px solid var(--green);">
+          <h4 class="mb-1">Sign Up Now</h4>
+          <p class="text-muted mb-4" style="font-size:.9rem;">Join over 3,000 supporters already in our community.</p>
+          <form id="signupForm" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+              <input name="name" type="text" class="form-control rounded-pill" placeholder="Your full name" required/>
+            </div>
+            <div class="mb-3">
+              <input name="email" type="email" class="form-control rounded-pill" placeholder="Email address" required/>
+            </div>
+            <div class="mb-3">
+              <select name="interest" class="form-select rounded-pill">
+                <option value="">Primary interest (optional)</option>
+                <option>Education & Child Sponsorship</option>
+                <option>Agriculture & Livelihoods</option>
+                <option>Health & Water</option>
+                <option>Volunteering Opportunities</option>
+                <option>Corporate Partnership</option>
+                <option>All Programmes</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="consentCheck" required/>
+                <label class="form-check-label" for="consentCheck" style="font-size:.85rem;">
+                  I agree to receive updates from cosma development Uganda. I can unsubscribe at any time.
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-green rounded-pill px-4 py-2 fw-semibold w-100">
+              <i class="bi bi-bell-fill me-2"></i>Subscribe to Updates
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('signupForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = e.target;
+  if (!f.querySelector('#consentCheck').checked) {
+    showToast('Please confirm your consent before subscribing.', 'error'); return;
+  }
+  const payload = {
+    name: f.querySelector('[name=name]').value,
+    email: f.querySelector('[name=email]').value,
+    subject: 'Newsletter Signup — ' + (f.querySelector('[name=interest]').value || 'All Programmes'),
+    message: 'New newsletter subscriber',
+  };
+  try {
+    const r = await fetch("{% url 'cosma_development:contact_submit' %}", {
+      method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':getCsrf()},
+      body: JSON.stringify(payload)
+    });
+    const d = await r.json();
+    showToast('Thank you! You have been subscribed to our updates. 🎉', 'success');
+    if (d.status === 'success') f.reset();
+  } catch { showToast('Something went wrong. Please try again.', 'error'); }
+});
+</script>
+{% endblock %}

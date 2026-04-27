@@ -298,7 +298,7 @@
           <div class="activity-body">
             <div class="activity-title">
               {% if not msg.is_read %}<span class="unread-dot"></span>{% endif %}
-              <a href="{% url 'admin:home_contactmessage_change' msg.pk %}">{{ msg.subject|truncatechars:38 }}</a>
+              <a href="{% url 'admin:cosma_development_contactmessage_change' msg.pk %}">{{ msg.subject|truncatechars:38 }}</a>
             </div>
             <div class="activity-meta">{{ msg.name }} · {{ msg.created_at|date:"d M, H:i" }}</div>
           </div>

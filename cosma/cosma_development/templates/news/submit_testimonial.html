@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Share Your Experience — cosma development Uganda{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item active">Share Your Experience</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-chat-quote-fill"></i> Your Voice Matters</div>
+    <h1>Share Your Experience</h1>
+    <p>If cosma development has touched your life or community, tell us your story. Approved testimonials appear on our website to inspire others.</p>
+  </div>
+</section>
+
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+
+        {% if submitted %}
+        <!-- SUCCESS STATE -->
+        <div class="hf-card p-5 text-center">
+          <i class="bi bi-check-circle-fill fs-1 text-green mb-3 d-block"></i>
+          <h3 class="mb-2">Thank You!</h3>
+          <p class="text-muted mb-4" style="line-height:1.8;">Your testimonial has been received and is now under review. Once approved by our team it will appear on the website.</p>
+          <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="{% url 'cosma_development:index' %}" class="btn btn-red rounded-pill px-4 py-2 fw-semibold">Back to Home</a>
+            <a href="{% url 'cosma_development:news' %}" class="btn btn-outline-green rounded-pill px-4 py-2 fw-semibold">Read Our News</a>
+          </div>
+        </div>
+        {% else %}
+        <!-- FORM -->
+        <div class="text-center mb-4 reveal">
+          <div class="section-label text-green justify-content-center"><span class="dot bg-green"></span>Your Story</div>
+          <h2 class="section-title">Tell Us What <em class="text-red">cosma Means to You</em></h2>
+          <div class="title-bar bg-red mx-auto mt-2 mb-3"></div>
+          <p class="text-muted" style="font-size:.93rem;">All submissions are reviewed before publishing. We may edit for length but will never change your meaning.</p>
+        </div>
+
+        <div class="hf-card p-5 reveal">
+          <form id="testimonialForm" method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label fw-semibold" style="font-size:.84rem;">Your Full Name *</label>
+                <input name="name" type="text" class="form-control rounded-pill" placeholder="e.g. Sarah Nakamya" required/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label fw-semibold" style="font-size:.84rem;">Your Role *</label>
+                <select name="role" class="form-select rounded-pill" required>
+                  <option value="">Select your connection…</option>
+                  <option value="donor">Donor</option>
+                  <option value="volunteer">Volunteer</option>
+                  <option value="partner">Partner Organisation</option>
+                  <option value="beneficiary">Beneficiary</option>
+                  <option value="community">Community Member</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold" style="font-size:.84rem;">Organisation or Location <span class="text-muted fw-normal">(optional)</span></label>
+                <input name="organisation" type="text" class="form-control rounded-pill" placeholder="e.g. Kampala, Uganda — or your company/school name"/>
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold" style="font-size:.84rem;">Your Testimonial *</label>
+                <textarea name="body" class="form-control rounded-4" rows="5"
+                          placeholder="Tell us how cosma development has impacted you or your community…" required></textarea>
+                <div class="text-muted mt-1" style="font-size:.78rem;">2–4 sentences work best. Be specific — your story is more powerful when it's personal.</div>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label fw-semibold" style="font-size:.84rem;">Star Rating</label>
+                <select name="rating" class="form-select rounded-pill">
+                  <option value="5">★★★★★  Excellent</option>
+                  <option value="4">★★★★☆  Very Good</option>
+                  <option value="3">★★★☆☆  Good</option>
+                  <option value="2">★★☆☆☆  Fair</option>
+                  <option value="1">★☆☆☆☆  Poor</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label fw-semibold" style="font-size:.84rem;">Your Photo <span class="text-muted fw-normal">(optional)</span></label>
+                <input name="photo" type="file" class="form-control rounded-pill" accept="image/*"/>
+                <div class="text-muted mt-1" style="font-size:.78rem;">A headshot helps bring your testimonial to life.</div>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="consentCheck" required/>
+                  <label class="form-check-label" for="consentCheck" style="font-size:.84rem;">
+                    I agree for cosma development Uganda to publish my name and testimonial on their website and social media channels.
+                  </label>
+                </div>
+              </div>
+              <div class="col-12 mt-2">
+                <button type="submit" class="btn btn-green rounded-pill px-5 py-3 fw-semibold w-100 fs-6">
+                  <i class="bi bi-send-fill me-2"></i>Submit Testimonial
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <p class="text-center text-muted mt-3" style="font-size:.8rem;">
+          <i class="bi bi-shield-check me-1 text-green"></i>
+          Your submission is reviewed before publishing. We respect your privacy.
+        </p>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+{% if not submitted %}
+document.getElementById('testimonialForm').addEventListener('submit', function(e) {
+  const check = document.getElementById('consentCheck');
+  if (!check.checked) {
+    e.preventDefault();
+    showToast('Please confirm your consent before submitting.', 'error');
+  }
+});
+{% endif %}
+</script>
+{% endblock %}

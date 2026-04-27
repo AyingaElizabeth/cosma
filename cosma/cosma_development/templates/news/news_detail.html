@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} — cosma development{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ── ARTICLE HERO ── */
+.article-hero{
+  min-height:480px;position:relative;
+  background-size:cover;background-position:center;
+  display:flex;align-items:flex-end;overflow:hidden;
+  margin-top:69px;
+}
+.article-hero::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.25) 60%,transparent 100%);
+}
+.article-hero-body{position:relative;z-index:2;padding:3rem 0 2.5rem;}
+
+/* ── ARTICLE BODY ── */
+.article-body{
+  font-size:1.05rem;line-height:1.9;color:#333;max-width:760px;
+}
+.article-body h2,.article-body h3{font-family:var(--font-display);font-weight:700;margin-top:2rem;margin-bottom:.75rem;color:var(--charcoal);}
+.article-body p{margin-bottom:1.3rem;}
+.article-body img{width:100%;border-radius:14px;margin:1.5rem 0;box-shadow:0 8px 28px rgba(0,0,0,.1);}
+.article-body blockquote{
+  border-left:4px solid var(--green);padding:1rem 1.5rem;
+  background:rgba(59,173,110,.06);border-radius:0 12px 12px 0;
+  font-style:italic;margin:1.5rem 0;
+}
+.article-body ul,
+.article-body ol{margin-bottom:1.3rem;padding-left:1.5rem;}
+.article-body li{margin-bottom:.4rem;}
+.article-body a{color:var(--green);text-decoration:underline;}
+
+/* ── SHARE STRIP ── */
+.share-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:.5rem 1.1rem;border-radius:50px;font-size:.82rem;font-weight:600;
+  border:2px solid;text-decoration:none;transition:.2s;
+}
+
+/* ── RELATED CARD ── */
+.related-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08);height:100%;text-decoration:none;color:inherit;display:block;transition:transform .3s,box-shadow .3s;}
+.related-card:hover{transform:translateY(-5px);box-shadow:0 12px 36px rgba(0,0,0,.13);}
+.related-card img{width:100%;height:170px;object-fit:cover;}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- ══ ARTICLE HERO ══ -->
+<div class="article-hero" style="background-image:url('{{ post.cover_url }}');">
+  <div class="container article-hero-body">
+    <nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}" style="color:rgba(255,255,255,.65);">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:news' %}" style="color:rgba(255,255,255,.65);">News</a></li>
+      <li class="breadcrumb-item active" style="color:#fff;">{{ post.title|truncatewords:6 }}</li>
+    </ol></nav>
+    <span class="page-hero-tag" style="margin-bottom:.8rem;">{{ post.get_category_display }}</span>
+    <h1 style="color:#fff;font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:700;max-width:800px;line-height:1.15;margin-bottom:1rem;">{{ post.title }}</h1>
+    <div class="d-flex flex-wrap align-items-center gap-3" style="font-size:.82rem;color:rgba(255,255,255,.65);">
+      <span><i class="bi bi-person me-1"></i>{{ post.author }}</span>
+      <span><i class="bi bi-calendar3 me-1"></i>{{ post.published_at|date:"j F Y" }}</span>
+      <span><i class="bi bi-clock me-1"></i>{{ post.read_time }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ARTICLE CONTENT ══ -->
+<section class="sec-pad" style="background:#fff;">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- MAIN BODY -->
+      <div class="col-lg-8">
+        <!-- Summary lead -->
+        <p style="font-size:1.15rem;font-weight:500;color:var(--muted);border-left:4px solid var(--red);padding-left:1.2rem;margin-bottom:2rem;line-height:1.7;">{{ post.summary }}</p>
+
+        <div class="article-body">
+          {{ post.body|safe }}
+        </div>
+
+        <!-- Share strip -->
+        <div class="mt-4 pt-4" style="border-top:2px solid var(--cream);">
+          <p class="text-muted mb-2" style="font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;">Share this article</p>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+               target="_blank" rel="noopener"
+               class="share-btn" style="color:#1877F2;border-color:#1877F2;">
+              <i class="bi bi-facebook"></i> Facebook
+            </a>
+            <a href="https://twitter.com/intent/tweet?text={{ post.title|urlencode }}&url={{ request.build_absolute_uri }}"
+               target="_blank" rel="noopener"
+               class="share-btn" style="color:#111;border-color:#111;">
+              <i class="bi bi-twitter-x"></i> Share
+            </a>
+            <a href="https://wa.me/?text={{ post.title|urlencode }}%20{{ request.build_absolute_uri }}"
+               target="_blank" rel="noopener"
+               class="share-btn" style="color:#25D366;border-color:#25D366;">
+              <i class="bi bi-whatsapp"></i> WhatsApp
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}"
+               target="_blank" rel="noopener"
+               class="share-btn" style="color:#0A66C2;border-color:#0A66C2;">
+              <i class="bi bi-linkedin"></i> LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="col-lg-4">
+        <!-- Donate CTA -->
+        <div class="p-4 rounded-4 mb-4 text-center" style="background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%);">
+          <i class="bi bi-heart-fill fs-2 mb-2 d-block" style="color:var(--green-light);"></i>
+          <h5 style="color:#fff;margin-bottom:.5rem;">Support Our Work</h5>
+          <p style="color:rgba(255,255,255,.75);font-size:.85rem;margin-bottom:1rem;line-height:1.6;">Stories like this are made possible by donors like you.</p>
+          <a href="{{ globalgiving_url|default:'https://www.globalgiving.org' }}"
+             target="_blank" rel="noopener"
+             class="btn btn-green rounded-pill px-4 py-2 fw-semibold w-100">
+            <i class="bi bi-heart-fill me-2"></i>Donate on GlobalGiving
+          </a>
+        </div>
+
+        <!-- Back to news -->
+        <a href="{% url 'cosma_development:news' %}"
+           class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold w-100 mb-4">
+          <i class="bi bi-arrow-left me-2"></i>All News
+        </a>
+
+        <!-- Category -->
+        <div class="hf-card p-3 mb-4">
+          <p class="text-muted mb-1" style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;">Category</p>
+          <a href="{% url 'cosma_development:news' %}?cat={{ post.category }}"
+             class="btn btn-outline-green rounded-pill px-3 py-1 fw-semibold" style="font-size:.82rem;">
+            {{ post.get_category_display }}
+          </a>
+        </div>
+
+        <!-- Leave testimonial -->
+        <div class="hf-card p-4 text-center" style="border-top:3px solid var(--green);">
+          <i class="bi bi-chat-quote-fill fs-2 text-green mb-2 d-block"></i>
+          <h6 class="mb-1">Share Your Experience</h6>
+          <p class="text-muted mb-3" style="font-size:.82rem;line-height:1.5;">Has cosma development impacted your life? We'd love to hear from you.</p>
+          <a href="{% url 'cosma_development:submit_testimonial' %}" class="btn btn-green rounded-pill px-4 py-2 fw-semibold w-100" style="font-size:.85rem;">
+            Leave a Testimonial
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ RELATED POSTS ══ -->
+    {% if related %}
+    <div class="mt-5 pt-4" style="border-top:2px solid var(--cream);">
+      <h3 class="section-title mb-4">More <em class="text-red">Stories</em></h3>
+      <div class="row g-4">
+        {% for r in related %}
+        <div class="col-md-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+          <a href="{% url 'cosma_development:news_detail' r.slug %}" class="related-card">
+            <img src="{{ r.cover_url }}" alt="{{ r.title }}"/>
+            <div class="p-3">
+              <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;color:var(--red);margin-bottom:.4rem;letter-spacing:.07em;">{{ r.get_category_display }}</div>
+              <h5 style="font-size:1rem;font-weight:700;line-height:1.3;margin-bottom:.4rem;">{{ r.title }}</h5>
+              <div style="font-size:.76rem;color:var(--muted);">{{ r.published_at|date:"j M Y" }} · {{ r.read_time }}</div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Gallery — cosma development Uganda{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ── FILTER PILLS ── */
+.filter-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:.45rem 1.1rem;border-radius:50px;font-size:.82rem;font-weight:600;
+  border:2px solid transparent;cursor:pointer;transition:all .22s;
+  background:#fff;color:var(--muted);border-color:rgba(0,0,0,.1);
+}
+.filter-pill:hover,.filter-pill.active{background:var(--red);color:#fff;border-color:var(--red);}
+.filter-pill.active-green{background:var(--green);color:#fff;border-color:var(--green);}
+
+/* ── MASONRY GALLERY ── */
+.gallery-grid{
+  columns:3;column-gap:1rem;
+}
+@media(max-width:768px){.gallery-grid{columns:2;}}
+@media(max-width:480px){.gallery-grid{columns:1;}}
+
+.gallery-item{
+  break-inside:avoid;margin-bottom:1rem;
+  position:relative;overflow:hidden;border-radius:14px;cursor:pointer;
+}
+.gallery-item img{
+  width:100%;display:block;transition:transform .5s;
+}
+.gallery-item:hover img{transform:scale(1.05);}
+.gallery-overlay{
+  position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 60%);
+  opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:1rem;
+}
+.gallery-item:hover .gallery-overlay{opacity:1;}
+.gallery-caption{color:#fff;font-size:.85rem;font-weight:500;}
+.gallery-tag{
+  display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;padding:3px 10px;border-radius:50px;
+  margin-bottom:.35rem;
+}
+
+/* ── LIGHTBOX ── */
+.lightbox-backdrop{
+  position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2000;
+  display:none;align-items:center;justify-content:center;
+}
+.lightbox-backdrop.open{display:flex;}
+.lightbox-inner{
+  position:relative;max-width:90vw;max-height:90vh;
+  display:flex;flex-direction:column;align-items:center;
+}
+.lightbox-inner img{
+  max-width:100%;max-height:80vh;border-radius:12px;object-fit:contain;
+}
+.lightbox-close{
+  position:absolute;top:-40px;right:0;
+  background:none;border:none;color:#fff;font-size:1.8rem;cursor:pointer;
+  transition:.2s;
+}
+.lightbox-close:hover{color:var(--green);}
+.lightbox-caption{
+  color:rgba(255,255,255,.75);font-size:.88rem;text-align:center;
+  margin-top:.75rem;max-width:500px;
+}
+.lightbox-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(255,255,255,.15);border:none;color:#fff;
+  width:46px;height:46px;border-radius:50%;font-size:1.2rem;cursor:pointer;
+  transition:.2s;display:flex;align-items:center;justify-content:center;
+}
+.lightbox-nav:hover{background:var(--green);}
+.lb-prev{left:-60px;}
+.lb-next{right:-60px;}
+@media(max-width:600px){.lb-prev{left:-50px;}.lb-next{right:-50px;}}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item">Impact</li>
+      <li class="breadcrumb-item active">Gallery</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-images"></i> Visual Impact</div>
+    <h1>Our Gallery</h1>
+    <p>A window into the communities, programmes, and lives we are privileged to serve across Uganda.</p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="sec-pad" style="background:#F7F7F7;">
+  <div class="container">
+    <!-- Filters -->
+    <div class="d-flex flex-wrap gap-2 mb-5 justify-content-center reveal">
+      <button class="filter-pill active" data-filter="all">
+        <i class="bi bi-grid-3x3-gap"></i> All
+      </button>
+      <button class="filter-pill" data-filter="education">
+        <i class="bi bi-book-half"></i> Education
+      </button>
+      <button class="filter-pill" data-filter="agriculture">
+        <i class="bi bi-flower1"></i> Agriculture
+      </button>
+      <button class="filter-pill" data-filter="health">
+        <i class="bi bi-heart-pulse"></i> Health
+      </button>
+      <button class="filter-pill" data-filter="community">
+        <i class="bi bi-people-fill"></i> Community
+      </button>
+      <button class="filter-pill" data-filter="water">
+        <i class="bi bi-droplet-half"></i> Water
+      </button>
+      <button class="filter-pill" data-filter="sponsorship">
+        <i class="bi bi-mortarboard"></i> Sponsorship
+      </button>
+      <button class="filter-pill" data-filter="vocational">
+        <i class="bi bi-tools"></i> Vocational
+      </button>
+    </div>
+
+    <!-- Grid -->
+    <div class="gallery-grid" id="galleryGrid">
+      {% if gallery_photos %}
+      {% for photo in gallery_photos %}
+      <div class="gallery-item reveal" data-category="{{ photo.category }}" data-index="{{ forloop.counter0 }}" style="transition-delay:{{ forloop.counter0 }}0ms">
+        <img src="{% if photo.image_url %}{{ photo.image_url }}{% else %}{{ photo.image.url }}{% endif %}" alt="{{ photo.caption }}" loading="lazy"/>
+        <div class="gallery-overlay">
+          <div>
+            <span class="gallery-tag" style="background:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' %};">{{ photo.category|capfirst }}</span>
+            <div class="gallery-caption">{{ photo.caption }}</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      {% for item in fallback_photos %}
+      <div class="gallery-item reveal" data-category="{{ item.category }}" data-index="{{ forloop.counter0 }}">
+        <img src="{% static item.image %}" alt="{{ item.caption }}" loading="lazy"/>
+        <div class="gallery-overlay">
+          <div>
+            <span class="gallery-tag" style="background:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' %};"> {{ item.category|capfirst }}</span>
+            <div class="gallery-caption">{{ item.caption }}</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- No results message -->
+    <div id="noResults" class="text-center py-5" style="display:none;">
+      <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
+      <p class="text-muted">No photos in this category yet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox-backdrop" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lbClose" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    <button class="lightbox-nav lb-prev" id="lbPrev" aria-label="Previous"><i class="bi bi-chevron-left"></i></button>
+    <img src="" alt="" id="lbImg"/>
+    <div class="lightbox-caption" id="lbCaption"></div>
+    <button class="lightbox-nav lb-next" id="lbNext" aria-label="Next"><i class="bi bi-chevron-right"></i></button>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// ── Filter ──────────────────────────────────────────────
+const filterBtns = document.querySelectorAll('.filter-pill');
+const items = Array.from(document.querySelectorAll('.gallery-item'));
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    let visible = 0;
+    items.forEach(item => {
+      const show = filter === 'all' || item.dataset.category === filter;
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    document.getElementById('noResults').style.display = visible === 0 ? 'flex' : 'none';
+  });
+});
+
+// ── Lightbox ────────────────────────────────────────────
+const lightbox = document.getElementById('lightbox');
+const lbImg    = document.getElementById('lbImg');
+const lbCap    = document.getElementById('lbCaption');
+let currentIdx = 0;
+
+function getVisible() {
+  return items.filter(i => i.style.display !== 'none');
+}
+
+function openLightbox(idx) {
+  const visible = getVisible();
+  if (!visible[idx]) return;
+  currentIdx = idx;
+  const img = visible[idx].querySelector('img');
+  const cap = visible[idx].querySelector('.gallery-caption');
+  lbImg.src = img.src;
+  lbImg.alt = img.alt;
+  lbCap.textContent = cap ? cap.textContent : '';
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+items.forEach((item, i) => {
+  item.addEventListener('click', () => {
+    const visible = getVisible();
+    const vIdx = visible.indexOf(item);
+    if (vIdx >= 0) openLightbox(vIdx);
+  });
+});
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', () => {
+  const visible = getVisible();
+  openLightbox((currentIdx - 1 + visible.length) % visible.length);
+});
+document.getElementById('lbNext').addEventListener('click', () => {
+  const visible = getVisible();
+  openLightbox((currentIdx + 1) % visible.length);
+});
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') document.getElementById('lbPrev').click();
+  if (e.key === 'ArrowRight') document.getElementById('lbNext').click();
+});
+</script>
+{% endblock %}

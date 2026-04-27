@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block title %}Team & Partners — cosma development Uganda{% endblock %}
+
+{% block extra_css %}
+<style>
+/* TEAM CARD */
+.team-card{border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,.08);transition:transform .3s,box-shadow .3s;height:100%;}
+.team-card:hover{transform:translateY(-7px);box-shadow:0 16px 44px rgba(0,0,0,.14);}
+.team-card-img-wrap{overflow:hidden;height:270px;}
+.team-card-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.team-card:hover .team-card-img-wrap img{transform:scale(1.05);}
+.team-role{color:var(--red);font-size:.84rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+.team-social a{width:32px;height:32px;border-radius:8px;background:var(--cream);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;text-decoration:none;transition:.2s;}
+.team-social a:hover{background:var(--green);color:#fff;}
+.team-group-head{border-left:4px solid var(--green);padding-left:1rem;margin:2.5rem 0 1.4rem;}
+.team-group-head h3{font-size:2rem;margin-bottom:.2rem;}
+
+/* PARTNER CARD */
+.partner-card{background:#fff;border-radius:14px;padding:1.8rem 1.5rem;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.07);transition:all .3s;height:100%;}
+.partner-card:hover{box-shadow:0 10px 32px rgba(0,0,0,.13);transform:translateY(-4px);}
+.partner-card img{height:52px;object-fit:contain;filter:grayscale(1);opacity:.55;transition:.3s;max-width:140px;}
+.partner-card:hover img{filter:none;opacity:1;}
+
+/* SECTION DIVIDER */
+.section-rule{height:3px;border-radius:3px;background:linear-gradient(to right,var(--red),var(--green));margin:4rem 0;opacity:.18;}
+
+/* JOIN BANNER */
+.join-banner{background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);border-radius:22px;padding:3rem;}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item">About</li>
+      <li class="breadcrumb-item active">Team &amp; Partners</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-people-fill"></i> Who Stands With Us</div>
+    <h1>Team &amp; Partners</h1>
+    <p>The passionate people who drive our work daily, and the trusted organisations that walk alongside us.</p>
+  </div>
+</section>
+
+<!-- ═══ LEADERSHIP TEAM ═══ -->
+<section class="sec-pad" style="background:#fff;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>Governance &amp; Team</div>
+      <h2 class="section-title">Our <em class="text-green">People</em></h2>
+      <div class="title-bar bg-green mx-auto mt-2"></div>
+      <p class="text-muted mx-auto mt-3" style="max-width:560px;">Board members provide oversight and accountability, while staff lead daily programme delivery with communities.</p>
+    </div>
+
+    {% for group in team_groups %}
+    <div class="team-group-head reveal">
+      <h3>{{ group.title }}</h3>
+      <p class="text-muted mb-0" style="max-width:620px;">{{ group.intro }}</p>
+    </div>
+    <div class="row g-4">
+      {% for member in group.members %}
+      <div class="col-sm-6 col-lg-4 reveal" style="transition-delay:{{ forloop.counter0 }}0ms">
+        <div class="team-card">
+          <div class="team-card-img-wrap">
+            <img src="{% if member.image_src %}{{ member.image_src }}{% else %}{{ member.image }}{% endif %}" alt="{{ member.name }}"/>
+          </div>
+          <div class="p-4">
+            <h5 class="mb-0" style="font-size:1.25rem;">{{ member.name }}</h5>
+            <p class="team-role mb-2">{{ member.role }}</p>
+            <p class="text-muted mb-3" style="font-size:.88rem;line-height:1.65;">{{ member.bio }}</p>
+            <div class="team-social d-flex gap-2">
+              {% if member.linkedin %}<a href="{{ member.linkedin }}" aria-label="LinkedIn" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i></a>{% endif %}
+              {% if member.twitter %}<a href="{{ member.twitter }}" aria-label="Twitter" target="_blank" rel="noopener"><i class="bi bi-twitter-x"></i></a>{% endif %}
+              {% if member.email %}<a href="mailto:{{ member.email }}" aria-label="Email"><i class="bi bi-envelope"></i></a>{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% empty %}
+    <div class="text-center py-4">
+      <p class="text-muted">Team members will appear here after they are added by the webadmin.</p>
+    </div>
+    {% endfor %}
+
+    <!-- Join team CTA -->
+    <div class="text-center mt-5 reveal">
+      <div class="join-banner d-inline-block text-center" style="max-width:600px;">
+        <i class="bi bi-person-plus-fill fs-1 text-white mb-3 d-block"></i>
+        <h4 class="text-white mb-2">Want to Join Our Team?</h4>
+        <p style="color:rgba(255,255,255,.85);font-size:.93rem;margin-bottom:1.5rem;">We are always looking for passionate individuals who want to make a real difference. Check open positions or send a spontaneous application.</p>
+        <a href="{% url 'cosma_development:contact' %}" class="btn btn-light rounded-pill px-4 py-2 fw-semibold" style="color:var(--green);">
+          <i class="bi bi-envelope me-2"></i>Get In Touch
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-rule mx-auto" style="max-width:200px;"/>
+
+<!-- ═══ PARTNERS ═══ -->
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-green justify-content-center"><span class="dot bg-green"></span>Collaboration</div>
+      <h2 class="section-title">Our Trusted <em class="text-red">Partners</em></h2>
+      <div class="title-bar bg-red mx-auto mt-2"></div>
+      <p class="text-muted mx-auto mt-3" style="max-width:500px;">Global and local organisations that amplify our reach and deepen our impact across Uganda.</p>
+    </div>
+
+    <div class="row g-4">
+      {% for p in partners %}
+      <div class="col-6 col-md-4 col-lg-3 reveal" style="transition-delay:{{ forloop.counter0 }}0ms">
+        <div class="partner-card">
+          <img src="{{ p.get_logo }}" alt="{{ p.name }}" class="mb-3"/>
+          <div class="fw-semibold" style="font-size:.9rem;">{{ p.name }}</div>
+          {% if p.website %}
+          <a href="{{ p.website }}" target="_blank" rel="noopener" style="font-size:.78rem;color:var(--green);">Visit website <i class="bi bi-arrow-up-right"></i></a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Become a partner -->
+    <div class="mt-5 reveal">
+      <div class="row align-items-center g-4 p-4 p-lg-5 rounded-4" style="background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%);">
+        <div class="col-lg-7">
+          <h3 style="color:#fff;font-size:2rem;margin-bottom:.5rem;">Become a <em>Partner</em></h3>
+          <p style="color:rgba(255,255,255,.82);font-size:.95rem;line-height:1.75;margin:0;">Whether you are a corporation, NGO, government body, or individual — there are meaningful ways to partner with us.</p>
+        </div>
+        <div class="col-lg-5 text-lg-end">
+          <a href="{% url 'cosma_development:partner_with_us' %}" class="btn btn-light rounded-pill px-4 py-2 fw-semibold" style="color:var(--red);">
+            <i class="bi bi-handshake me-2"></i>Explore Partnership
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% block title %}Resources — cosma development Uganda{% endblock %}
+
+{% block extra_css %}
+<style>
+/* FILTER BAR */
+.filter-bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem;}
+.filter-btn{display:inline-flex;align-items:center;gap:5px;padding:.42rem 1rem;border-radius:50px;font-size:.82rem;font-weight:600;border:2px solid rgba(0,0,0,.1);background:#fff;color:var(--muted);cursor:pointer;transition:.2s;}
+.filter-btn:hover,.filter-btn.active{background:var(--red);color:#fff;border-color:var(--red);}
+
+/* RESOURCE CARD */
+.res-card{background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.07);overflow:hidden;height:100%;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s;}
+.res-card:hover{transform:translateY(-5px);box-shadow:0 14px 40px rgba(0,0,0,.13);}
+.res-card-thumb{
+  height:160px;display:flex;align-items:center;justify-content:center;
+  font-size:3.5rem;position:relative;overflow:hidden;
+}
+.res-card-thumb::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.04);}
+.res-card-body{padding:1.4rem 1.6rem;flex:1;display:flex;flex-direction:column;}
+.res-type-badge{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:50px;margin-bottom:.6rem;}
+.res-card h5{font-size:1.15rem;font-weight:700;line-height:1.25;margin-bottom:.4rem;}
+.res-card p{font-size:.88rem;color:var(--muted);line-height:1.6;flex:1;}
+.res-meta{display:flex;align-items:center;gap:1rem;font-size:.78rem;color:var(--muted);margin:auto 0 1rem;}
+.res-meta span{display:flex;align-items:center;gap:4px;}
+.res-download-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:.65rem;border-radius:10px;font-size:.88rem;font-weight:600;
+  text-decoration:none;transition:.2s;border:2px solid;
+}
+.res-download-btn.btn-dl-red{color:var(--red);border-color:var(--red);}
+.res-download-btn.btn-dl-red:hover{background:var(--red);color:#fff;}
+.res-download-btn.btn-dl-green{color:var(--green);border-color:var(--green);}
+.res-download-btn.btn-dl-green:hover{background:var(--green);color:#fff;}
+
+/* FEATURED REPORT HERO */
+.featured-report{
+  background:linear-gradient(135deg,var(--charcoal) 0%,#2a2a2a 100%);
+  border-radius:20px;padding:2.5rem;position:relative;overflow:hidden;
+}
+.featured-report::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:rgba(59,173,110,.08);}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:4rem 2rem;color:var(--muted);}
+.empty-state i{font-size:3rem;opacity:.3;display:block;margin-bottom:1rem;}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item">About</li>
+      <li class="breadcrumb-item active">Resources</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-folder2-open"></i> Publications</div>
+    <h1>Resources</h1>
+    <p>Annual reports, research publications, policy briefs, and programme materials — all in one place.</p>
+  </div>
+</section>
+
+<section class="sec-pad" style="background:var(--cream);">
+  <div class="container">
+
+    {% if featured %}
+    <!-- ═══ FEATURED REPORT ═══ -->
+    <div class="featured-report mb-5 reveal">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-2 text-center">
+          <div style="font-size:4.5rem;">{{ featured.get_thumb_icon }}</div>
+        </div>
+        <div class="col-lg-7">
+          <span class="badge rounded-pill mb-2" style="background:var(--green);font-size:.72rem;letter-spacing:.08em;">Latest Report</span>
+          <h3 style="color:#fff;font-size:1.9rem;margin-bottom:.5rem;">{{ featured.title }}</h3>
+          <p style="color:rgba(255,255,255,.72);font-size:.92rem;line-height:1.7;margin-bottom:.8rem;">{{ featured.description }}</p>
+          <div class="d-flex flex-wrap gap-3" style="font-size:.8rem;color:rgba(255,255,255,.5);">
+            <span><i class="bi bi-calendar3 me-1"></i>{{ featured.year }}</span>
+            {% if featured.pages %}<span><i class="bi bi-file-text me-1"></i>{{ featured.pages }} pages</span>{% endif %}
+            {% if featured.file_size_display %}<span><i class="bi bi-hdd me-1"></i>{{ featured.file_size_display }}</span>{% endif %}
+          </div>
+        </div>
+        <div class="col-lg-3 text-lg-end">
+          <a href="{{ featured.file.url }}" target="_blank" rel="noopener"
+             class="btn btn-green rounded-pill px-4 py-3 fw-semibold d-inline-flex align-items-center gap-2">
+            <i class="bi bi-download"></i> Download PDF
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- ═══ FILTER BAR ═══ -->
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" data-filter="all"><i class="bi bi-grid-3x3-gap"></i> All</button>
+      <button class="filter-btn" data-filter="annual_report"><i class="bi bi-file-earmark-bar-graph"></i> Annual Reports</button>
+      <button class="filter-btn" data-filter="research"><i class="bi bi-journal-text"></i> Research</button>
+      <button class="filter-btn" data-filter="policy_brief"><i class="bi bi-file-earmark-ruled"></i> Policy Briefs</button>
+      <button class="filter-btn" data-filter="programme_update"><i class="bi bi-megaphone"></i> Programme Updates</button>
+      <button class="filter-btn" data-filter="media_kit"><i class="bi bi-images"></i> Media Kits</button>
+    </div>
+
+    <!-- ═══ RESOURCES GRID ═══ -->
+    {% if resources %}
+    <div class="row g-4" id="resourcesGrid">
+      {% for r in resources %}
+      <div class="col-md-6 col-lg-4 reveal res-item" data-type="{{ r.resource_type }}" style="transition-delay:{{ forloop.counter0 }}0ms">
+        <div class="res-card">
+          <div class="res-card-thumb" style="background:{% cycle 'rgba(142,0,5,.06)' 'rgba(59,173,110,.06)' 'rgba(142,0,5,.06)' %};">
+            <span style="position:relative;z-index:1;">{{ r.get_thumb_icon }}</span>
+          </div>
+          <div class="res-card-body">
+            <span class="res-type-badge" style="background:{% cycle 'rgba(142,0,5,.1)' 'rgba(59,173,110,.1)' 'rgba(142,0,5,.1)' %};color:{% cycle 'var(--red)' 'var(--green)' 'var(--red)' %};">
+              {{ r.get_resource_type_display }}
+            </span>
+            <h5>{{ r.title }}</h5>
+            <p>{{ r.description|truncatewords:22 }}</p>
+            <div class="res-meta">
+              <span><i class="bi bi-calendar3"></i> {{ r.year }}</span>
+              {% if r.pages %}<span><i class="bi bi-file-text"></i> {{ r.pages }}pp</span>{% endif %}
+              {% if r.file_size_display %}<span><i class="bi bi-hdd"></i> {{ r.file_size_display }}</span>{% endif %}
+            </div>
+            <a href="{{ r.file.url }}" target="_blank" rel="noopener"
+               class="res-download-btn {% cycle 'btn-dl-red' 'btn-dl-green' 'btn-dl-red' %}">
+              <i class="bi bi-download"></i> Download {{ r.get_file_ext }}
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div id="noResults" class="empty-state" style="display:none;">
+      <i class="bi bi-folder2"></i>
+      <p>No resources in this category yet.</p>
+    </div>
+    {% else %}
+    <!-- Empty state -->
+    <div class="empty-state">
+      <i class="bi bi-folder2"></i>
+      <h5>Resources coming soon</h5>
+      <p>Our publications and reports will appear here. Check back soon or <a href="{% url 'cosma_development:signup_updates' %}" class="text-green">sign up for updates</a>.</p>
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<!-- ═══ NEWSLETTER CTA ═══ -->
+<section class="sec-pad" style="background:#fff;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center reveal">
+        <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>Stay Informed</div>
+        <h2 class="section-title mb-2">Never Miss a <em class="text-green">Report</em></h2>
+        <div class="title-bar bg-green mx-auto mt-2 mb-4"></div>
+        <p class="text-muted mb-4">Sign up and we'll notify you when new reports, research, and publications are released.</p>
+        <a href="{% url 'cosma_development:signup_updates' %}" class="btn btn-red rounded-pill px-4 py-2 fw-semibold">
+          <i class="bi bi-bell me-2"></i>Sign Up for Updates
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const filterBtns = document.querySelectorAll('.filter-btn');
+const items      = Array.from(document.querySelectorAll('.res-item'));
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    let vis = 0;
+    items.forEach(item => {
+      const show = f === 'all' || item.dataset.type === f;
+      item.style.display = show ? '' : 'none';
+      if (show) vis++;
+    });
+    const noRes = document.getElementById('noResults');
+    if (noRes) noRes.style.display = vis === 0 ? 'block' : 'none';
+  });
+});
+</script>
+{% endblock %}

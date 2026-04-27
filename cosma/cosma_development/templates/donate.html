@@ -1,0 +1,427 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Donate — cosma development Uganda{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ══ HERO ══ */
+.donate-hero{
+  min-height:100vh;padding:8rem 0 6rem;
+  background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 55%,#2d0002 100%);
+  position:relative;overflow:hidden;display:flex;align-items:center;
+}
+.donate-hero::before{content:'';position:absolute;top:-140px;right:-140px;width:560px;height:560px;border-radius:50%;background:rgba(255,255,255,.035);}
+.donate-hero::after{content:'';position:absolute;bottom:-100px;left:-80px;width:380px;height:380px;border-radius:50%;background:rgba(59,173,110,.09);}
+
+/* ══ IMPACT CARDS ══ */
+.impact-card{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.15);
+  backdrop-filter:blur(8px);
+  border-radius:18px;padding:1.6rem;
+  transition:background .25s,transform .25s;
+}
+.impact-card:hover{background:rgba(255,255,255,.16);transform:translateY(-4px);}
+.impact-icon{
+  width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:1rem;flex-shrink:0;
+}
+.impact-figure{
+  font-family:var(--font-display);font-size:2.2rem;font-weight:700;
+  color:var(--green-light);line-height:1;display:block;margin-bottom:.3rem;
+}
+.impact-desc{color:rgba(255,255,255,.75);font-size:.88rem;line-height:1.55;}
+
+/* ══ BIG DONATE BUTTON ══ */
+.btn-globalgiving{
+  display:inline-flex;align-items:center;justify-content:center;gap:.75rem;
+  background:var(--green);color:#fff;
+  border-radius:50px;padding:1.1rem 2.8rem;
+  font-size:1.15rem;font-weight:700;border:none;
+  box-shadow:0 10px 36px rgba(59,173,110,.45);
+  transition:all .25s;text-decoration:none;
+  position:relative;overflow:hidden;
+}
+.btn-globalgiving::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.12) 50%,transparent 100%);
+  transform:translateX(-100%);transition:transform .5s;
+}
+.btn-globalgiving:hover{background:var(--green-dark);color:#fff;transform:translateY(-3px);box-shadow:0 16px 44px rgba(59,173,110,.5);}
+.btn-globalgiving:hover::before{transform:translateX(100%);}
+.btn-globalgiving .gg-logo{
+  background:#fff;color:var(--green);border-radius:50%;
+  width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;font-weight:900;flex-shrink:0;
+}
+
+/* ══ TRUST STRIP ══ */
+.trust-strip{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;margin-top:1.5rem;}
+.trust-item{display:flex;align-items:center;gap:6px;font-size:.78rem;color:rgba(255,255,255,.6);}
+.trust-item i{color:var(--green-light);}
+
+/* ══ GLOBALGIVING CARD ══ */
+.gg-card{
+  background:#fff;border-radius:22px;
+  box-shadow:0 28px 80px rgba(0,0,0,.22);
+  overflow:hidden;
+}
+.gg-card-top{
+  background:linear-gradient(135deg,#1a7a4a 0%,#138a42 100%);
+  padding:2rem 2.2rem 1.6rem;
+}
+.gg-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.18);color:#fff;
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 12px;border-radius:50px;border:1px solid rgba(255,255,255,.25);
+  margin-bottom:1rem;
+}
+.gg-body{padding:1.8rem 2.2rem 2rem;}
+.gg-step{
+  display:flex;align-items:flex-start;gap:.9rem;
+  padding:.7rem 0;border-bottom:1px solid rgba(0,0,0,.06);
+}
+.gg-step:last-child{border-bottom:none;}
+.gg-step-num{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--green);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:700;flex-shrink:0;margin-top:1px;
+}
+.gg-step-text{font-size:.88rem;color:#555;line-height:1.6;}
+.gg-step-text strong{color:var(--charcoal);}
+
+/* ══ IMPACT NUMBERS SECTION ══ */
+.impact-num-card{
+  background:#fff;border-radius:18px;padding:2rem 1.5rem;text-align:center;
+  box-shadow:0 4px 24px rgba(0,0,0,.07);
+  border-bottom:4px solid transparent;
+  transition:transform .3s,box-shadow .3s;
+}
+.impact-num-card:hover{transform:translateY(-6px);box-shadow:0 14px 40px rgba(0,0,0,.12);}
+.impact-num-card .num{
+  font-family:var(--font-display);font-size:2.8rem;font-weight:700;
+  display:block;line-height:1;margin-bottom:.4rem;
+}
+.impact-num-card .lbl{font-size:.82rem;color:var(--muted);line-height:1.4;}
+
+/* ══ STORY QUOTES ══ */
+.quote-card{
+  background:#fff;border-radius:18px;padding:2rem;
+  box-shadow:0 4px 24px rgba(0,0,0,.07);
+  position:relative;overflow:hidden;height:100%;
+}
+.quote-card::before{
+  content:'\201C';font-family:var(--font-display);font-size:8rem;font-weight:700;
+  color:var(--cream);position:absolute;top:-1.5rem;left:.5rem;line-height:1;
+}
+.quote-card img{width:46px;height:46px;border-radius:50%;object-fit:cover;}
+.quote-tag{
+  display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;padding:3px 10px;border-radius:50px;margin-bottom:.8rem;
+}
+
+/* ══ ALLOCATION BARS ══ */
+.alloc-row{margin-bottom:1.2rem;}
+.alloc-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;font-size:.9rem;}
+.alloc-bar{height:10px;background:rgba(0,0,0,.07);border-radius:50px;overflow:hidden;}
+.alloc-fill{height:100%;border-radius:50px;transition:width 1.4s cubic-bezier(.22,.61,.36,1);}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<section class="donate-hero">
+  <div class="container" style="position:relative;z-index:1;">
+
+    <nav aria-label="breadcrumb" class="mb-4"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}" style="color:rgba(255,255,255,.65);">Home</a></li>
+      <li class="breadcrumb-item active" style="color:#fff;">Donate</li>
+    </ol></nav>
+
+    <div class="row align-items-center g-5">
+
+      <!-- ── LEFT: WHY & HOW ── -->
+      <div class="col-lg-6 reveal-left">
+        <div class="page-hero-tag" style="background:var(--green);display:inline-flex;margin-bottom:1.2rem;">
+          <i class="bi bi-heart-fill"></i> Make a Difference
+        </div>
+        <h1 style="font-size:clamp(2.6rem,5vw,4rem);font-weight:700;color:#fff;line-height:1.06;" class="mb-4">
+          Your Gift <em style="color:var(--green-light);">Transforms</em><br>Real Lives
+        </h1>
+        <p style="color:rgba(255,255,255,.82);font-size:1rem;line-height:1.85;max-width:500px;" class="mb-5">
+          cosma development Uganda is on GlobalGiving — a trusted global platform that vets every non-profit. Your donation is secure, tax-deductible in many countries, and 98% goes directly to programmes on the ground.
+        </p>
+
+        <!-- Impact mini-cards -->
+        <div class="row g-3 mb-5">
+          {% for impact in impact_items %}
+          <div class="col-6 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+            <div class="impact-card">
+              <div class="impact-icon" style="background:rgba(255,255,255,.12);">{{ impact.emoji }}</div>
+              <span class="impact-figure">{{ impact.figure }}</span>
+              <span class="impact-desc">{{ impact.desc }}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="trust-strip">
+          <div class="trust-item"><i class="bi bi-shield-check"></i> Verified NGO on GlobalGiving</div>
+          <div class="trust-item"><i class="bi bi-lock-fill"></i> Secure &amp; encrypted</div>
+          <div class="trust-item"><i class="bi bi-receipt"></i> Tax receipt provided</div>
+          <div class="trust-item"><i class="bi bi-arrow-repeat"></i> Monthly giving available</div>
+        </div>
+      </div>
+
+      <!-- ── RIGHT: GLOBALGIVING CARD ── -->
+      <div class="col-lg-5 offset-lg-1 reveal-right">
+        <div class="gg-card">
+          <div class="gg-card-top">
+            <div class="gg-badge"><i class="bi bi-patch-check-fill me-1"></i> Verified on GlobalGiving</div>
+            <h3 style="color:#fff;font-size:1.6rem;margin-bottom:.4rem;">Ready to give?</h3>
+            <p style="color:rgba(255,255,255,.78);font-size:.9rem;margin:0;">You'll be taken to our verified GlobalGiving page where you can donate securely in your preferred currency.</p>
+          </div>
+
+          <div class="gg-body">
+            <!-- How it works steps -->
+            <p style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:.5rem;">How it works</p>
+            <div class="gg-step">
+              <div class="gg-step-num">1</div>
+              <div class="gg-step-text"><strong>Click Donate on GlobalGiving</strong> — you'll land on our verified campaign page.</div>
+            </div>
+            <div class="gg-step">
+              <div class="gg-step-num">2</div>
+              <div class="gg-step-text"><strong>Choose your amount &amp; frequency</strong> — one-time or monthly, any currency.</div>
+            </div>
+            <div class="gg-step">
+              <div class="gg-step-num">3</div>
+              <div class="gg-step-text"><strong>Complete payment securely</strong> — card, PayPal, and more accepted.</div>
+            </div>
+            <div class="gg-step">
+              <div class="gg-step-num">4</div>
+              <div class="gg-step-text"><strong>Receive your receipt</strong> — official tax receipt emailed instantly.</div>
+            </div>
+
+            <div class="mt-4 d-grid">
+              <a href="{{ globalgiving_url|default:'https://www.globalgiving.org/donate/11831/cosma-sustainable-rural-development/' }}"
+                 target="_blank" rel="noopener"
+                 class="btn-globalgiving">
+                <span class="gg-logo">GG</span>
+                Donate on GlobalGiving
+                <i class="bi bi-box-arrow-up-right" style="font-size:.85rem;opacity:.8;"></i>
+              </a>
+            </div>
+
+            <p class="text-center mt-3 mb-0" style="font-size:.75rem;color:var(--muted);">
+              <i class="bi bi-globe me-1"></i>globalgiving.org · Trusted by 1M+ donors worldwide
+            </p>
+          </div>
+        </div>
+
+        <!-- Bank transfer option -->
+        <div class="mt-3 p-3 rounded-3 text-center" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);">
+          <p style="color:rgba(255,255,255,.65);font-size:.82rem;margin:0;">
+            Prefer bank transfer or cheque?
+            <a href="{% url 'cosma_development:contact' %}" style="color:var(--green-light);font-weight:600;">Contact us</a> for details.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ IMPACT IN NUMBERS ══════════════════════ -->
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>Where Your Money Goes</div>
+      <h2 class="section-title">Every Donation <em class="text-green">Counts</em></h2>
+      <div class="title-bar bg-green mx-auto mt-2"></div>
+      <p class="text-muted mx-auto mt-3" style="max-width:520px;">Here is the real-world impact cosma development has delivered — made possible entirely by donors like you.</p>
+    </div>
+    <div class="row g-4">
+      {% for stat in impact_stats %}
+      <div class="col-6 col-lg-3 reveal" style="transition-delay:{{ forloop.counter0 }}0ms">
+        <div class="impact-num-card" style="border-bottom-color:{{ stat.color }};">
+          <i class="bi {{ stat.icon }} fs-1 mb-3 d-block" style="color:{{ stat.color }};"></i>
+          <span class="num" style="color:{{ stat.color }};">{{ stat.value }}</span>
+          <span class="lbl">{{ stat.label }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ WHAT YOUR DONATION FUNDS ══════════════════════ -->
+<section class="sec-pad" style="background:#fff;">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 reveal-left">
+        <div class="section-label text-green"><span class="dot bg-green"></span>Your Donation At Work</div>
+        <h2 class="section-title mb-3">What Donations <em class="text-red">Fund</em></h2>
+        <div class="title-bar bg-red mb-4"></div>
+        <p class="text-muted mb-4" style="line-height:1.8;">Every contribution flows directly into four life-changing programme areas. Here is exactly how we allocate funds, as independently audited.</p>
+
+        <div class="alloc-row">
+          <div class="alloc-label"><span class="fw-semibold">Education &amp; Child Sponsorship</span><span class="fw-bold text-red">35%</span></div>
+          <div class="alloc-bar"><div class="alloc-fill" style="width:0%;background:var(--red);" data-width="35"></div></div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-label"><span class="fw-semibold">Agriculture &amp; Livelihoods</span><span class="fw-bold text-green">30%</span></div>
+          <div class="alloc-bar"><div class="alloc-fill" style="width:0%;background:var(--green);" data-width="30"></div></div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-label"><span class="fw-semibold">Community Health</span><span class="fw-bold text-red">23%</span></div>
+          <div class="alloc-bar"><div class="alloc-fill" style="width:0%;background:var(--red);" data-width="23"></div></div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-label"><span class="fw-semibold">Clean Water &amp; WASH</span><span class="fw-bold text-green">10%</span></div>
+          <div class="alloc-bar"><div class="alloc-fill" style="width:0%;background:var(--green);" data-width="10"></div></div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-label"><span class="fw-semibold">Administration</span><span class="fw-bold text-muted">2%</span></div>
+          <div class="alloc-bar"><div class="alloc-fill" style="width:0%;background:var(--muted);" data-width="2"></div></div>
+        </div>
+
+        <p class="text-muted mt-3 mb-0" style="font-size:.82rem;">
+          <i class="bi bi-award me-1 text-green"></i>Independently audited annually. Full report available on our <a href="{% url 'cosma_development:resources' %}" class="text-green fw-semibold">Resources page</a>.
+        </p>
+      </div>
+
+      <div class="col-lg-5 offset-lg-1 reveal-right">
+        <div class="p-5 rounded-4" style="background:var(--cream);">
+          <i class="bi bi-award-fill fs-1 text-green mb-3 d-block"></i>
+          <h4 class="mb-2">Registered &amp; Verified</h4>
+          <p class="text-muted mb-4" style="font-size:.9rem;line-height:1.75;">cosma development Uganda is a fully registered NGO listed on GlobalGiving — a platform that vets every organisation for legitimacy, transparency, and impact.</p>
+          <div class="d-flex flex-wrap gap-2 mb-4">
+            <span class="badge rounded-pill px-3 py-2" style="background:rgba(59,173,110,.1);color:var(--green);font-size:.8rem;"><i class="bi bi-check-circle-fill me-1"></i>GlobalGiving Verified</span>
+            <span class="badge rounded-pill px-3 py-2" style="background:rgba(142,0,5,.1);color:var(--red);font-size:.8rem;"><i class="bi bi-check-circle-fill me-1"></i>Registered NGO Uganda</span>
+            <span class="badge rounded-pill px-3 py-2" style="background:rgba(59,173,110,.1);color:var(--green);font-size:.8rem;"><i class="bi bi-check-circle-fill me-1"></i>Independently Audited</span>
+            <span class="badge rounded-pill px-3 py-2" style="background:rgba(142,0,5,.1);color:var(--red);font-size:.8rem;"><i class="bi bi-check-circle-fill me-1"></i>UN SDG Aligned</span>
+          </div>
+          <a href="{{ globalgiving_url|default:'https://www.globalgiving.org/donate/11831/cosma-sustainable-rural-development/' }}"
+             target="_blank" rel="noopener"
+             class="btn btn-green rounded-pill px-4 py-2 fw-semibold w-100 text-center">
+            <i class="bi bi-heart-fill me-2"></i>Donate on GlobalGiving
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ REAL STORIES ══════════════════════ -->
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>Donor-Funded Impact</div>
+      <h2 class="section-title">Donations Like Yours <em class="text-green">Did This</em></h2>
+      <div class="title-bar bg-green mx-auto mt-2"></div>
+    </div>
+    <div class="row g-4">
+      {% for story in stories %}
+      <div class="col-md-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+        <div class="quote-card">
+          <span class="quote-tag" style="background:{% cycle 'rgba(59,173,110,.1)' 'rgba(142,0,5,.1)' 'rgba(59,173,110,.1)' %};color:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' %};">{{ story.tag }}</span>
+          <p style="font-size:.95rem;font-style:italic;line-height:1.75;color:#444;position:relative;z-index:1;margin-bottom:1.2rem;">"{% if story.narrative %}{{ story.narrative }}{% elif story.quote %}{{ story.quote }}{% else %}{{ story.story }}{% endif %}"</p>
+          <div class="d-flex align-items-center gap-3">
+            <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image.url %}{{ story.image.url }}{% elif story.image %}{% static story.image %}{% endif %}" alt="{{ story.name }}"/>
+            <div>
+              <div class="fw-semibold" style="font-size:.9rem;">{{ story.name }}</div>
+              <div class="text-muted" style="font-size:.78rem;"><i class="bi bi-geo-alt me-1"></i>{{ story.location }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5 reveal">
+      <a href="{% url 'cosma_development:impact_stories' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold me-3">Read More Stories</a>
+      <a href="{{ globalgiving_url|default:'https://www.globalgiving.org/donate/11831/cosma-sustainable-rural-development/' }}" 
+         class="btn btn-green rounded-pill px-4 py-2 fw-semibold">
+        <i class="bi bi-heart-fill me-2"></i>Donate Now on GlobalGiving
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ OTHER WAYS TO HELP ══════════════════════ -->
+<section class="sec-pad" style="background:#fff;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-green justify-content-center"><span class="dot bg-green"></span>Beyond Donating</div>
+      <h2 class="section-title">Other Ways to <em class="text-red">Help</em></h2>
+      <div class="title-bar bg-red mx-auto mt-2"></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4 reveal">
+        <div class="hf-card p-4 text-center h-100">
+          <i class="bi bi-person-plus fs-1 text-red mb-3 d-block"></i>
+          <h5>Sponsor a Child</h5>
+          <p class="text-muted mb-3" style="font-size:.9rem;line-height:1.65;">Keep a child in school for a full year — receive their story, photos, and progress updates.</p>
+          <a href="{% url 'cosma_development:sponsor_child' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">Learn More</a>
+        </div>
+      </div>
+      <div class="col-md-4 reveal" style="transition-delay:100ms">
+        <div class="hf-card p-4 text-center h-100">
+          <i class="bi bi-share fs-1 text-green mb-3 d-block"></i>
+          <h5>Share Our Story</h5>
+          <p class="text-muted mb-3" style="font-size:.9rem;line-height:1.65;">Awareness is impact too. Share our work on social media and connect us with new supporters.</p>
+          <a href="{% url 'cosma_development:share_story' %}" class="btn btn-outline-green rounded-pill px-4 py-2 fw-semibold">Share Now</a>
+        </div>
+      </div>
+      <div class="col-md-4 reveal" style="transition-delay:200ms">
+        <div class="hf-card p-4 text-center h-100">
+          <i class="bi bi-handshake fs-1 text-red mb-3 d-block"></i>
+          <h5>Corporate Partnership</h5>
+          <p class="text-muted mb-3" style="font-size:.9rem;line-height:1.65;">Align your brand with verified community impact. Tailored CSR packages for businesses of all sizes.</p>
+          <a href="{% url 'cosma_development:partner_with_us' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">Partner With Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FINAL CTA ══════════════════════ -->
+<section class="sec-pad" style="background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%);position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.04);"></div>
+  <div style="position:absolute;bottom:-60px;left:-60px;width:240px;height:240px;border-radius:50%;background:rgba(59,173,110,.1);"></div>
+  <div class="container text-center reveal" style="position:relative;z-index:1;">
+    <i class="bi bi-globe-africa fs-1 mb-3 d-block" style="color:var(--green-light);"></i>
+    <h2 class="section-title mb-3" style="color:#fff;">Ready to Change a Life?</h2>
+    <p style="color:rgba(255,255,255,.8);font-size:1rem;max-width:480px;margin:0 auto 2rem;line-height:1.8;">Every dollar, pound, or shilling makes a measurable difference. Join thousands of donors supporting cosma development Uganda on GlobalGiving.</p>
+    <a href="{{ globalgiving_url|default:'https://www.globalgiving.org/donate/11831/cosma-sustainable-rural-development/' }}"
+       class="btn-globalgiving">
+      <span class="gg-logo">GG</span>
+      Donate on GlobalGiving
+      <i class="bi bi-box-arrow-up-right" style="font-size:.85rem;opacity:.8;"></i>
+    </a>
+    <p class="mt-3 mb-0" style="color:rgba(255,255,255,.45);font-size:.78rem;">
+      <i class="bi bi-lock-fill me-1"></i>Secure · Tax-deductible in eligible countries · Receipt issued instantly
+    </p>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Animate allocation bars when they scroll into view
+const fills = document.querySelectorAll('.alloc-fill');
+const barObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.animated) {
+      e.target.dataset.animated = '1';
+      e.target.style.width = e.target.dataset.width + '%';
+    }
+  });
+}, { threshold: 0.3 });
+fills.forEach(f => barObs.observe(f));
+</script>
+{% endblock %}

@@ -1,4 +1,7 @@
+
 # cosma— Django Landing Page
+
+# cosma development — Django 
 
 ## Quick Start
 
@@ -23,6 +26,8 @@ Visit **http://127.0.0.1:8000** for the landing page.
 Visit **http://127.0.0.1:8000/admin** to manage content.
 
 ---
+
+
 
 ## Admin — Add Content
 - **Impact Stories** → `/admin/home/impactstory/`

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Impact Stories — HopeForward{% endblock %}
+{% load static %}
+{% block title %}Impact Stories - cosma development Uganda{% endblock %}
 {% block content %}
 <section class="page-hero">
   <div class="container" style="position:relative;z-index:1;">
@@ -7,30 +8,54 @@
       <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
       <li class="breadcrumb-item active">Impact Stories</li>
     </ol></nav>
-    <div class="page-hero-tag"><i class="bi bi-chat-quote"></i> Real People, Real Change</div>
-    <h1>Impact Stories</h1>
-    <p>Behind every statistic is a person. These are their stories.</p>
+    <div class="page-hero-tag"><i class="bi {% if active_filter %}{{ active_filter.icon }}{% else %}bi-chat-quote{% endif %}"></i> Real People, Real Change</div>
+    <h1>{{ hero_title }}</h1>
+    <p>{{ hero_description }}</p>
   </div>
 </section>
-<section class="sec-pad">
+
+<section class="sec-pad" style="background:#F7F7F7;">
   <div class="container">
+    <div class="d-flex flex-wrap gap-2 justify-content-center mb-5 reveal">
+      <a href="{% url 'cosma_development:impact_stories' %}" class="btn {% if not active_program %}btn-red{% else %}btn-outline-red{% endif %} rounded-pill px-4">All Stories</a>
+      {% for key, config in filters.items %}
+      <a href="{% url 'cosma_development:impact_stories' %}?program={{ key }}" class="btn {% if active_program == key %}btn-green{% else %}btn-outline-green{% endif %} rounded-pill px-4">
+        <i class="bi {{ config.icon }} me-1"></i>{{ config.label }}
+      </a>
+      {% endfor %}
+    </div>
+
     <div class="row g-4">
       {% for story in stories %}
       <div class="col-md-6 col-lg-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
-        <div class="hf-card overflow-hidden">
-          <div style="overflow:hidden;height:230px;"><img src="{{ story.image }}" alt="{{ story.name }}" class="w-100 h-100" style="object-fit:cover;transition:transform .5s;"/></div>
+        <div class="hf-card overflow-hidden h-100">
+          <div style="overflow:hidden;height:230px;">
+            <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image.url %}{{ story.image.url }}{% elif story.image %}{% static story.image %}{% endif %}" alt="{{ story.name }}" class="w-100 h-100" style="object-fit:cover;transition:transform .5s;"/>
+          </div>
           <div class="p-4">
             <span class="badge rounded-pill mb-2" style="background:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' %};">{{ story.tag }}</span>
-            <p style="font-style:italic;font-size:.98rem;line-height:1.65;color:#333;" class="mb-3">"{{ story.story }}"</p>
+            <h3 class="h5 mb-2">{% if story.display_title %}{{ story.display_title }}{% elif story.headline %}{{ story.headline }}{% else %}{{ story.name }}'s Story{% endif %}</h3>
+            <p style="font-style:italic;font-size:.96rem;line-height:1.65;color:#333;" class="mb-3">"{% if story.narrative %}{{ story.narrative }}{% elif story.quote %}{{ story.quote }}{% else %}{{ story.story }}{% endif %}"</p>
+            {% if story.outcome %}
+            <div class="mb-3 p-3 rounded-3" style="background:rgba(59,173,110,.08);font-size:.86rem;line-height:1.55;">
+              <strong class="text-green d-block mb-1">What changed</strong>
+              <span class="text-muted">{{ story.outcome }}</span>
+            </div>
+            {% endif %}
             <div class="d-flex align-items-center gap-2">
-              <img src="{{ story.image }}" alt="" style="width:38px;height:38px;border-radius:50%;object-fit:cover;"/>
+              <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image.url %}{{ story.image.url }}{% elif story.image %}{% static story.image %}{% endif %}" alt="" style="width:38px;height:38px;border-radius:50%;object-fit:cover;"/>
               <div>
                 <div class="fw-semibold" style="font-size:.9rem;">{{ story.name }}</div>
                 <div class="text-muted" style="font-size:.8rem;"><i class="bi bi-geo-alt me-1"></i>{{ story.location }}</div>
+                <div class="text-muted" style="font-size:.72rem;">By {{ story.author|default:"Webadmin" }}</div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center py-5">
+        <p class="text-muted">Impact stories will appear here after they are published by the webadmin.</p>
       </div>
       {% endfor %}
     </div>

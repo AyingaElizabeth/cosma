@@ -23,11 +23,15 @@ class StaticPageSitemap(Sitemap):
         ("cosma_development:agri_approach",  0.8,  "monthly"),
         ("cosma_development:agri_support",   0.9,  "weekly"),
         ("cosma_development:agri_impact",    0.8,  "weekly"),
+        ("cosma_development:agri_faqs",      0.7,  "monthly"),
         ("cosma_development:sponsor_why",    0.9,  "monthly"),
+        ("cosma_development:sponsorship_impact", 0.8, "weekly"),
         ("cosma_development:sponsor_child",  0.9,  "weekly"),
         ("cosma_development:vocational",     0.8,  "monthly"),
+        ("cosma_development:sponsorship_faqs", 0.7, "monthly"),
         ("cosma_development:impact_numbers", 0.8,  "monthly"),
         ("cosma_development:impact_stories", 0.9,  "weekly"),
+        ("cosma_development:faqs",           0.7,  "monthly"),
         ("cosma_development:contact",        0.7,  "yearly"),
     ]
 
