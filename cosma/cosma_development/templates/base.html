@@ -39,7 +39,8 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-display);}
 .btn-green{background:var(--green);color:#fff;border:none;}.btn-green:hover{background:var(--green-dark);color:#fff;}
 .btn-outline-red{border:2px solid var(--red);color:var(--red);background:transparent;}.btn-outline-red:hover{background:var(--red);color:#fff;}
 .btn-outline-green{border:2px solid var(--green);color:var(--green);background:transparent;}.btn-outline-green:hover{background:var(--green);color:#fff;}
-/* NAVBAR */
+
+/* ── NAVBAR ── */
 #mainNav{background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,0,0,.05);transition:.3s;z-index:1050;}
 #mainNav.scrolled{box-shadow:0 6px 25px rgba(0,0,0,.09);}
 .nav-link{font-size:.88rem;font-weight:500;color:var(--charcoal)!important;padding:6px 10px!important;display:flex;align-items:center;gap:4px;position:relative;transition:.25s;white-space:nowrap;}
@@ -49,7 +50,6 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-display);}
 .nav-link.dropdown-toggle::after{display:none;}
 .nav-caret{font-size:.62rem;transition:transform .25s;margin-left:1px;}
 .nav-item.dropdown:hover .nav-caret{transform:rotate(180deg);}
-/* DROPDOWN */
 .dropdown-menu{border:none;border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.13);padding:.6rem 0;min-width:240px;opacity:0;visibility:hidden;transform:translateY(14px);transition:all .25s ease;}
 .dropdown-item{font-size:.86rem;padding:.65rem 1.1rem;display:flex;align-items:center;gap:10px;color:var(--charcoal);transition:.18s;}
 .di-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;transition:.18s;}
@@ -59,9 +59,6 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-display);}
 .di-label-main{display:block;font-weight:600;}
 .di-label-sub{display:block;font-size:.73rem;color:var(--muted);}
 .dropdown-divider{margin:.3rem .8rem;border-color:rgba(0,0,0,.07);}
-.dropdown-section{padding:.55rem 1.1rem .25rem;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);}
-.dropdown-subitem{padding-left:1.55rem;font-size:.84rem;}
-.dropdown-subitem i{width:20px;text-align:center;color:var(--green);}
 .programs-mega{width:min(860px,calc(100vw - 2rem));padding:1rem!important;}
 .programs-mega-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem;}
 .programs-mega-col{border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:.55rem;background:#fff;}
@@ -72,11 +69,6 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-display);}
 .programs-mega-link:hover{background:var(--cream);color:var(--red);}
 .programs-mega-link i{width:20px;color:var(--green);text-align:center;}
 .programs-mega-footer{display:flex;justify-content:center;border-top:1px solid rgba(0,0,0,.06);margin-top:.85rem;padding-top:.85rem;}
-.dropdown-submenu{position:relative;}
-.dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-.6rem;margin-left:.15rem;}
-.dropdown-submenu>.dropdown-item{justify-content:space-between;}
-.dropdown-submenu:hover>.dropdown-menu{opacity:1;visibility:visible;transform:translateY(0);}
-.submenu-caret{font-size:.65rem;margin-left:auto;}
 @media(min-width:992px){.nav-item.dropdown:hover>.dropdown-menu{opacity:1;visibility:visible;transform:translateY(0);}}
 @media(max-width:991px){
   .dropdown-menu{opacity:1!important;visibility:visible!important;transform:none!important;box-shadow:none;}
@@ -84,20 +76,19 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-display);}
   .programs-mega-grid{grid-template-columns:1fr;gap:.45rem;}
   .programs-mega-col{border:none;border-radius:0;padding:.25rem .5rem;}
   .programs-mega-footer{justify-content:flex-start;padding-left:.5rem;}
-  .dropdown-submenu>.dropdown-menu{display:block;position:static;margin:.15rem 0 .45rem 1.2rem;padding:.2rem 0;border-left:2px solid rgba(59,173,110,.18);border-radius:0;}
-  .submenu-caret{display:none;}
 }
-@media(min-width:992px){
-  .nav-item.dropdown.programs-nav:hover>.programs-mega{opacity:1;visibility:visible;transform:translateY(0);}
-}
-/* DONATE BTN */
+@media(min-width:992px){.nav-item.dropdown.programs-nav:hover>.programs-mega{opacity:1;visibility:visible;transform:translateY(0);}}
+
+/* ── DONATE BTN ── */
 .btn-donate{background:var(--red);color:#fff;border-radius:50px;padding:7px 20px;font-weight:600;font-size:.88rem;transition:.25s;}
 .btn-donate:hover{background:var(--green);color:#fff;transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.15);}
-/* ANIMATIONS */
+
+/* ── ANIMATIONS ── */
 .reveal{opacity:0;transform:translateY(26px);transition:.7s;}.reveal.on{opacity:1;transform:none;}
 .reveal-left{opacity:0;transform:translateX(-30px);transition:.7s;}.reveal-left.on{opacity:1;transform:none;}
 .reveal-right{opacity:0;transform:translateX(30px);transition:.7s;}.reveal-right.on{opacity:1;transform:none;}
-/* PAGE HERO */
+
+/* ── PAGE HERO (gradient fallback) ── */
 .page-hero{padding:7rem 0 4rem;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%);color:#fff;margin-top:69px;}
 .page-hero::before{content:'';position:absolute;top:-100px;right:-100px;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.04);}
 .page-hero::after{content:'';position:absolute;bottom:-80px;left:-60px;width:280px;height:280px;border-radius:50%;background:rgba(59,173,110,.1);}
@@ -107,13 +98,21 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-display);}
 .page-hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--green);color:#fff;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 16px;border-radius:50px;margin-bottom:1rem;}
 .page-hero h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;position:relative;z-index:1;}
 .page-hero p{opacity:.88;font-size:1.05rem;max-width:560px;position:relative;z-index:1;}
-/* CARDS */
+
+/* ── IMAGE HERO (when bg image is set) ── */
+.page-hero-img .breadcrumb-item,.page-hero-img .breadcrumb-item a{color:rgba(255,255,255,.7);font-size:.84rem;}
+.page-hero-img .breadcrumb-item.active{color:#fff;}
+.page-hero-img .breadcrumb-item+.breadcrumb-item::before{color:rgba(255,255,255,.35);}
+
+/* ── CARDS ── */
 .hf-card{background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.07);transition:transform .3s,box-shadow .3s;}
 .hf-card:hover{transform:translateY(-5px);box-shadow:0 12px 36px rgba(0,0,0,.13);}
-/* SOCIAL */
+
+/* ── SOCIAL ── */
 .social-btn{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);display:inline-flex;align-items:center;justify-content:center;transition:.2s;text-decoration:none;font-size:1rem;}
 .social-btn:hover{background:var(--green);color:#fff;}
-/* FOOTER */
+
+/* ── FOOTER ── */
 footer{background:#111;color:rgba(255,255,255,.7);}
 .footer-brand{font-family:var(--font-display);font-size:2rem;color:#fff;}
 .footer-brand span{color:var(--green);}
@@ -123,6 +122,8 @@ footer{background:#111;color:rgba(255,255,255,.7);}
 footer a{color:rgba(255,255,255,.6);transition:.2s;}
 footer a:hover{color:var(--green-light);}
 .footer-hr{border-color:rgba(255,255,255,.08);}
+
+/* ── ACCESSIBILITY ── */
 :focus-visible{outline:3px solid var(--green);outline-offset:3px;}
 .skip-link{position:absolute;top:-40px;left:0;background:var(--red);color:#fff;padding:8px 16px;z-index:9999;}
 .skip-link:focus{top:0;}
@@ -137,7 +138,7 @@ footer a:hover{color:var(--green-light);}
     <a class="navbar-brand d-flex align-items-center" href="{% url 'cosma_development:index' %}">
       <img src="{% static 'logo/COSMA sustainable rural development logo.png' %}" alt="COSMA Logo" height="100" class="me-2">
     </a>
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navContent">
@@ -149,42 +150,35 @@ footer a:hover{color:var(--green-light);}
 
         <!-- ABOUT -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle {% if 'about' in request.path or 'story' in request.path or 'team' in request.path or 'resources' in request.path %}active-page{% endif %}" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link dropdown-toggle {% if 'about' in request.path or 'story' in request.path or 'team' in request.path or 'resources' in request.path %}active-page{% endif %}" href="#" data-bs-toggle="dropdown" aria-expanded="false">
             About <i class="bi bi-chevron-down nav-caret"></i>
           </a>
           <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" href="{% url 'cosma_development:about-us' %}">
-                <span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-building-heart"></i></span>
-                <span class="di-label"><span class="di-label-main">Who We Are</span><span class="di-label-sub">Mission, vision &amp; values</span></span>
-              </a>
-            </li>
+            <li><a class="dropdown-item" href="{% url 'cosma_development:about-us' %}">
+              <span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-building-heart"></i></span>
+              <span class="di-label"><span class="di-label-main">Who We Are</span><span class="di-label-sub">Mission, vision &amp; values</span></span>
+            </a></li>
             <li><div class="dropdown-divider"></div></li>
-            <li>
-              <a class="dropdown-item" href="{% url 'cosma_development:our_story' %}">
-                <span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-map"></i></span>
-                <span class="di-label"><span class="di-label-main">Our Story</span><span class="di-label-sub">Journey &amp; milestones</span></span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="{% url 'cosma_development:team_partners' %}">
-                <span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-people-fill"></i></span>
-                <span class="di-label"><span class="di-label-main">Team &amp; Partners</span><span class="di-label-sub">Who stands with us</span></span>
-              </a>
-            </li>
+            <li><a class="dropdown-item" href="{% url 'cosma_development:our_story' %}">
+              <span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-map"></i></span>
+              <span class="di-label"><span class="di-label-main">Our Story</span><span class="di-label-sub">Journey &amp; milestones</span></span>
+            </a></li>
+             <li><a class="dropdown-item" href="{% url 'cosma_development:our_approach' %}">
+              <span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-map"></i></span>
+              <span class="di-label"><span class="di-label-main">Our Approach</span><span class="di-label-sub">Journey &amp; milestones</span></span>
+            </a></li>
+            <li><a class="dropdown-item" href="{% url 'cosma_development:team_partners' %}">
+              <span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-people-fill"></i></span>
+              <span class="di-label"><span class="di-label-main">Team &amp; Partners</span><span class="di-label-sub">Who stands with us</span></span>
+            </a></li>
             <li><div class="dropdown-divider"></div></li>
-            <li>
-              <a class="dropdown-item" href="{% url 'cosma_development:resources' %}">
-                <span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-folder2-open"></i></span>
-                <span class="di-label"><span class="di-label-main">Resources</span><span class="di-label-sub">Reports &amp; publications</span></span>
-              </a>
-            </li>
+            
           </ul>
         </li>
 
         <!-- PROGRAMS -->
         <li class="nav-item dropdown programs-nav">
-          <a class="nav-link dropdown-toggle {% if 'programs' in request.path %}active-page{% endif %}" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link dropdown-toggle {% if 'programs' in request.path %}active-page{% endif %}" href="#" data-bs-toggle="dropdown" aria-expanded="false">
             Programs <i class="bi bi-chevron-down nav-caret"></i>
           </a>
           <ul class="dropdown-menu programs-mega">
@@ -198,24 +192,23 @@ footer a:hover{color:var(--green-light);}
                   <a class="programs-mega-link" href="{% url 'cosma_development:agri_why' %}"><i class="bi bi-question-circle"></i>Why Agriculture</a>
                   <a class="programs-mega-link" href="{% url 'cosma_development:agri_approach' %}"><i class="bi bi-diagram-3"></i>Our Approach</a>
                   <a class="programs-mega-link" href="{% url 'cosma_development:agri_support' %}"><i class="bi bi-person-heart"></i>Support a Farmer</a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:impact_stories' %}?program=agriculture"><i class="bi bi-chat-quote"></i>Agriculture Impact Stories</a>
+                  <a class="programs-mega-link" href="{% url 'cosma_development:impact_stories' %}?program=agriculture"><i class="bi bi-chat-quote"></i>Impact Stories</a>
                   <a class="programs-mega-link" href="{% url 'cosma_development:agri_faqs' %}"><i class="bi bi-patch-question"></i>Agriculture FAQs</a>
                 </div>
-
                 <div class="programs-mega-col">
                   <a class="programs-mega-head" href="{% url 'cosma_development:sponsor_why' %}">
                     <span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-person-plus"></i></span>
                     <span class="di-label"><span class="di-label-main">Child Sponsorship</span><span class="di-label-sub">Education &amp; life skills</span></span>
                   </a>
                   <a class="programs-mega-link" href="{% url 'cosma_development:sponsor_why' %}"><i class="bi bi-question-circle"></i>Why Sponsorship</a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:vocational' %}"><i class="bi bi-tools"></i>Vocational &amp; Life Skills Training</a>
+                  <a class="programs-mega-link" href="{% url 'cosma_development:vocational' %}"><i class="bi bi-tools"></i>Vocational &amp; Life Skills</a>
                   <a class="programs-mega-link" href="{% url 'cosma_development:sponsor_child' %}"><i class="bi bi-mortarboard"></i>Sponsor a Child</a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:impact_stories' %}?program=child-sponsorship"><i class="bi bi-chat-quote"></i>Sponsorship Impact Stories</a>
+                  <a class="programs-mega-link" href="{% url 'cosma_development:impact_stories' %}?program=child-sponsorship"><i class="bi bi-chat-quote"></i>Impact Stories</a>
                   <a class="programs-mega-link" href="{% url 'cosma_development:sponsorship_faqs' %}"><i class="bi bi-patch-question"></i>Sponsorship FAQs</a>
                 </div>
               </div>
               <div class="programs-mega-footer">
-                <a class="programs-mega-link" href="{% url 'cosma_development:faqs' %}"><i class="bi bi-ui-checks"></i>View All Categorized FAQs</a>
+                <a class="programs-mega-link" href="{% url 'cosma_development:faqs' %}"><i class="bi bi-ui-checks"></i>View All FAQs</a>
               </div>
             </li>
           </ul>
@@ -223,7 +216,7 @@ footer a:hover{color:var(--green-light);}
 
         <!-- IMPACT -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle {% if 'impact' in request.path %}active-page{% endif %}" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link dropdown-toggle {% if 'impact' in request.path %}active-page{% endif %}" href="#" data-bs-toggle="dropdown" aria-expanded="false">
             Impact <i class="bi bi-chevron-down nav-caret"></i>
           </a>
           <ul class="dropdown-menu">
@@ -235,11 +228,12 @@ footer a:hover{color:var(--green-light);}
 
         <!-- GET INVOLVED -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle {% if 'get-involved' in request.path %}active-page{% endif %}" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link dropdown-toggle {% if 'get-involved' in request.path %}active-page{% endif %}" href="#" data-bs-toggle="dropdown" aria-expanded="false">
             Get Involved <i class="bi bi-chevron-down nav-caret"></i>
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'cosma_development:partner_with_us' %}"><span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-handshake"></i></span>Partner With Us</a></li>
+            <li><a class="dropdown-item" href="{% url 'cosma_development:fund_project' %}"><span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-handshake"></i></span>Fund a Project</a></li>
             <li><a class="dropdown-item" href="{% url 'cosma_development:share_story' %}"><span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-share"></i></span>Share Our Story</a></li>
             <li><a class="dropdown-item" href="{% url 'cosma_development:volunteer' %}"><span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-person-heart"></i></span>Volunteer With Us</a></li>
             <li><a class="dropdown-item" href="{% url 'cosma_development:signup_updates' %}"><span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-bell"></i></span>Sign Up for Updates</a></li>
@@ -247,14 +241,11 @@ footer a:hover{color:var(--green-light);}
         </li>
 
         <li class="nav-item">
-          <a class="nav-link {% if 'news' in request.path %}active-page{% endif %}"
-             href="{% url 'cosma_development:news' %}">News</a>
+          <a class="nav-link dropdown-toggle {% if 'news' in request.path %}active-page{% endif %}" href="{% url 'cosma_development:news' %}">News and updates</a>
         </li>
-
         <li class="nav-item">
           <a class="nav-link {% if 'contact' in request.path %}active-page{% endif %}" href="{% url 'cosma_development:contact' %}">Contact</a>
         </li>
-
         <li class="nav-item ms-lg-2">
           <a class="btn btn-donate" href="{% url 'cosma_development:donate_page' %}">
             <i class="bi bi-heart-fill me-1"></i> Donate
@@ -272,13 +263,15 @@ footer a:hover{color:var(--green-light);}
     <div class="row g-4 pb-4">
       <div class="col-lg-4">
         <div class="footer-brand mb-3">COSMA<span> Uganda</span></div>
-        <p style="font-size:.9rem;line-height:1.75;max-width:270px;">Building resilient communities across Uganda through education, health, livelihoods, and clean water since 2006.</p>
+        <p style="font-size:.9rem;line-height:1.75;max-width:270px;">
+          {% if site %}{{ site.footer_tagline }}{% else %}Building resilient communities across Uganda since 2006.{% endif %}
+        </p>
         <div class="d-flex gap-2 mt-3">
-          <a href="#" class="social-btn" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="social-btn" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="social-btn" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-          <a href="#" class="social-btn" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+          {% if site and site.facebook_url %}<a href="{{ site.facebook_url }}" class="social-btn" aria-label="Facebook"><i class="bi bi-facebook"></i></a>{% else %}<a href="#" class="social-btn" aria-label="Facebook"><i class="bi bi-facebook"></i></a>{% endif %}
+          {% if site and site.twitter_url %}<a href="{{ site.twitter_url }}" class="social-btn" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>{% else %}<a href="#" class="social-btn" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>{% endif %}
+          {% if site and site.instagram_url %}<a href="{{ site.instagram_url }}" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>{% else %}<a href="#" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>{% endif %}
+          {% if site and site.linkedin_url %}<a href="{{ site.linkedin_url }}" class="social-btn" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>{% else %}<a href="#" class="social-btn" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>{% endif %}
+          {% if site and site.youtube_url %}<a href="{{ site.youtube_url }}" class="social-btn" aria-label="YouTube"><i class="bi bi-youtube"></i></a>{% else %}<a href="#" class="social-btn" aria-label="YouTube"><i class="bi bi-youtube"></i></a>{% endif %}
         </div>
       </div>
       <div class="col-6 col-lg-2 offset-lg-1">
@@ -286,6 +279,7 @@ footer a:hover{color:var(--green-light);}
           <div class="footer-head">About</div>
           <a class="footer-link" href="{% url 'cosma_development:about-us' %}">Who We Are</a>
           <a class="footer-link" href="{% url 'cosma_development:our_story' %}">Our Story</a>
+           <a class="footer-link" href="{% url 'cosma_development:our_approach' %}">Our Approach</a>
           <a class="footer-link" href="{% url 'cosma_development:team_partners' %}">Team &amp; Partners</a>
           <a class="footer-link" href="{% url 'cosma_development:resources' %}">Resources</a>
         </nav>
@@ -306,32 +300,89 @@ footer a:hover{color:var(--green-light);}
         <div class="footer-head">Newsletter</div>
         <p style="font-size:.88rem;">Get stories of impact delivered to your inbox.</p>
         <div class="input-group mt-2">
-          <input type="email" class="form-control rounded-start-pill" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff;" placeholder="Your email"/>
-          <button class="btn btn-green rounded-end-pill px-3" aria-label="Subscribe"><i class="bi bi-send-fill"></i></button>
+          <input type="email" class="form-control rounded-start-pill" id="footerEmail"
+                 style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff;"
+                 placeholder="Your email"/>
+          <button class="btn btn-green rounded-end-pill px-3" id="footerSubBtn" aria-label="Subscribe">
+            <i class="bi bi-send-fill"></i>
+          </button>
         </div>
         <address class="mt-3" style="font-size:.85rem;font-style:normal;">
-          <i class="bi bi-geo-alt-fill me-1 text-green"></i>Plot 45, Kampala Road, Uganda<br>
-          <i class="bi bi-telephone-fill me-1 text-green"></i><a href="tel:+256700123456">+256 700 123 456</a><br>
-          <i class="bi bi-envelope-fill me-1 text-green"></i><a href="mailto:info@cosmadevelopments.org">info@cosmadevelopments.org</a>
+          <i class="bi bi-geo-alt-fill me-1 text-green"></i>
+          {% if site %}{{ site.office_address }}{% else %}Kampala, Uganda{% endif %}<br>
+          <i class="bi bi-telephone-fill me-1 text-green"></i>
+          <a href="tel:{% if site %}{{ site.phone }}{% else %}+256700123456{% endif %}">{% if site %}{{ site.phone }}{% else %}+256 700 123 456{% endif %}</a><br>
+          <i class="bi bi-envelope-fill me-1 text-green"></i>
+          <a href="mailto:{% if site %}{{ site.email }}{% else %}info@cosmadevelopments.org{% endif %}">{% if site %}{{ site.email }}{% else %}info@cosmadevelopments.org{% endif %}</a>
         </address>
       </div>
     </div>
     <hr class="footer-hr"/>
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 pt-1" style="font-size:.8rem;">
       <span>&copy; {% now "Y" %} cosma development Uganda. Registered NGO. All rights reserved.</span>
-      <span><a href="#" class="me-3">Privacy Policy</a><a href="#" class="me-3">Terms of Use</a><a href="{% url 'cosma_development:resources' %}">Annual Report</a></span>
+      <span>
+        <a href="#" class="me-3">Privacy Policy</a>
+        <a href="#" class="me-3">Terms of Use</a>
+        <a href="{% url 'cosma_development:resources' %}">Annual Report</a>
+      </span>
     </div>
   </div>
 </footer>
 
-<div id="toastBox" role="status" aria-live="polite" style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;"></div>
+<div id="toastBox" role="status" aria-live="polite"
+     style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',scrollY>40));
-const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:.12});
-document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>obs.observe(el));
-function showToast(msg,type='success'){const box=document.getElementById('toastBox');const id='t'+Date.now();const color=type==='success'?'var(--green)':'var(--red)';const icon=type==='success'?'bi-check-circle-fill':'bi-exclamation-circle-fill';box.insertAdjacentHTML('beforeend',`<div id="${id}" class="toast show mb-2 align-items-center border-0" role="alert" style="background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.14);border-radius:14px;min-width:280px;"><div class="d-flex"><div class="toast-body d-flex align-items-center gap-2"><i class="bi ${icon}" style="color:${color};font-size:1.2rem;"></i><span>${msg}</span></div><button type="button" class="btn-close me-2 m-auto" onclick="this.closest('.toast').remove()" aria-label="Close"></button></div></div>`);setTimeout(()=>document.getElementById(id)?.remove(),5000);}
-function getCsrf(){return document.querySelector('[name=csrfmiddlewaretoken]')?.value||'';}
+/* ── Navbar scroll ── */
+window.addEventListener('scroll', () =>
+  document.getElementById('mainNav').classList.toggle('scrolled', scrollY > 40));
+
+/* ── Scroll reveal ── */
+const obs = new IntersectionObserver(entries =>
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }), { threshold: .12 });
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => obs.observe(el));
+
+/* ── Toast ── */
+function showToast(msg, type = 'success') {
+  const box = document.getElementById('toastBox');
+  const id  = 't' + Date.now();
+  const color = type === 'success' ? 'var(--green)' : 'var(--red)';
+  const icon  = type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-circle-fill';
+  box.insertAdjacentHTML('beforeend',
+    `<div id="${id}" class="toast show mb-2 align-items-center border-0" role="alert"
+       style="background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.14);border-radius:14px;min-width:280px;">
+      <div class="d-flex">
+        <div class="toast-body d-flex align-items-center gap-2">
+          <i class="bi ${icon}" style="color:${color};font-size:1.2rem;"></i>
+          <span>${msg}</span>
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" onclick="this.closest('.toast').remove()" aria-label="Close"></button>
+      </div>
+    </div>`);
+  setTimeout(() => document.getElementById(id)?.remove(), 5000);
+}
+
+/* ── CSRF helper ── */
+function getCsrf() {
+  return document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+}
+
+/* ── Footer newsletter ── */
+document.getElementById('footerSubBtn')?.addEventListener('click', async () => {
+  const email = document.getElementById('footerEmail').value.trim();
+  if (!email) { showToast('Please enter your email address.', 'error'); return; }
+  try {
+    const r = await fetch("{% url 'cosma_development:contact_submit' %}", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+      body: JSON.stringify({ name: 'Newsletter Subscriber', email, subject: 'Newsletter Signup', message: 'Footer newsletter subscription' })
+    });
+    const d = await r.json();
+    showToast('Thank you! You have been subscribed. 🎉', 'success');
+    document.getElementById('footerEmail').value = '';
+  } catch { showToast('Something went wrong. Please try again.', 'error'); }
+});
 </script>
 {% block extra_js %}{% endblock %}
 </body>

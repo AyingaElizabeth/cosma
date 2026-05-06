@@ -1,0 +1,100 @@
+{% load static %}
+
+{% if hero and hero.bg_image_url %}
+  <!-- IMAGE HERO -->
+  <section class="page-hero-img" style="
+    background-image: url('{{ hero.bg_image_url }}');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: flex-end;
+    margin-top: 69px;
+    overflow: hidden;
+  ">
+    <!-- Overlay -->
+    <div style="
+      position:absolute;inset:0;
+      background: rgba(0,0,0,{{ hero.overlay_opacity|default:'0.55' }});
+    "></div>
+
+    <div class="container py-5" style="position:relative;z-index:2;">
+
+      {% if breadcrumbs %}
+      <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+          {% for crumb in breadcrumbs %}
+            {% if not forloop.last %}
+              <li class="breadcrumb-item">
+                <a href="{{ crumb.url }}" style="color:rgba(255,255,255,.7);">
+                  {{ crumb.label }}
+                </a>
+              </li>
+            {% else %}
+              <li class="breadcrumb-item active" style="color:#fff;">
+                {{ crumb.label }}
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ol>
+      </nav>
+      {% endif %}
+
+      {% if hero.tag_text %}
+      <div class="page-hero-tag">
+        <i class="bi {{ hero.tag_icon|default:'bi-stars' }}"></i>
+        {{ hero.tag_text }}
+      </div>
+      {% endif %}
+
+      {% if hero.heading %}
+      <h1 style="color:#fff;">
+        {{ hero.heading }}
+      </h1>
+      {% endif %}
+
+      {% if hero.subheading %}
+      <p style="color:rgba(255,255,255,.88);">
+        {{ hero.subheading }}
+      </p>
+      {% endif %}
+    </div>
+  </section>
+
+{% else %}
+  <!-- FALLBACK HERO -->
+  <section class="page-hero">
+    <div class="container">
+
+      {% if breadcrumbs %}
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for crumb in breadcrumbs %}
+            {% if not forloop.last %}
+              <li class="breadcrumb-item">
+                <a href="{{ crumb.url }}">{{ crumb.label }}</a>
+              </li>
+            {% else %}
+              <li class="breadcrumb-item active">
+                {{ crumb.label }}
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ol>
+      </nav>
+      {% endif %}
+
+      {% if hero %}
+        <div class="page-hero-tag">
+          <i class="bi {{ hero.tag_icon|default:'bi-stars' }}"></i>
+          {{ hero.tag_text }}
+        </div>
+
+        <h1>{{ hero.heading }}</h1>
+        <p>{{ hero.subheading }}</p>
+      {% endif %}
+
+    </div>
+  </section>
+{% endif %}

@@ -1,6 +1,26 @@
+{% comment %}
+=== VOCATIONAL.HTML ===
+{% endcomment %}
 {% extends "base.html" %}
-{% block title %}Vocational & Life Skills Training — HopeForward{% endblock %}
+{% block title %}Vocational & Life Skills Training — cosma development Uganda{% endblock %}
 {% block content %}
+
+{# ══ IMAGE HERO ══ #}
+{% if hero and hero.bg_image_url %}
+<section style="background-image:url('{{ hero.bg_image_url }}');background-size:cover;background-position:center;position:relative;min-height:400px;display:flex;align-items:flex-end;margin-top:69px;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,{{ hero.overlay_opacity|default:'0.55' }});"></div>
+  <div class="container py-5" style="position:relative;z-index:2;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}" style="color:rgba(255,255,255,.7);">Home</a></li>
+      <li class="breadcrumb-item" style="color:rgba(255,255,255,.7);">Our Programs</li>
+      <li class="breadcrumb-item active" style="color:#fff;">Vocational &amp; Life Skills</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi {{ hero.tag_icon|default:'bi-tools' }}"></i> {{ hero.tag_text|default:'Skills Program' }}</div>
+    <h1 style="color:#fff;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;margin-bottom:.8rem;">{{ hero.heading|default:'Vocational &amp; Life Skills Training' }}</h1>
+    <p style="color:rgba(255,255,255,.88);font-size:1.05rem;max-width:560px;line-height:1.75;">{{ hero.subheading|default:'Equipping youth and women with market-relevant skills to build independent, sustainable livelihoods.' }}</p>
+  </div>
+</section>
+{% else %}
 <section class="page-hero">
   <div class="container" style="position:relative;z-index:1;">
     <nav aria-label="breadcrumb"><ol class="breadcrumb">
@@ -13,23 +33,37 @@
     <p>Equipping youth and women with market-relevant skills to build independent, sustainable livelihoods.</p>
   </div>
 </section>
+{% endif %}
+
 <section class="sec-pad">
   <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>Our Courses</div>
+      <h2 class="section-title">What We <em class="text-green">Teach</em></h2>
+      <div class="title-bar bg-green mx-auto mt-2"></div>
+      <p class="text-muted mx-auto mt-3" style="max-width:520px;">Practical, certified training that leads directly to employment or self-employment.</p>
+    </div>
     <div class="row g-4">
       {% for course in courses %}
       <div class="col-md-6 col-lg-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
-        <div class="hf-card p-4">
-          <div class="mb-3 rounded-3 d-flex align-items-center justify-content-center" style="width:56px;height:56px;background:{% cycle 'rgba(142,0,5,.1)' 'rgba(59,173,110,.1)' %};"><i class="bi {{ course.icon }} fs-2" style="color:{% cycle 'var(--red)' 'var(--green)' %};"></i></div>
+        <div class="hf-card p-4 h-100">
+          <div class="mb-3 rounded-3 d-flex align-items-center justify-content-center" style="width:56px;height:56px;background:{% cycle 'rgba(142,0,5,.1)' 'rgba(59,173,110,.1)' %};">
+            <i class="bi {{ course.icon }} fs-2" style="color:{% cycle 'var(--red)' 'var(--green)' %};"></i>
+          </div>
           <h5 class="mb-2">{{ course.title }}</h5>
           <p class="text-muted mb-3" style="font-size:.9rem;line-height:1.65;">{{ course.desc }}</p>
           <span class="badge rounded-pill" style="background:{% cycle 'rgba(142,0,5,.1)' 'rgba(59,173,110,.1)' %};color:{% cycle 'var(--red)' 'var(--green)' %};">{{ course.duration }}</span>
         </div>
       </div>
+      {% empty %}
+      <div class="col-12 text-center py-4">
+        <p class="text-muted">Courses will appear here after they are added by the webadmin.</p>
+      </div>
       {% endfor %}
     </div>
     <div class="text-center mt-5 reveal">
       <a href="{% url 'cosma_development:contact' %}" class="btn btn-green rounded-pill px-4 py-2 fw-semibold me-3">Apply for Training</a>
-      <a href="{% url 'cosma_development:index' %}#donate" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">Sponsor a Trainee</a>
+      <a href="{% url 'cosma_development:donate_page' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">Sponsor a Trainee</a>
     </div>
   </div>
 </section>

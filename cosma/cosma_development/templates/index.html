@@ -27,13 +27,12 @@
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
 
 /* ═══ ABOUT ═══ */
-.about-img-wrap{position:relative;}
 .about-img{width:100%;height:460px;object-fit:cover;border-radius:18px;box-shadow:22px 22px 0 var(--red);}
 .about-badge{position:absolute;bottom:-20px;right:-20px;background:var(--green);color:#fff;border-radius:14px;padding:1.1rem 1.6rem;text-align:center;box-shadow:0 10px 28px rgba(59,173,110,.35);}
 .about-badge .num{font-family:var(--font-display);font-size:2.6rem;font-weight:700;display:block;}
 .about-badge .lbl{font-size:.75rem;letter-spacing:.08em;opacity:.9;}
 
-/* ═══ CARDS ═══ */
+/* ═══ STORY CARDS ═══ */
 .story-card{border:none;border-radius:18px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);height:100%;transition:transform .3s,box-shadow .3s;}
 .story-card:hover{transform:translateY(-7px);box-shadow:0 14px 40px rgba(0,0,0,.14);}
 .story-img{width:100%;height:240px;object-fit:cover;transition:transform .5s;}
@@ -41,6 +40,8 @@
 .story-tag{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:50px;}
 .story-quote{font-size:1rem;font-style:italic;line-height:1.65;color:#333;}
 .story-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;}
+
+/* ═══ PROGRAM CARDS ═══ */
 .program-card{border:none;border-radius:18px;padding:2.2rem 1.8rem;background:#fff;height:100%;box-shadow:0 2px 18px rgba(0,0,0,.07);transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden;}
 .program-card:hover{transform:translateY(-6px);box-shadow:0 12px 36px rgba(0,0,0,.13);}
 .prog-icon-wrap{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;margin-bottom:1.3rem;}
@@ -53,7 +54,7 @@
 .program-theme-red .prog-stat-pill{background:rgba(142,0,5,.09);color:var(--red);}
 .program-theme-red .prog-bottom-bar{background:var(--red);}
 
-/* ═══ PARTNERS ═══ */
+/* ═══ PARTNERS SCROLL ═══ */
 .partners-track-wrap{overflow:hidden;}
 .partners-track{display:flex;align-items:center;gap:4rem;animation:scroll-x 20s linear infinite;width:max-content;}
 .partners-track:hover{animation-play-state:paused;}
@@ -61,77 +62,61 @@
 .partner-logo:hover{filter:none;opacity:1;}
 @keyframes scroll-x{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-/* ═══ DONATE SECTION — IMPACT FOCUSED ═══ */
-#donate{
-  background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 55%,#2d0002 100%);
-  position:relative;overflow:hidden;padding:5.5rem 0;
-}
+/* ═══ DONATE SECTION ═══ */
+#donate{background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 55%,#2d0002 100%);position:relative;overflow:hidden;padding:5.5rem 0;}
 #donate::before{content:'';position:absolute;top:-100px;right:-100px;width:440px;height:440px;border-radius:50%;background:rgba(255,255,255,.04);}
 #donate::after{content:'';position:absolute;bottom:-80px;left:-60px;width:320px;height:320px;border-radius:50%;background:rgba(59,173,110,.1);}
-
-/* IMPACT ITEMS */
-.donate-impact-item{
-  display:flex;align-items:flex-start;gap:1rem;
-  padding:.9rem 0;border-bottom:1px solid rgba(255,255,255,.1);
-}
+.donate-impact-item{display:flex;align-items:flex-start;gap:1rem;padding:.9rem 0;border-bottom:1px solid rgba(255,255,255,.1);}
 .donate-impact-item:last-child{border-bottom:none;}
-.donate-impact-emoji{
-  font-size:1.5rem;width:44px;height:44px;border-radius:12px;
-  background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
+.donate-impact-emoji{font-size:1.5rem;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .donate-impact-text strong{color:#fff;display:block;font-size:.93rem;margin-bottom:.15rem;}
 .donate-impact-text span{color:rgba(255,255,255,.65);font-size:.83rem;line-height:1.5;}
-
-/* GLOBALGIVING CTA CARD */
-.gg-cta-card{
-  background:#fff;border-radius:22px;
-  box-shadow:0 28px 80px rgba(0,0,0,.25);
-  overflow:hidden;
-}
+.gg-cta-card{background:#fff;border-radius:22px;box-shadow:0 28px 80px rgba(0,0,0,.25);overflow:hidden;}
 .gg-cta-top{background:linear-gradient(135deg,#1a7a4a 0%,#138a42 100%);padding:1.6rem 2rem;}
 .gg-cta-body{padding:2rem;}
-
-.btn-gg-main{
-  display:flex;align-items:center;justify-content:center;gap:.7rem;
-  background:var(--green);color:#fff;
-  border-radius:50px;padding:1rem 2rem;
-  font-size:1.05rem;font-weight:700;border:none;
-  box-shadow:0 8px 28px rgba(59,173,110,.4);
-  transition:all .25s;text-decoration:none;width:100%;
-}
-.btn-gg-main:hover{background:var(--green-dark);color:#fff;transform:translateY(-2px);box-shadow:0 14px 36px rgba(59,173,110,.45);}
+.btn-gg-main{display:flex;align-items:center;justify-content:center;gap:.7rem;background:var(--green);color:#fff;border-radius:50px;padding:1rem 2rem;font-size:1.05rem;font-weight:700;border:none;box-shadow:0 8px 28px rgba(59,173,110,.4);transition:all .25s;text-decoration:none;width:100%;}
+.btn-gg-main:hover{background:var(--green-dark);color:#fff;transform:translateY(-2px);}
 .gg-logo-badge{background:#fff;color:var(--green);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;flex-shrink:0;}
-
 .trust-row{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem;}
 .trust-item-sm{display:flex;align-items:center;gap:5px;font-size:.76rem;color:rgba(255,255,255,.55);}
 .trust-item-sm i{color:var(--green-light);}
-/* ═══ NEWS SECTION ═══ */
-.news-hp-card-featured:hover{transform:translateY(-5px)!important;box-shadow:0 18px 50px rgba(0,0,0,.22)!important;}
-
-/* ═══ TESTIMONIALS SECTION ═══ */
-/* styles are inline for flexibility */
 </style>
 {% endblock %}
 
 {% block content %}
 
-<!-- ══════════════════ HERO ══════════════════ -->
+<!-- ══ HERO SLIDER ══ -->
 <section id="hero">
   <div class="hero-slider" id="heroSlider">
-    <div class="hero-slide active" style="background-image:url('{% static "imgs/kids.png" %}')"></div>
-    <div class="hero-slide"        style="background-image:url('{% static "imgs/hero2.jpg" %}')"></div>
-    <div class="hero-slide"        style="background-image:url('{% static "imgs/hero3.jpg" %}')"></div>
-    <div class="hero-slide"        style="background-image:url('{% static "imgs/hero5.png" %}')"></div>
+    {% if slides %}
+      {% for slide in slides %}
+      <div class="hero-slide {% if forloop.first %}active{% endif %}"
+           style="background-image:url('{{ slide.bg_url }}')"></div>
+      {% endfor %}
+    {% else %}
+      {# Fallback static slides #}
+      <div class="hero-slide active" style="background-image:url('{% static "imgs/kids.png" %}')"></div>
+      <div class="hero-slide"        style="background-image:url('{% static "imgs/hero2.jpg" %}')"></div>
+      <div class="hero-slide"        style="background-image:url('{% static "imgs/hero3.jpg" %}')"></div>
+      <div class="hero-slide"        style="background-image:url('{% static "imgs/hero5.png" %}')"></div>
+    {% endif %}
   </div>
+
   <div class="container hero-content py-5 mt-5">
     <div class="row">
       <div class="col-lg-8 col-xl-7">
+        {% if hero %}
+        <div class="hero-eyebrow"><i class="bi {{ hero.tag_icon|default:'bi-globe-africa' }}"></i> {{ hero.tag_text|default:'Serving Uganda Since 2006' }}</div>
+        <h1 class="hero-title mb-4">{{ hero.heading|default:'Building <em>Brighter</em><br>Futures Together'|safe }}</h1>
+        <p class="hero-sub mb-5">{{ hero.subheading|default:'We partner with communities across Uganda to deliver education, healthcare, livelihoods, and clean water — transforming lives from the ground up.' }}</p>
+        {% else %}
         <div class="hero-eyebrow"><i class="bi bi-globe-africa"></i> Serving Uganda Since 2006</div>
         <h1 class="hero-title mb-4">Building <em>Brighter</em><br>Futures Together</h1>
         <p class="hero-sub mb-5">We partner with communities across Uganda to deliver education, healthcare, livelihoods, and clean water — transforming lives from the ground up.</p>
+        {% endif %}
         <div class="hero-ctas d-flex flex-wrap gap-3">
-          <a href="{{ globalgiving_url|default:'https://www.globalgiving.org/donate/11831/cosma-sustainable-rural-development/' }}" target="_blank" rel="noopener"
-             class="btn btn-green btn-lg rounded-pill px-4 fw-semibold">
+          <a href="{{ globalgiving_url|default:'https://www.globalgiving.org/donate/11831/cosma-sustainable-rural-development/' }}"
+             target="_blank" rel="noopener" class="btn btn-green btn-lg rounded-pill px-4 fw-semibold">
             <i class="bi bi-heart-fill me-2"></i>Donate on GlobalGiving
           </a>
           <a href="#about" class="btn btn-outline-light btn-lg rounded-pill px-4">
@@ -141,14 +126,17 @@
       </div>
     </div>
   </div>
+
   <div class="hero-dots" id="heroDots"></div>
+
+  <!-- Stat strip -->
   <div class="hero-stats">
     <div class="container">
       <div class="row">
         {% for s in stats %}
         <div class="col">
           <div class="hero-stat {% if not forloop.last %}border-end border-white border-opacity-10{% endif %}">
-            <span class="val">{{ s.value }}</span>
+            <span class="val counter" data-target="{{ s.raw|default:s.value }}" data-suffix="{{ s.suffix|default:'' }}">{{ s.value }}</span>
             <span class="lbl">{{ s.label }}</span>
           </div>
         </div>
@@ -158,15 +146,15 @@
   </div>
 </section>
 
-<!-- ══════════════════ ABOUT ══════════════════ -->
+<!-- ══ ABOUT ══ -->
 <section id="about" class="sec-pad bg-cream">
   <div class="container">
     <div class="row align-items-center g-5">
       <div class="col-lg-5 reveal-left">
-        <div class="about-img-wrap pe-3 pb-3">
+        <div style="position:relative;padding-bottom:1.5rem;padding-right:1.5rem;">
           <img src="{% static 'imgs/about-us.jpeg' %}" alt="Community outreach" class="about-img"/>
           <div class="about-badge">
-            <span class="num">25+</span>
+            <span class="num">18+</span>
             <span class="lbl">Years of Impact</span>
           </div>
         </div>
@@ -191,27 +179,27 @@
   </div>
 </section>
 
-<!-- ══════════════════ IMPACT STORIES ══════════════════ -->
+<!-- ══ IMPACT STORIES ══ -->
 <section id="stories" class="sec-pad" style="background:#fff;">
   <div class="container">
     <div class="text-center mb-5 reveal">
       <div class="section-label text-green justify-content-center"><span class="dot bg-green"></span>Real Lives, Real Change</div>
       <h2 class="section-title">Impact <em class="text-red">Stories</em></h2>
       <div class="title-bar bg-red mx-auto mb-3"></div>
-      <p class="text-muted mx-auto" style="max-width:520px;">Every number represents a person. Meet a few of the individuals whose lives have been transformed through your support.</p>
+      <p class="text-muted mx-auto" style="max-width:520px;">Every number represents a person. Meet a few of the individuals whose lives have been transformed.</p>
     </div>
     <div class="row g-4">
       {% for story in stories %}
       <div class="col-md-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
         <div class="story-card card">
           <div style="overflow:hidden;">
-            <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image.url %}{{ story.image.url }}{% elif story.image %}{% static story.image %}{% endif %}" alt="{{ story.name }}" class="story-img"/>
+            <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image %}{% if story.image.url %}{{ story.image.url }}{% else %}{% static story.image %}{% endif %}{% endif %}" alt="{{ story.name }}" class="story-img"/>
           </div>
           <div class="card-body p-4">
             <span class="story-tag text-white mb-3 d-inline-block" style="background:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' %}">{{ story.tag }}</span>
             <p class="story-quote mb-3">"{% if story.narrative %}{{ story.narrative }}{% elif story.quote %}{{ story.quote }}{% else %}{{ story.story }}{% endif %}"</p>
             <div class="d-flex align-items-center gap-3">
-              <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image.url %}{{ story.image.url }}{% elif story.image %}{% static story.image %}{% endif %}" alt="" class="story-avatar"/>
+              <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image %}{% if story.image.url %}{{ story.image.url }}{% else %}{% static story.image %}{% endif %}{% endif %}" alt="" class="story-avatar"/>
               <div>
                 <div style="font-size:.93rem;font-weight:600;">{{ story.name }}</div>
                 <div class="text-muted" style="font-size:.82rem;"><i class="bi bi-geo-alt me-1"></i>{{ story.location }}</div>
@@ -230,7 +218,7 @@
   </div>
 </section>
 
-<!-- ══════════════════ PROGRAMMES ══════════════════ -->
+<!-- ══ PROGRAMMES ══ -->
 <section id="programs" class="sec-pad bg-cream">
   <div class="container">
     <div class="text-center mb-5 reveal">
@@ -255,7 +243,7 @@
   </div>
 </section>
 
-<!-- ══════════════════ PARTNERS ══════════════════ -->
+<!-- ══ PARTNERS ══ -->
 <section id="partners" class="sec-pad" style="background:#fff;">
   <div class="container">
     <div class="text-center mb-5 reveal">
@@ -280,22 +268,19 @@
   </div>
 </section>
 
-<!-- ══════════════════ NEWS & UPDATES ══════════════════ -->
+<!-- ══ NEWS ══ -->
 <section id="news" class="sec-pad" style="background:var(--cream);">
   <div class="container">
     <div class="text-center mb-5 reveal">
       <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>Latest from cosma</div>
       <h2 class="section-title">News &amp; <em class="text-green">Updates</em></h2>
       <div class="title-bar bg-green mx-auto mb-3"></div>
-      <p class="text-muted mx-auto" style="max-width:520px;">Stories from the field, programme milestones, and everything happening across our communities.</p>
     </div>
-
     {% if latest_news %}
     <div class="row g-4">
-      <!-- FEATURED NEWS — large card -->
       {% with post=latest_news.0 %}
       <div class="col-lg-7 reveal">
-        <a href="{% url 'cosma_development:news_detail' post.slug %}" class="news-hp-card-featured text-decoration-none d-block" style="border-radius:20px;overflow:hidden;position:relative;min-height:360px;background:url('{{ post.cover_url }}') center/cover no-repeat;box-shadow:0 10px 36px rgba(0,0,0,.16);transition:transform .3s,box-shadow .3s;">
+        <a href="{% url 'cosma_development:news_detail' post.slug %}" class="text-decoration-none d-block" style="border-radius:20px;overflow:hidden;position:relative;min-height:360px;background:url('{{ post.cover_url }}') center/cover no-repeat;box-shadow:0 10px 36px rgba(0,0,0,.16);transition:transform .3s,box-shadow .3s;" onmouseenter="this.style.transform='translateY(-5px)';this.style.boxShadow='0 18px 50px rgba(0,0,0,.22)'" onmouseleave="this.style.transform='';this.style.boxShadow='0 10px 36px rgba(0,0,0,.16)'">
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.2) 60%,transparent 100%);"></div>
           <div style="position:absolute;bottom:0;left:0;right:0;padding:2rem;">
             <span style="display:inline-block;background:var(--green);color:#fff;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:50px;margin-bottom:.6rem;">{{ post.get_category_display }}</span>
@@ -306,8 +291,6 @@
         </a>
       </div>
       {% endwith %}
-
-      <!-- SMALLER NEWS CARDS -->
       <div class="col-lg-5">
         <div class="d-flex flex-column gap-3 h-100">
           {% for post in latest_news|slice:"1:4" %}
@@ -323,14 +306,12 @@
         </div>
       </div>
     </div>
-
     <div class="text-center mt-5 reveal">
       <a href="{% url 'cosma_development:news' %}" class="btn btn-red rounded-pill px-4 py-2 fw-semibold">
         All News &amp; Updates <i class="bi bi-arrow-right ms-1"></i>
       </a>
     </div>
     {% else %}
-    <!-- Placeholder when no news yet -->
     <div class="text-center py-4">
       <p class="text-muted">News articles will appear here. <a href="{% url 'cosma_development:news' %}" class="text-green">Visit the news page</a>.</p>
     </div>
@@ -338,39 +319,31 @@
   </div>
 </section>
 
-<!-- ══════════════════ TESTIMONIALS ══════════════════ -->
+<!-- ══ TESTIMONIALS ══ -->
 <section id="testimonials" class="sec-pad" style="background:#fff;">
   <div class="container">
     <div class="text-center mb-5 reveal">
       <div class="section-label text-green justify-content-center"><span class="dot bg-green"></span>Voices of Impact</div>
       <h2 class="section-title">What People Say <em class="text-red">About Us</em></h2>
       <div class="title-bar bg-red mx-auto mb-3"></div>
-      <p class="text-muted mx-auto" style="max-width:520px;">From donors and volunteers to the communities we serve — here is what they say about cosma development Uganda.</p>
     </div>
-
     {% if testimonials %}
     <div class="row g-4">
       {% for t in testimonials %}
       <div class="col-md-6 col-lg-4 reveal" style="transition-delay:{{ forloop.counter0 }}0ms">
-        <div style="background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden;">
-          <!-- Quote mark decoration -->
+        <div style="background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;" onmouseenter="this.style.transform='translateY(-6px)';this.style.boxShadow='0 14px 40px rgba(0,0,0,.13)'" onmouseleave="this.style.transform='';this.style.boxShadow='0 4px 24px rgba(0,0,0,.08)'">
           <div style="font-family:var(--font-display);font-size:6rem;font-weight:700;color:var(--cream);position:absolute;top:-1.5rem;left:.5rem;line-height:1;pointer-events:none;">&ldquo;</div>
-          <!-- Stars -->
           <div style="margin-bottom:.8rem;position:relative;z-index:1;">
             {% for i in "12345" %}
             <i class="bi bi-star-fill" style="color:{% if forloop.counter <= t.rating %}#F59E0B{% else %}#E5E7EB{% endif %};font-size:.8rem;"></i>
             {% endfor %}
           </div>
-          <!-- Body -->
           <p style="font-size:.95rem;line-height:1.75;color:#444;flex:1;font-style:italic;position:relative;z-index:1;margin-bottom:1.2rem;">&ldquo;{{ t.body }}&rdquo;</p>
-          <!-- Person -->
           <div style="display:flex;align-items:center;gap:.75rem;padding-top:1rem;border-top:1px solid var(--cream);">
             {% if t.photo %}
             <img src="{{ t.photo.url }}" alt="{{ t.name }}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--green-light);flex-shrink:0;"/>
             {% else %}
-            <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--red),#c0392b);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.85rem;font-weight:700;flex-shrink:0;">
-              {{ t.name|slice:":2"|upper }}
-            </div>
+            <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--red),#c0392b);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.85rem;font-weight:700;flex-shrink:0;">{{ t.name|slice:":2"|upper }}</div>
             {% endif %}
             <div>
               <div style="font-size:.9rem;font-weight:700;color:var(--charcoal);">{{ t.name }}</div>
@@ -382,12 +355,10 @@
       {% endfor %}
     </div>
     {% else %}
-    <!-- Placeholder -->
     <div class="text-center py-4">
       <p class="text-muted">Be the first to share your experience with cosma development.</p>
     </div>
     {% endif %}
-
     <div class="text-center mt-5 reveal">
       <a href="{% url 'cosma_development:submit_testimonial' %}" class="btn btn-outline-green rounded-pill px-4 py-2 fw-semibold me-3">
         <i class="bi bi-chat-quote me-2"></i>Share Your Experience
@@ -399,54 +370,29 @@
   </div>
 </section>
 
-
-<!-- ══════════════════ DONATE — GLOBALGIVING ══════════════════ -->
+<!-- ══ DONATE ══ -->
 <section id="donate">
   <div class="container" style="position:relative;z-index:1;">
     <div class="row align-items-center g-5">
-
-      <!-- LEFT: Impact storytelling -->
       <div class="col-lg-6 reveal-left">
         <div class="section-label" style="color:rgba(255,255,255,.55);"><span class="dot" style="background:var(--green-light);"></span>Make A Difference</div>
         <h2 style="font-size:clamp(2rem,4.5vw,3.6rem);font-weight:700;color:#fff;line-height:1.1;" class="mb-3">
           Your Gift <em style="color:var(--green-light);">Changes Lives</em> Today
         </h2>
         <p style="color:rgba(255,255,255,.75);font-size:.98rem;line-height:1.85;max-width:460px;" class="mb-4">
-          Every contribution — no matter the size — reaches families across Uganda directly. Here is what donations from people like you have already achieved:
+          Every contribution reaches families across Uganda directly. Here is what donations have already achieved:
         </p>
-
-        <!-- Impact list -->
         <div class="mb-4">
+          {% for item in impact_items %}
           <div class="donate-impact-item">
-            <div class="donate-impact-emoji">👧</div>
+            <div class="donate-impact-emoji">{{ item.emoji }}</div>
             <div class="donate-impact-text">
-              <strong>2,400+ children kept in school</strong>
-              <span>School fees, uniforms, books, and mentorship — because no child should miss school due to poverty.</span>
+              <strong>{{ item.figure }} {{ item.desc|truncatewords:4 }}</strong>
+              <span>{{ item.desc }}</span>
             </div>
           </div>
-          <div class="donate-impact-item">
-            <div class="donate-impact-emoji">🌾</div>
-            <div class="donate-impact-text">
-              <strong>4,200+ farmers supported</strong>
-              <span>Seeds, training, and market access that increased average household income by 60%.</span>
-            </div>
-          </div>
-          <div class="donate-impact-item">
-            <div class="donate-impact-emoji">💧</div>
-            <div class="donate-impact-text">
-              <strong>40+ clean water sites installed</strong>
-              <span>Boreholes and rainwater systems bringing safe water to communities for the first time.</span>
-            </div>
-          </div>
-          <div class="donate-impact-item">
-            <div class="donate-impact-emoji">🏥</div>
-            <div class="donate-impact-text">
-              <strong>15,000+ health consultations</strong>
-              <span>Mobile clinics and maternal care reaching villages with no nearby health facilities.</span>
-            </div>
-          </div>
+          {% endfor %}
         </div>
-
         <div class="trust-row">
           <div class="trust-item-sm"><i class="bi bi-patch-check-fill"></i> Verified on GlobalGiving</div>
           <div class="trust-item-sm"><i class="bi bi-shield-check"></i> 98% reaches programmes</div>
@@ -454,53 +400,43 @@
           <div class="trust-item-sm"><i class="bi bi-arrow-repeat"></i> Monthly giving available</div>
         </div>
       </div>
-
-      <!-- RIGHT: GlobalGiving CTA -->
       <div class="col-lg-5 offset-lg-1 reveal-right">
         <div class="gg-cta-card">
           <div class="gg-cta-top">
             <div class="d-flex align-items-center gap-2 mb-3">
               <div class="gg-logo-badge" style="width:32px;height:32px;font-size:.8rem;">GG</div>
-              <div>
-                <div style="color:#fff;font-weight:700;font-size:.9rem;">GlobalGiving</div>
-                <div style="color:rgba(255,255,255,.65);font-size:.75rem;">Verified non-profit platform</div>
-              </div>
+              <div><div style="color:#fff;font-weight:700;font-size:.9rem;">GlobalGiving</div>
+              <div style="color:rgba(255,255,255,.65);font-size:.75rem;">Verified non-profit platform</div></div>
             </div>
             <h3 style="color:#fff;font-size:1.5rem;margin-bottom:.3rem;">Donate to cosma development</h3>
             <p style="color:rgba(255,255,255,.72);font-size:.87rem;margin:0;">Securely processed by GlobalGiving — trusted by 1M+ donors worldwide.</p>
           </div>
           <div class="gg-cta-body">
             <p class="text-muted mb-3" style="font-size:.88rem;line-height:1.7;">Choose your amount, frequency, and payment method on our verified GlobalGiving campaign page. All major cards, PayPal, and more are accepted.</p>
-
             <a href="{{ globalgiving_url|default:'https://www.globalgiving.org/donate/11831/cosma-sustainable-rural-development/' }}"
-               target="_blank" rel="noopener"
-               class="btn-gg-main mb-3">
+               target="_blank" rel="noopener" class="btn-gg-main mb-3">
               <span class="gg-logo-badge">GG</span>
               Donate on GlobalGiving
               <i class="bi bi-box-arrow-up-right" style="font-size:.8rem;opacity:.75;"></i>
             </a>
-
             <div class="d-flex flex-wrap gap-2 justify-content-center">
               <span class="badge rounded-pill px-3 py-2" style="background:rgba(59,173,110,.1);color:var(--green);font-size:.76rem;"><i class="bi bi-lock-fill me-1"></i>Secure</span>
               <span class="badge rounded-pill px-3 py-2" style="background:rgba(59,173,110,.1);color:var(--green);font-size:.76rem;"><i class="bi bi-globe me-1"></i>Any currency</span>
               <span class="badge rounded-pill px-3 py-2" style="background:rgba(59,173,110,.1);color:var(--green);font-size:.76rem;"><i class="bi bi-receipt me-1"></i>Tax receipt</span>
               <span class="badge rounded-pill px-3 py-2" style="background:rgba(59,173,110,.1);color:var(--green);font-size:.76rem;"><i class="bi bi-arrow-repeat me-1"></i>Monthly option</span>
             </div>
-
             <hr style="border-color:rgba(0,0,0,.08);margin:1.2rem 0;"/>
             <p class="text-center mb-0" style="font-size:.78rem;color:var(--muted);">
-              Prefer bank transfer?
-              <a href="{% url 'cosma_development:contact' %}" class="text-green fw-semibold">Contact us</a>
+              Prefer bank transfer? <a href="{% url 'cosma_development:contact' %}" class="text-green fw-semibold">Contact us</a>
             </p>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ CONTACT ══════════════════ -->
+<!-- ══ CONTACT ══ -->
 <section id="contact" class="sec-pad bg-cream">
   <div class="container">
     <div class="row justify-content-center">
@@ -508,7 +444,7 @@
         <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>Get In Touch</div>
         <h2 class="section-title mb-2">Let's <em class="text-green">Talk</em></h2>
         <div class="title-bar bg-green mx-auto mb-4"></div>
-        <p class="text-muted mb-5">Interested in partnering, volunteering, or learning more about our work? We'd love to hear from you.</p>
+        <p class="text-muted mb-5">Interested in partnering, volunteering, or learning more about our work?</p>
       </div>
     </div>
     <div class="row g-4 justify-content-center">
@@ -516,15 +452,18 @@
         <div class="d-flex flex-column gap-4">
           <div class="d-flex align-items-start gap-3">
             <div class="icon-box bg-red"><i class="bi bi-geo-alt-fill text-white"></i></div>
-            <div><strong>Our Office</strong><p class="mb-0 text-muted" style="font-size:.92rem;">Plot 45, Kampala Road,<br>Kampala, Uganda</p></div>
+            <div><strong>Our Office</strong>
+              <p class="mb-0 text-muted" style="font-size:.92rem;">{% if site %}{{ site.office_address }}{% else %}Plot 45, Kampala Road, Kampala, Uganda{% endif %}</p></div>
           </div>
           <div class="d-flex align-items-start gap-3">
             <div class="icon-box bg-green"><i class="bi bi-telephone-fill text-white"></i></div>
-            <div><strong>Phone</strong><p class="mb-0 text-muted" style="font-size:.92rem;">+256 700 123 456</p></div>
+            <div><strong>Phone</strong>
+              <p class="mb-0 text-muted" style="font-size:.92rem;">{% if site %}{{ site.phone }}{% else %}+256 700 123 456{% endif %}</p></div>
           </div>
           <div class="d-flex align-items-start gap-3">
             <div class="icon-box bg-red"><i class="bi bi-envelope-fill text-white"></i></div>
-            <div><strong>Email</strong><p class="mb-0 text-muted" style="font-size:.92rem;">info@cosmadevelopments.ug</p></div>
+            <div><strong>Email</strong>
+              <p class="mb-0 text-muted" style="font-size:.92rem;">{% if site %}{{ site.email }}{% else %}info@cosmadevelopments.org{% endif %}</p></div>
           </div>
         </div>
       </div>
@@ -556,26 +495,67 @@
 const slides   = document.querySelectorAll('.hero-slide');
 const dotsWrap = document.getElementById('heroDots');
 let current = 0, timer;
-slides.forEach((_,i)=>{const btn=document.createElement('button');btn.className='hero-dot'+(i===0?' active':'');btn.addEventListener('click',()=>goTo(i));dotsWrap.appendChild(btn);});
-function goTo(n){slides[current].classList.remove('active');dotsWrap.children[current].classList.remove('active');current=(n+slides.length)%slides.length;slides[current].classList.add('active');dotsWrap.children[current].classList.add('active');clearInterval(timer);timer=setInterval(()=>goTo(current+1),5500);}
-timer=setInterval(()=>goTo(current+1),5500);
+slides.forEach((_, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'hero-dot' + (i === 0 ? ' active' : '');
+  btn.setAttribute('aria-label', `Slide ${i + 1}`);
+  btn.addEventListener('click', () => goTo(i));
+  dotsWrap.appendChild(btn);
+});
+function goTo(n) {
+  slides[current].classList.remove('active');
+  dotsWrap.children[current].classList.remove('active');
+  current = (n + slides.length) % slides.length;
+  slides[current].classList.add('active');
+  dotsWrap.children[current].classList.add('active');
+  clearInterval(timer);
+  timer = setInterval(() => goTo(current + 1), 5500);
+}
+timer = setInterval(() => goTo(current + 1), 5500);
 
 /* ── Stat counters ── */
-const statsObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&!e.target.classList.contains('counted')){e.target.classList.add('counted');animateCounter(e.target);}});},{threshold:0.5});
-document.querySelectorAll('.hero-stat .val').forEach(el=>statsObserver.observe(el));
-function animateCounter(el){const text=el.textContent.trim();const match=text.match(/(\d+)/);if(!match)return;const target=parseInt(match[1]);const suffix=text.replace(/\d+/g,'').trim();let cur=0;const start=Date.now();const update=()=>{const p=Math.min((Date.now()-start)/2000,1);cur=Math.floor(target*p);el.textContent=cur.toLocaleString()+suffix;if(p<1)requestAnimationFrame(update);};update();}
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.classList.contains('counted')) {
+      e.target.classList.add('counted');
+      const text   = e.target.dataset.target || '';
+      const target = parseInt(text);
+      const suffix = e.target.dataset.suffix || '';
+      if (isNaN(target)) return;
+      let cur = 0;
+      const start  = Date.now();
+      const update = () => {
+        const p = Math.min((Date.now() - start) / 2000, 1);
+        cur = Math.floor(target * p);
+        e.target.textContent = cur.toLocaleString() + suffix;
+        if (p < 1) requestAnimationFrame(update);
+      };
+      update();
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.hero-stat .val.counter').forEach(el => statsObs.observe(el));
 
 /* ── Contact form ── */
-document.getElementById('contactForm').addEventListener('submit',async e=>{
+document.getElementById('contactForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const form=e.target;
-  const payload={name:form.querySelector('[name=name]').value,email:form.querySelector('[name=email]').value,subject:form.querySelector('[name=subject]').value,message:form.querySelector('[name=message]').value};
-  try{
-    const res=await fetch("{% url 'cosma_development:contact_submit' %}",{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCsrf()},body:JSON.stringify(payload)});
-    const data=await res.json();
-    showToast(data.message,data.status);
-    if(data.status==='success')form.reset();
-  }catch{showToast('Something went wrong. Please try again.','error');}
+  const form = e.target;
+  const payload = {
+    name: form.querySelector('[name=name]').value,
+    email: form.querySelector('[name=email]').value,
+    subject: form.querySelector('[name=subject]').value,
+    message: form.querySelector('[name=message]').value
+  };
+  try {
+    const res  = await fetch("{% url 'cosma_development:contact_submit' %}", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrf() },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    showToast(data.message, data.status);
+    if (data.status === 'success') form.reset();
+  } catch { showToast('Something went wrong. Please try again.', 'error'); }
 });
 </script>
 {% endblock %}

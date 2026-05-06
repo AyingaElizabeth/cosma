@@ -1,0 +1,354 @@
+{% extends "base.html" %}
+{% block title %}Fund a Project — cosma development Uganda{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ── PROJECT CARDS ── */
+.project-card {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 6px 28px rgba(0,0,0,.09);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform .3s, box-shadow .3s;
+}
+.project-card:hover { transform: translateY(-8px); box-shadow: 0 18px 50px rgba(0,0,0,.15); }
+
+.project-card-img {
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+}
+.project-card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s;
+}
+.project-card:hover .project-card-img img { transform: scale(1.06); }
+
+.project-amount-badge {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  background: var(--green);
+  color: #fff;
+  font-weight: 700;
+  font-size: .85rem;
+  padding: .4rem .9rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 14px rgba(59,173,110,.45);
+}
+
+.project-card-body {
+  padding: 1.8rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.project-card h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: .6rem;
+  line-height: 1.25;
+}
+
+.project-card p {
+  font-size: .9rem;
+  color: #555;
+  line-height: 1.75;
+  flex: 1;
+  margin-bottom: 1.2rem;
+}
+
+.project-progress-wrap {
+  margin-bottom: 1.2rem;
+}
+.project-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: .78rem;
+  color: var(--muted);
+  margin-bottom: .35rem;
+}
+.project-progress-bar {
+  height: 7px;
+  background: rgba(0,0,0,.07);
+  border-radius: 50px;
+  overflow: hidden;
+}
+.project-progress-fill {
+  height: 100%;
+  border-radius: 50px;
+  background: var(--green);
+  transition: width 1.4s cubic-bezier(.22,.61,.36,1);
+}
+
+/* ── IMPACT CALLOUT ── */
+.impact-callout {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  border-radius: 20px;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.impact-callout::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+}
+.impact-callout::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.06);
+}
+
+/* ── TOTAL FUNDING STRIP ── */
+.funding-strip {
+  background: var(--charcoal);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.funding-strip .total-label { color: rgba(255,255,255,.6); font-size: .85rem; }
+.funding-strip .total-value {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--green-light);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+{# ══ HERO ══ #}
+{% if hero and hero.bg_image_url %}
+<section style="background-image:url('{{ hero.bg_image_url }}');background-size:cover;background-position:center;position:relative;min-height:420px;display:flex;align-items:flex-end;margin-top:69px;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,{{ hero.overlay_opacity|default:'0.58' }});"></div>
+  <div style="position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-60px;left:-60px;width:240px;height:240px;border-radius:50%;background:rgba(59,173,110,.1);pointer-events:none;"></div>
+  <div class="container py-5" style="position:relative;z-index:2;">
+    <nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}" style="color:rgba(255,255,255,.7);">Home</a></li>
+      <li class="breadcrumb-item" style="color:rgba(255,255,255,.7);">Get Involved</li>
+      <li class="breadcrumb-item active" style="color:#fff;">Fund a Project</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi {{ hero.tag_icon|default:'bi-bullseye' }}"></i> {{ hero.tag_text|default:'Project Wishlist' }}</div>
+    <h1 style="color:#fff;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;max-width:780px;line-height:1.1;margin-bottom:.8rem;">{{ hero.heading|default:'Fund a Project. Transform a Community.' }}</h1>
+    <p style="color:rgba(255,255,255,.88);font-size:1.05rem;max-width:600px;line-height:1.75;margin-bottom:0;">{{ hero.subheading|default:'Practical, high-impact investments that strengthen livelihoods, improve productivity, and expand opportunities for rural communities.' }}</p>
+  </div>
+</section>
+{% else %}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      <li class="breadcrumb-item">Get Involved</li>
+      <li class="breadcrumb-item active">Fund a Project</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-bullseye"></i> Project Wishlist</div>
+    <h1>Fund a Project. Transform a Community.</h1>
+    <p>Practical, high-impact investments that strengthen livelihoods, improve productivity, and expand opportunities for rural communities.</p>
+  </div>
+</section>
+{% endif %}
+
+<!-- ══ INTRO + TOTAL ══ -->
+<section class="sec-pad" style="background:#fff;">
+  <div class="container">
+    <div class="row align-items-center g-5 mb-5">
+      <div class="col-lg-7 reveal-left">
+        <div class="section-label text-red"><span class="dot bg-red"></span>Why Fund a Project?</div>
+        <h2 class="section-title mb-3">Direct Investment. <em class="text-green">Real Change.</em></h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <p class="text-muted mb-3" style="line-height:1.85;font-size:1.02rem;">
+          Our project wishlist highlights the specific equipment and infrastructure that will have the greatest impact on the rural communities we serve. Each project is carefully selected based on community need, cost-effectiveness, and long-term sustainability.
+        </p>
+        <p class="text-muted" style="line-height:1.85;font-size:1.02rem;">
+          By funding a project, you directly contribute to sustainable, long-term change — and you'll receive a full report on how your investment transformed lives.
+        </p>
+      </div>
+      <div class="col-lg-5 reveal-right">
+        <div class="funding-strip mb-3">
+          <div>
+            <div class="total-label">Total Wishlist Value</div>
+            <div class="total-value">$97,390</div>
+          </div>
+          <div>
+            <div class="total-label">Projects</div>
+            <div class="total-value" style="font-size:2.2rem;">6</div>
+          </div>
+          <div>
+            <a href="{% url 'cosma_development:contact' %}" class="btn btn-green rounded-pill px-4 py-2 fw-semibold">
+              <i class="bi bi-envelope me-2"></i>Get in Touch
+            </a>
+          </div>
+        </div>
+        <p class="text-muted" style="font-size:.82rem;"><i class="bi bi-shield-check me-1 text-green"></i>All funds go directly to programme delivery. We provide full reporting on fund utilisation.</p>
+      </div>
+    </div>
+
+    <!-- ══ PROJECT GRID ══ -->
+    <div class="row g-4">
+
+      {% for project in projects %}
+      <div class="col-md-6 col-lg-4 reveal" style="transition-delay:{{ forloop.counter0 }}0ms">
+        <div class="project-card">
+          <div class="project-card-img">
+            <img src="{{ project.image }}" alt="{{ project.title }}"/>
+            <span class="project-amount-badge">${{ project.amount_display }}</span>
+          </div>
+          <div class="project-card-body">
+            <div class="project-icon" style="background:{% cycle 'rgba(59,173,110,.1)' 'rgba(142,0,5,.1)' 'rgba(59,173,110,.1)' 'rgba(142,0,5,.1)' 'rgba(59,173,110,.1)' 'rgba(142,0,5,.1)' %};">
+              <i class="bi {{ project.icon }}" style="color:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' %};"></i>
+            </div>
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.desc }}</p>
+            <div class="project-progress-wrap">
+              <div class="project-progress-label">
+                <span>Funding progress</span>
+                <span class="fw-semibold" style="color:var(--green);">{{ project.funded_pct }}%</span>
+              </div>
+              <div class="project-progress-bar">
+                <div class="project-progress-fill" data-width="{{ project.funded_pct }}" style="width:0%;"></div>
+              </div>
+            </div>
+            <a href="{% url 'cosma_development:contact' %}" class="btn btn-{% cycle 'green' 'outline-red' 'green' 'outline-red' 'green' 'outline-red' %} rounded-pill px-4 py-2 fw-semibold w-100">
+              <i class="bi bi-heart-fill me-2"></i>Fund This Project
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ IMPACT CALLOUT ══ -->
+<section class="sec-pad" style="background:var(--cream);">
+  <div class="container">
+    <div class="impact-callout reveal">
+      <div class="row align-items-center g-4" style="position:relative;z-index:1;">
+        <div class="col-lg-7">
+          <div class="section-label" style="color:rgba(255,255,255,.6);"><span class="dot bg-white"></span>Your Investment</div>
+          <h3 style="color:#fff;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;margin-bottom:.8rem;">What Your Funding Makes Possible</h3>
+          <div class="row g-3 mt-1">
+            <div class="col-sm-6">
+              <div class="d-flex align-items-start gap-3">
+                <i class="bi bi-check-circle-fill" style="color:rgba(255,255,255,.9);font-size:1.1rem;flex-shrink:0;margin-top:2px;"></i>
+                <span style="color:rgba(255,255,255,.85);font-size:.92rem;line-height:1.6;">Year-round crop production for hundreds of farming families</span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="d-flex align-items-start gap-3">
+                <i class="bi bi-check-circle-fill" style="color:rgba(255,255,255,.9);font-size:1.1rem;flex-shrink:0;margin-top:2px;"></i>
+                <span style="color:rgba(255,255,255,.85);font-size:.92rem;line-height:1.6;">Higher-value products reaching competitive markets</span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="d-flex align-items-start gap-3">
+                <i class="bi bi-check-circle-fill" style="color:rgba(255,255,255,.9);font-size:1.1rem;flex-shrink:0;margin-top:2px;"></i>
+                <span style="color:rgba(255,255,255,.85);font-size:.92rem;line-height:1.6;">Timely field support reaching remote farming communities</span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="d-flex align-items-start gap-3">
+                <i class="bi bi-check-circle-fill" style="color:rgba(255,255,255,.9);font-size:1.1rem;flex-shrink:0;margin-top:2px;"></i>
+                <span style="color:rgba(255,255,255,.85);font-size:.92rem;line-height:1.6;">Stored harvests sold at optimal prices — not farm-gate desperation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 offset-lg-1 text-center" style="position:relative;z-index:1;">
+          <div style="background:rgba(255,255,255,.15);border-radius:16px;padding:2rem;border:1px solid rgba(255,255,255,.2);">
+            <i class="bi bi-envelope-heart-fill fs-1 mb-3 d-block" style="color:rgba(255,255,255,.9);"></i>
+            <h5 style="color:#fff;margin-bottom:.5rem;">Ready to Fund a Project?</h5>
+            <p style="color:rgba(255,255,255,.75);font-size:.87rem;margin-bottom:1.2rem;line-height:1.6;">Contact us to discuss which project matches your giving goals and how we'll report back to you.</p>
+            <a href="{% url 'cosma_development:contact' %}" class="btn btn-light rounded-pill px-4 py-2 fw-semibold w-100" style="color:var(--green);">
+              <i class="bi bi-send-fill me-2"></i>Contact Us
+            </a>
+            <a href="{% url 'cosma_development:donate_page' %}" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold w-100 mt-2" style="color:#fff;">
+              <i class="bi bi-heart-fill me-2"></i>General Donation
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ OTHER WAYS ══ -->
+<section class="sec-pad" style="background:#fff;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>More Ways to Help</div>
+      <h2 class="section-title">Other Ways to <em class="text-green">Get Involved</em></h2>
+      <div class="title-bar bg-green mx-auto mt-2"></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4 reveal">
+        <div class="hf-card p-4 text-center h-100">
+          <i class="bi bi-person-plus fs-1 text-red mb-3 d-block"></i>
+          <h5>Sponsor a Child</h5>
+          <p class="text-muted mb-3" style="font-size:.9rem;line-height:1.65;">Keep a child in school by contributing to fees, healthcare, and essential learning needs.</p>
+          <a href="{% url 'cosma_development:sponsor_child' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">Learn More</a>
+        </div>
+      </div>
+      <div class="col-md-4 reveal" style="transition-delay:100ms">
+        <div class="hf-card p-4 text-center h-100">
+          <i class="bi bi-person-heart fs-1 text-green mb-3 d-block"></i>
+          <h5>Volunteer With Us</h5>
+          <p class="text-muted mb-3" style="font-size:.9rem;line-height:1.65;">Share your time and skills to support our programmes and expand our reach.</p>
+          <a href="{% url 'cosma_development:volunteer' %}" class="btn btn-outline-green rounded-pill px-4 py-2 fw-semibold">Learn More</a>
+        </div>
+      </div>
+      <div class="col-md-4 reveal" style="transition-delay:200ms">
+        <div class="hf-card p-4 text-center h-100">
+          <i class="bi bi-share fs-1 text-red mb-3 d-block"></i>
+          <h5>Share Our Story</h5>
+          <p class="text-muted mb-3" style="font-size:.9rem;line-height:1.65;">Help us reach new supporters by sharing our work with your networks and communities.</p>
+          <a href="{% url 'cosma_development:share_story' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">Share Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+/* ── Animate progress bars on scroll ── */
+const fills = document.querySelectorAll('.project-progress-fill');
+const barObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.animated) {
+      e.target.dataset.animated = '1';
+      e.target.style.width = e.target.dataset.width + '%';
+    }
+  });
+}, { threshold: 0.3 });
+fills.forEach(f => barObs.observe(f));
+</script>
+{% endblock %}

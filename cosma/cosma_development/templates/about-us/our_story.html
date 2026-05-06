@@ -10,110 +10,37 @@
 .stat-strip-val{font-family:var(--font-display);font-size:2.2rem;font-weight:700;color:var(--green-light);display:block;line-height:1;}
 .stat-strip-lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.65);margin-top:.3rem;display:block;}
 
-/* ═══════ TIMELINE SECTION ═══════ */
+/* ═══════ TIMELINE ═══════ */
 .timeline-section{background:#fff;padding:6rem 0;}
 .tl-intro{max-width:640px;margin:0 auto 4.5rem;text-align:center;}
-
-/* THE SPINE */
 .timeline{position:relative;}
-.timeline::before{
-  content:'';position:absolute;
-  left:50%;top:0;bottom:0;
-  width:3px;
-  background:linear-gradient(to bottom,var(--red) 0%,var(--green) 50%,var(--red) 100%);
-  transform:translateX(-50%);
-}
-@media(max-width:767px){
-  .timeline::before{left:28px;}
-}
-
-/* EACH NODE */
-.tl-node{
-  position:relative;
-  display:grid;
-  grid-template-columns:1fr 60px 1fr;
-  gap:0;
-  margin-bottom:0;
-  opacity:0;
-  transition:opacity .6s ease, transform .6s ease;
-}
-.tl-node.tl-left{ transform:translateX(-40px); }
-.tl-node.tl-right{ transform:translateX(40px); }
-.tl-node.visible{ opacity:1; transform:translateX(0)!important; }
-
-/* CONTENT CARD */
-.tl-card{
-  background:#fff;border-radius:18px;
-  box-shadow:0 6px 30px rgba(0,0,0,.09);
-  padding:1.8rem 2rem;
-  position:relative;
-  transition:box-shadow .3s;
-}
+.timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--red) 0%,var(--green) 50%,var(--red) 100%);transform:translateX(-50%);}
+@media(max-width:767px){.timeline::before{left:28px;}}
+.tl-node{position:relative;display:grid;grid-template-columns:1fr 60px 1fr;gap:0;margin-bottom:0;opacity:0;transition:opacity .6s ease,transform .6s ease;}
+.tl-node.tl-left{transform:translateX(-40px);}
+.tl-node.tl-right{transform:translateX(40px);}
+.tl-node.visible{opacity:1;transform:translateX(0)!important;}
+.tl-card{background:#fff;border-radius:18px;box-shadow:0 6px 30px rgba(0,0,0,.09);padding:1.8rem 2rem;position:relative;transition:box-shadow .3s;}
 .tl-card:hover{box-shadow:0 14px 44px rgba(0,0,0,.15);}
-
-/* CARD ACCENT BAR */
-.tl-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:4px;
-  border-radius:18px 18px 0 0;
-}
+.tl-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:18px 18px 0 0;}
 .tl-left .tl-card{border-radius:18px 4px 18px 18px;}
 .tl-right .tl-card{border-radius:4px 18px 18px 18px;}
 .tl-accent-red .tl-card::before{background:var(--red);}
 .tl-accent-green .tl-card::before{background:var(--green);}
-
-/* YEAR BADGE ON CARD */
-.tl-year{
-  display:inline-flex;align-items:center;
-  font-family:var(--font-display);font-size:1.1rem;font-weight:700;
-  padding:.3rem .9rem;border-radius:50px;margin-bottom:.75rem;
-}
+.tl-year{display:inline-flex;align-items:center;font-family:var(--font-display);font-size:1.1rem;font-weight:700;padding:.3rem .9rem;border-radius:50px;margin-bottom:.75rem;}
 .tl-accent-red .tl-year{background:rgba(142,0,5,.1);color:var(--red);}
 .tl-accent-green .tl-year{background:rgba(59,173,110,.1);color:var(--green);}
-
 .tl-card h3{font-size:1.45rem;font-weight:700;margin-bottom:.5rem;line-height:1.2;}
 .tl-card p{font-size:.92rem;line-height:1.75;color:#555;margin-bottom:0;}
-
-/* STAT PILL ON CARD */
-.tl-stat{
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:.8rem;font-weight:600;padding:.35rem .9rem;
-  border-radius:50px;margin-top:.9rem;
-}
+.tl-stat{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;padding:.35rem .9rem;border-radius:50px;margin-top:.9rem;}
 .tl-accent-red .tl-stat{background:rgba(142,0,5,.08);color:var(--red);}
 .tl-accent-green .tl-stat{background:rgba(59,173,110,.08);color:var(--green);}
-
-/* IMAGE ON CARD */
 .tl-card-img{width:100%;border-radius:10px;height:170px;object-fit:cover;margin-top:1rem;}
-
-/* CENTRE NODE CIRCLE */
-.tl-centre{
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:flex-start;padding-top:1.9rem;
-  position:relative;z-index:2;
-}
-.tl-dot{
-  width:50px;height:50px;border-radius:50%;
-  border:4px solid #fff;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.2rem;color:#fff;
-  box-shadow:0 4px 16px rgba(0,0,0,.18);
-  flex-shrink:0;
-}
+.tl-centre{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:1.9rem;position:relative;z-index:2;}
+.tl-dot{width:50px;height:50px;border-radius:50%;border:4px solid #fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);flex-shrink:0;}
 .tl-accent-red .tl-dot{background:var(--red);}
 .tl-accent-green .tl-dot{background:var(--green);}
-
-/* CONNECTOR LINES FROM CENTRE TO CARD */
-.tl-line-left,.tl-line-right{
-  position:absolute;top:2.25rem;height:2px;width:30px;
-  background:currentColor;
-}
-.tl-line-left{right:50px;color:inherit;}
-.tl-line-right{left:50px;}
-
-/* EMPTY SIDE (opposite of card) */
 .tl-empty{/* spacer */}
-
-/* ── MOBILE OVERRIDES ── */
 @media(max-width:767px){
   .timeline::before{left:28px;}
   .tl-node{grid-template-columns:56px 1fr;grid-template-rows:auto;}
@@ -132,28 +59,48 @@
 .val-icon{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem;}
 
 /* ═══════ LOOKING AHEAD ═══════ */
-.ahead-section{
-  padding:5rem 0;
-  background:linear-gradient(135deg,var(--charcoal) 0%,#2a2a2a 100%);
-  position:relative;overflow:hidden;
-}
+.ahead-section{padding:5rem 0;background:linear-gradient(135deg,var(--charcoal) 0%,#2a2a2a 100%);position:relative;overflow:hidden;}
 .ahead-section::before{content:'';position:absolute;top:-80px;right:-80px;width:360px;height:360px;border-radius:50%;background:rgba(59,173,110,.08);}
 .ahead-section::after{content:'';position:absolute;bottom:-60px;left:-60px;width:280px;height:280px;border-radius:50%;background:rgba(142,0,5,.07);}
-.goal-item{
-  display:flex;align-items:flex-start;gap:1rem;
-  padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.08);
-}
+.goal-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.08);}
 .goal-item:last-child{border-bottom:none;}
-.goal-num{
-  font-family:var(--font-display);font-size:2rem;font-weight:700;
-  color:var(--green-light);line-height:1;flex-shrink:0;min-width:50px;
-}
+.goal-num{font-family:var(--font-display);font-size:2rem;font-weight:700;color:var(--green-light);line-height:1;flex-shrink:0;min-width:50px;}
 </style>
 {% endblock %}
 
 {% block content %}
 
-<!-- ═══════ HERO ═══════ -->
+{# ══ HERO with image background if admin set one ══ #}
+{% if hero and hero.bg_image_url %}
+<section style="
+  background-image:url('{{ hero.bg_image_url }}');
+  background-size:cover;background-position:center;
+  position:relative;min-height:460px;display:flex;align-items:flex-end;
+  margin-top:69px;overflow:hidden;padding-bottom:0;">
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,{{ hero.overlay_opacity|default:'0.58' }});"></div>
+  <div class="container" style="position:relative;z-index:2;padding-bottom:0;">
+    <nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}" style="color:rgba(255,255,255,.7);">Home</a></li>
+      <li class="breadcrumb-item" style="color:rgba(255,255,255,.7);">About</li>
+      <li class="breadcrumb-item active" style="color:#fff;">Our Story</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi {{ hero.tag_icon|default:'bi-map' }}"></i> {{ hero.tag_text|default:'Our Journey' }}</div>
+    <h1 style="color:#fff;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;margin-bottom:1rem;">{{ hero.heading|default:'Our Story' }}</h1>
+    <p style="color:rgba(255,255,255,.88);font-size:1.05rem;max-width:560px;line-height:1.75;">{{ hero.subheading|default:'From a single after-school programme to a national force serving over 125,000 lives.' }}</p>
+    <!-- Stat strip sits at bottom of hero -->
+    <div class="stat-strip">
+      <div class="row g-0">
+        {% for s in hero_stats %}
+        <div class="col stat-strip-item">
+          <span class="stat-strip-val counter" data-target="{{ s.raw }}" data-suffix="{{ s.suffix }}">0</span>
+          <span class="stat-strip-lbl">{{ s.label }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% else %}
 <section class="page-hero" style="padding-bottom:0;">
   <div class="container" style="position:relative;z-index:1;">
     <nav aria-label="breadcrumb"><ol class="breadcrumb">
@@ -163,13 +110,12 @@
     </ol></nav>
     <div class="page-hero-tag"><i class="bi bi-map"></i> Our Journey</div>
     <h1>Our Story</h1>
-    <p>From a single after-school programme in 2006 to a national force serving over 125,000 lives — follow the journey that built cosma development Uganda.</p>
-    <!-- Stat strip -->
+    <p>From a single after-school programme in 2006 to a national force serving over 125,000 lives.</p>
     <div class="stat-strip">
       <div class="row g-0">
         {% for s in hero_stats %}
         <div class="col stat-strip-item">
-          <span class="stat-strip-val counter" data-target="{{ s.raw }}">0</span>
+          <span class="stat-strip-val counter" data-target="{{ s.raw }}" data-suffix="{{ s.suffix }}">0</span>
           <span class="stat-strip-lbl">{{ s.label }}</span>
         </div>
         {% endfor %}
@@ -177,6 +123,7 @@
     </div>
   </div>
 </section>
+{% endif %}
 
 <!-- ═══════ TIMELINE ═══════ -->
 <section class="timeline-section">
@@ -185,60 +132,50 @@
       <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>18 Years of Impact</div>
       <h2 class="section-title">The Road That <em class="text-green">Brought Us Here</em></h2>
       <div class="title-bar bg-green mx-auto mt-2 mb-3"></div>
-      <p class="text-muted" style="line-height:1.8;">Every milestone below represents real people, real communities, and real change. Scroll through the chapters of our story.</p>
+      <p class="text-muted" style="line-height:1.8;">Every milestone represents real people, real communities, and real change. Scroll through the chapters of our story.</p>
     </div>
 
     <div class="timeline">
       {% for event in timeline %}
       {% if forloop.counter|divisibleby:2 %}
-      <!-- RIGHT-SIDE NODE -->
       <div class="tl-node tl-right tl-accent-{% if forloop.counter|divisibleby:3 %}red{% else %}green{% endif %}">
         <div class="tl-empty"></div>
-        <div class="tl-centre">
-          <div class="tl-dot"><i class="bi {{ event.icon }}"></i></div>
-        </div>
+        <div class="tl-centre"><div class="tl-dot"><i class="bi {{ event.icon }}"></i></div></div>
         <div class="tl-card-wrap-right" style="padding:1.5rem 0 1.5rem 2rem;">
           <div class="tl-card">
             <span class="tl-year">{{ event.year }}</span>
             <h3>{{ event.title }}</h3>
             <p>{{ event.desc }}</p>
-            {% if event.stat %}
-            <div class="tl-stat"><i class="bi bi-bar-chart-fill"></i> {{ event.stat }}</div>
-            {% endif %}
-            {% if event.image %}
-            <img src="{{ event.image }}" alt="{{ event.title }}" class="tl-card-img"/>
-            {% endif %}
+            {% if event.stat %}<div class="tl-stat"><i class="bi bi-bar-chart-fill"></i> {{ event.stat }}</div>{% endif %}
+            {% with img=event.image_src|default:'' %}{% if img %}<img src="{{ img }}" alt="{{ event.title }}" class="tl-card-img"/>{% endif %}{% endwith %}
           </div>
         </div>
       </div>
       {% else %}
-      <!-- LEFT-SIDE NODE -->
       <div class="tl-node tl-left tl-accent-{% if forloop.counter|divisibleby:2 %}green{% else %}red{% endif %}">
         <div class="tl-card-wrap-left" style="padding:1.5rem 2rem 1.5rem 0;">
           <div class="tl-card">
             <span class="tl-year">{{ event.year }}</span>
             <h3>{{ event.title }}</h3>
             <p>{{ event.desc }}</p>
-            {% if event.stat %}
-            <div class="tl-stat"><i class="bi bi-bar-chart-fill"></i> {{ event.stat }}</div>
-            {% endif %}
-            {% if event.image %}
-            <img src="{{ event.image }}" alt="{{ event.title }}" class="tl-card-img"/>
-            {% endif %}
+            {% if event.stat %}<div class="tl-stat"><i class="bi bi-bar-chart-fill"></i> {{ event.stat }}</div>{% endif %}
+            {% with img=event.image_src|default:'' %}{% if img %}<img src="{{ img }}" alt="{{ event.title }}" class="tl-card-img"/>{% endif %}{% endwith %}
           </div>
         </div>
-        <div class="tl-centre">
-          <div class="tl-dot"><i class="bi {{ event.icon }}"></i></div>
-        </div>
+        <div class="tl-centre"><div class="tl-dot"><i class="bi {{ event.icon }}"></i></div></div>
         <div class="tl-empty"></div>
       </div>
       {% endif %}
+      {% empty %}
+      <div class="text-center py-5">
+        <p class="text-muted">Timeline events will appear here after they are added by the webadmin.</p>
+      </div>
       {% endfor %}
-    </div><!-- /timeline -->
+    </div>
   </div>
 </section>
 
-<!-- ═══════ CORE VALUES STRIP ═══════ -->
+<!-- ═══════ CORE VALUES ═══════ -->
 <section class="values-strip">
   <div class="container">
     <div class="text-center mb-5 reveal">
@@ -250,9 +187,11 @@
       {% for v in values %}
       <div class="col-6 col-lg-3 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
         <div class="val-card">
-          <div class="val-icon" style="background:{{ v.bg }};"><i class="bi {{ v.icon }}" style="color:{{ v.color }};"></i></div>
+          <div class="val-icon" style="background:{{ v.bg|default:'rgba(142,0,5,.1)' }};">
+            <i class="bi {{ v.icon|default:'bi-star' }}" style="color:{{ v.color|default:'var(--red)' }};"></i>
+          </div>
           <h5 style="font-size:1.15rem;">{{ v.title }}</h5>
-          <p class="text-muted mb-0" style="font-size:.88rem;line-height:1.65;">{{ v.desc }}</p>
+          <p class="text-muted mb-0" style="font-size:.88rem;line-height:1.65;">{{ v.description }}</p>
         </div>
       </div>
       {% endfor %}
@@ -277,17 +216,19 @@
         {% for g in goals %}
         <div class="goal-item">
           <span class="goal-num">{{ forloop.counter|stringformat:"02d" }}</span>
-          <div>
+          <div style="flex:1;">
             <div style="color:#fff;font-weight:600;font-size:1rem;margin-bottom:.25rem;">{{ g.title }}</div>
             <div style="color:rgba(255,255,255,.6);font-size:.88rem;line-height:1.6;">{{ g.desc }}</div>
             <div class="mt-2">
               <div class="progress rounded-pill" style="height:5px;background:rgba(255,255,255,.1);">
-                <div class="progress-bar rounded-pill" style="width:{{ g.progress }}%;background:var(--green-light);"></div>
+                <div class="progress-bar rounded-pill goal-bar" data-width="{{ g.progress }}" style="width:0%;background:var(--green-light);transition:width 1.4s ease;"></div>
               </div>
               <small style="color:rgba(255,255,255,.4);font-size:.72rem;">{{ g.progress }}% towards goal</small>
             </div>
           </div>
         </div>
+        {% empty %}
+        <p style="color:rgba(255,255,255,.6);">Strategic goals will appear here after they are added by the webadmin.</p>
         {% endfor %}
       </div>
     </div>
@@ -322,7 +263,7 @@ const cObs = new IntersectionObserver(entries => {
     const start  = Date.now();
     const dur    = 1800;
     const tick   = () => {
-      const p = Math.min((Date.now() - start) / dur, 1);
+      const p    = Math.min((Date.now() - start) / dur, 1);
       const ease = 1 - Math.pow(1 - p, 3);
       e.target.textContent = Math.floor(target * ease).toLocaleString() + suffix;
       if (p < 1) requestAnimationFrame(tick);
@@ -332,20 +273,18 @@ const cObs = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 counterEls.forEach(el => cObs.observe(el));
 
-/* ── Timeline node reveal on scroll ── */
+/* ── Timeline reveal ── */
 const tlNodes = document.querySelectorAll('.tl-node');
-const tlObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      tlObs.unobserve(e.target);
-    }
-  });
+const tlObs   = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); tlObs.unobserve(e.target); } });
 }, { threshold: 0.15 });
-tlNodes.forEach((node, i) => {
-  // stagger delay
-  node.style.transitionDelay = `${i * 0.06}s`;
-  tlObs.observe(node);
-});
+tlNodes.forEach((node, i) => { node.style.transitionDelay = `${i * 0.06}s`; tlObs.observe(node); });
+
+/* ── Goal progress bars ── */
+const goalBars = document.querySelectorAll('.goal-bar');
+const barObs   = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting && !e.target.dataset.animated) { e.target.dataset.animated='1'; e.target.style.width = e.target.dataset.width + '%'; } });
+}, { threshold: 0.3 });
+goalBars.forEach(b => barObs.observe(b));
 </script>
 {% endblock %}

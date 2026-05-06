@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% comment %}
+  REUSABLE IMAGE-HERO PATTERN
+  ────────────────────────────
+  Copy this hero block into ANY page template.
+  The `hero` object comes from the view via:  ctx['hero'] = _hero('page_key')
+
+  When the admin has uploaded/linked an image → full-bleed photo hero
+  When no image is set → gradient red fallback (original page-hero style)
+
+  Pass the page-specific fallback content in the {% else %} block.
+{% endcomment %}
+
+{# ══ UNIVERSAL IMAGE / GRADIENT HERO BLOCK ══ #}
+{# Replace <page_icon>, <page_tag>, <page_title>, <page_sub>, breadcrumb items #}
+
+{% if hero and hero.bg_image_url %}
+{# ─── PHOTO HERO ─── #}
+<section style="
+  background-image:url('{{ hero.bg_image_url }}');
+  background-size:cover;
+  background-position:center;
+  position:relative;
+  min-height:400px;
+  display:flex;
+  align-items:flex-end;
+  margin-top:69px;
+  overflow:hidden;">
+
+  {# Overlay #}
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,{{ hero.overlay_opacity|default:'0.55' }});"></div>
+
+  {# Decorative blobs #}
+  <div style="position:absolute;top:-100px;right:-100px;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-80px;left:-60px;width:280px;height:280px;border-radius:50%;background:rgba(59,173,110,.1);pointer-events:none;"></div>
+
+  <div class="container py-5" style="position:relative;z-index:2;">
+
+    {# Breadcrumbs #}
+    <nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}" style="color:rgba(255,255,255,.7);">Home</a></li>
+      {# ADD EXTRA BREADCRUMB ITEMS AS NEEDED: #}
+      {# <li class="breadcrumb-item" style="color:rgba(255,255,255,.7);">Parent</li> #}
+      <li class="breadcrumb-item active" style="color:#fff;">PAGE TITLE</li>
+    </ol></nav>
+
+    {# Tag pill #}
+    <div class="page-hero-tag">
+      <i class="bi {{ hero.tag_icon|default:'bi-stars' }}"></i>
+      {{ hero.tag_text|default:'FALLBACK TAG' }}
+    </div>
+
+    {# Heading & subheading from admin #}
+    <h1 style="color:#fff;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;max-width:780px;line-height:1.1;margin-bottom:.8rem;">
+      {{ hero.heading|default:'FALLBACK HEADING' }}
+    </h1>
+    <p style="color:rgba(255,255,255,.88);font-size:1.05rem;max-width:580px;line-height:1.75;margin-bottom:0;">
+      {{ hero.subheading|default:'FALLBACK SUBHEADING' }}
+    </p>
+
+  </div>
+</section>
+
+{% else %}
+{# ─── GRADIENT FALLBACK HERO ─── #}
+<section class="page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
+      {# ADD EXTRA BREADCRUMB ITEMS AS NEEDED #}
+      <li class="breadcrumb-item active">PAGE TITLE</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi bi-stars"></i> FALLBACK TAG</div>
+    <h1>FALLBACK HEADING</h1>
+    <p>FALLBACK SUBHEADING</p>
+  </div>
+</section>
+{% endif %}
+
+{# ══ PAGE CONTENT GOES HERE ══ #}
+{% block content %}{% endblock %}

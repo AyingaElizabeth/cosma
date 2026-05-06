@@ -1,7 +1,97 @@
 {% extends "base.html" %}
 {% block title %}Share Our Story — cosma development Uganda{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ── SOCIAL SHARE CARDS ── */
+.share-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 2rem;
+  height: 100%;
+  box-shadow: 0 4px 22px rgba(0,0,0,.08);
+  transition: transform .3s, box-shadow .3s;
+  display: flex;
+  flex-direction: column;
+}
+.share-card:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(0,0,0,.13); }
+.share-card-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.share-card h5 { font-size: 1.15rem; margin-bottom: .5rem; }
+.share-card .sample-post {
+  background: var(--cream);
+  border-radius: 10px;
+  padding: .9rem 1rem;
+  font-size: .87rem;
+  color: #555;
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: 1.2rem;
+  border-left: 3px solid rgba(0,0,0,.1);
+}
+
+/* ── HOW TO HELP LIST ── */
+.how-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(0,0,0,.07);
+}
+.how-item:last-child { border-bottom: none; }
+.how-bullet {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── FUNDRAISER BANNER ── */
+.fundraiser-banner {
+  background: linear-gradient(135deg, var(--charcoal) 0%, #2a2a2a 100%);
+  border-radius: 20px;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.fundraiser-banner::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: rgba(59,173,110,.1);
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
+{# ══ HERO ══ #}
+{% if hero and hero.bg_image_url %}
+<section style="background-image:url('{{ hero.bg_image_url }}');background-size:cover;background-position:center;position:relative;min-height:420px;display:flex;align-items:flex-end;margin-top:69px;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,{{ hero.overlay_opacity|default:'0.55' }});"></div>
+  <div class="container py-5" style="position:relative;z-index:2;">
+    <nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}" style="color:rgba(255,255,255,.7);">Home</a></li>
+      <li class="breadcrumb-item" style="color:rgba(255,255,255,.7);">Get Involved</li>
+      <li class="breadcrumb-item active" style="color:#fff;">Share Our Story</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi {{ hero.tag_icon|default:'bi-share' }}"></i> {{ hero.tag_text|default:'Spread the Word' }}</div>
+    <h1 style="color:#fff;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;max-width:780px;line-height:1.1;margin-bottom:.8rem;">{{ hero.heading|default:'Help Us Spread the Word' }}</h1>
+    <p style="color:rgba(255,255,255,.88);font-size:1.05rem;max-width:600px;line-height:1.75;">{{ hero.subheading|default:'One of the simplest and most powerful ways to support COSMA is by sharing our story. By raising awareness, you help us reach new supporters and expand our impact.' }}</p>
+  </div>
+</section>
+{% else %}
 <section class="page-hero">
   <div class="container" style="position:relative;z-index:1;">
     <nav aria-label="breadcrumb"><ol class="breadcrumb">
@@ -9,124 +99,165 @@
       <li class="breadcrumb-item">Get Involved</li>
       <li class="breadcrumb-item active">Share Our Story</li>
     </ol></nav>
-    <div class="page-hero-tag"><i class="bi bi-share"></i> Get Involved</div>
-    <h1>Share Our Story</h1>
-    <p>Awareness changes lives. Every share connects us with potential donors, volunteers, and partners who can help us reach more communities.</p>
+    <div class="page-hero-tag"><i class="bi bi-share"></i> Spread the Word</div>
+    <h1>Help Us Spread the Word</h1>
+    <p>One of the simplest and most powerful ways to support COSMA is by sharing our story.</p>
+  </div>
+</section>
+{% endif %}
+
+<!-- ══ HOW YOU CAN HELP ══ -->
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-5 reveal-left">
+        <div class="section-label text-red"><span class="dot bg-red"></span>How You Can Help</div>
+        <h2 class="section-title mb-3">Your Voice <em class="text-green">Matters</em></h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <p class="text-muted mb-4" style="line-height:1.85;font-size:1rem;">
+          Every time you share our work, you help connect us to someone who can contribute to transforming lives in the rural communities of Uganda.
+        </p>
+        <div>
+          {% for item in how_to_help %}
+          <div class="how-item">
+            <div class="how-bullet" style="background:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' %};">{{ forloop.counter }}</div>
+            <p class="mb-0" style="font-size:.95rem;line-height:1.7;color:#444;">{{ item }}</p>
+          </div>
+          {% empty %}
+          <div class="how-item"><div class="how-bullet" style="background:var(--green);">1</div><p class="mb-0" style="font-size:.95rem;line-height:1.7;color:#444;">Celebrate special occasions by fundraising instead of receiving gifts.</p></div>
+          <div class="how-item"><div class="how-bullet" style="background:var(--red);">2</div><p class="mb-0" style="font-size:.95rem;line-height:1.7;color:#444;">Share our work with friends, colleagues, and community groups.</p></div>
+          <div class="how-item"><div class="how-bullet" style="background:var(--green);">3</div><p class="mb-0" style="font-size:.95rem;line-height:1.7;color:#444;">Organise awareness or fundraising events in your community.</p></div>
+          <div class="how-item"><div class="how-bullet" style="background:var(--red);">4</div><p class="mb-0" style="font-size:.95rem;line-height:1.7;color:#444;">Share our stories and updates on social media.</p></div>
+          {% endfor %}
+        </div>
+
+        <!-- Why it matters callout -->
+        <div class="mt-4 p-4 rounded-3" style="background:rgba(59,173,110,.08);border-left:4px solid var(--green);">
+          <p class="mb-1" style="font-weight:700;color:var(--green);font-size:.95rem;">Why It Matters</p>
+          <p class="mb-0 text-muted" style="font-size:.9rem;line-height:1.7;">Every time you share our work, you help connect us to someone who can contribute to transforming lives in the rural communities of Uganda.</p>
+          <p class="mb-0 mt-2" style="font-weight:600;color:var(--charcoal);font-size:.9rem;">Your voice matters. Be part of the transformation.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-6 offset-lg-1 reveal-right">
+        <div class="text-center mb-4">
+          <div class="section-label text-green justify-content-center"><span class="dot bg-green"></span>Share on Social Media</div>
+          <h3 class="section-title" style="font-size:1.8rem;">Ready-Made Posts</h3>
+          <p class="text-muted" style="font-size:.9rem;">Copy and post — or tag us so we can reshare!</p>
+        </div>
+        <div class="d-flex flex-column gap-3">
+
+          <!-- Facebook -->
+          <div class="share-card">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="share-card-icon" style="background:#1877F2;"><i class="bi bi-facebook"></i></div>
+              <h5 class="mb-0">Facebook</h5>
+            </div>
+            <div class="sample-post">"cosma development Uganda is transforming lives across rural Uganda through agriculture cooperatives and education. Help them reach even more families — donate or share today! 🌱 cosmadevelopments.org #CommunityImpact #Uganda"</div>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://cosmadevelopments.org" target="_blank" rel="noopener" class="btn btn-red rounded-pill px-4 py-2 fw-semibold w-100">
+              <i class="bi bi-facebook me-2"></i>Share on Facebook
+            </a>
+          </div>
+
+          <!-- WhatsApp -->
+          <div class="share-card">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="share-card-icon" style="background:#25D366;"><i class="bi bi-whatsapp"></i></div>
+              <h5 class="mb-0">WhatsApp</h5>
+            </div>
+            <div class="sample-post">"Have you heard about cosma development Uganda? They are doing incredible work supporting farmers and children in rural Uganda. Check them out and consider donating — cosmadevelopments.org 🙏"</div>
+            <a href="https://wa.me/?text=Check+out+cosma+development+Uganda+%E2%80%94+transforming+rural+lives+through+agriculture+%26+education%3A+https%3A%2F%2Fcosmadevelopments.org" target="_blank" rel="noopener" class="btn btn-green rounded-pill px-4 py-2 fw-semibold w-100">
+              <i class="bi bi-whatsapp me-2"></i>Share on WhatsApp
+            </a>
+          </div>
+
+          <!-- X / Twitter -->
+          <div class="share-card">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="share-card-icon" style="background:#111;"><i class="bi bi-twitter-x"></i></div>
+              <h5 class="mb-0">X / Twitter</h5>
+            </div>
+            <div class="sample-post">"Farmers, families &amp; children transforming their futures in rural Uganda 🌍 @CosmaDevelopment is doing incredible work. Support them: cosmadevelopments.org #Uganda #NGO #CommunityDevelopment"</div>
+            <a href="https://twitter.com/intent/tweet?text=Farmers%2C+families+%26+children+transforming+their+futures+in+rural+Uganda+%F0%9F%8C%8D+@CosmaDevelopment+is+doing+incredible+work.+Support+them%3A+https%3A%2F%2Fcosmadevelopments.org+%23Uganda+%23NGO" target="_blank" rel="noopener" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold w-100">
+              <i class="bi bi-twitter-x me-2"></i>Share on X
+            </a>
+          </div>
+
+          <!-- LinkedIn -->
+          <div class="share-card">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="share-card-icon" style="background:#0A66C2;"><i class="bi bi-linkedin"></i></div>
+              <h5 class="mb-0">LinkedIn</h5>
+            </div>
+            <div class="sample-post">"Proud to share the work of cosma development Uganda — a remarkable NGO strengthening agricultural livelihoods and expanding education access across rural Uganda. If your organisation is looking for a meaningful CSR partner, look no further."</div>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://cosmadevelopments.org" target="_blank" rel="noopener" class="btn btn-outline-green rounded-pill px-4 py-2 fw-semibold w-100">
+              <i class="bi bi-linkedin me-2"></i>Share on LinkedIn
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- Share channels -->
+<!-- ══ START A FUNDRAISER ══ -->
+<section class="sec-pad" style="background:#fff;">
+  <div class="container">
+    <div class="fundraiser-banner reveal">
+      <div class="row align-items-center g-4" style="position:relative;z-index:1;">
+        <div class="col-lg-7">
+          <div class="section-label" style="color:rgba(255,255,255,.5);"><span class="dot" style="background:var(--green-light);"></span>Go Further</div>
+          <h3 style="color:#fff;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;margin-bottom:.8rem;">Start a Fundraiser for COSMA</h3>
+          <p style="color:rgba(255,255,255,.75);font-size:.95rem;line-height:1.8;margin-bottom:1.2rem;">Turn birthdays, graduations, sporting challenges, or community events into an opportunity to raise funds for rural communities in Uganda. Every shilling raised creates real, lasting change.</p>
+          <div class="d-flex flex-column gap-2">
+            <div class="d-flex align-items-center gap-2" style="color:rgba(255,255,255,.8);font-size:.9rem;"><i class="bi bi-check-circle-fill text-green"></i>Celebrate special occasions by fundraising instead of receiving gifts</div>
+            <div class="d-flex align-items-center gap-2" style="color:rgba(255,255,255,.8);font-size:.9rem;"><i class="bi bi-check-circle-fill text-green"></i>Organise events in universities, schools, churches, or social clubs</div>
+            <div class="d-flex align-items-center gap-2" style="color:rgba(255,255,255,.8);font-size:.9rem;"><i class="bi bi-check-circle-fill text-green"></i>Run challenges, sports events, or community drives</div>
+            <div class="d-flex align-items-center gap-2" style="color:rgba(255,255,255,.8);font-size:.9rem;"><i class="bi bi-check-circle-fill text-green"></i>We provide materials, guidance, and ongoing support</div>
+          </div>
+        </div>
+        <div class="col-lg-4 offset-lg-1 text-center">
+          <div style="background:rgba(255,255,255,.1);border-radius:16px;padding:2rem;border:1px solid rgba(255,255,255,.15);">
+            <i class="bi bi-megaphone-fill fs-1 mb-3 d-block" style="color:var(--green-light);"></i>
+            <h5 style="color:#fff;margin-bottom:.5rem;">Ready to Start?</h5>
+            <p style="color:rgba(255,255,255,.7);font-size:.87rem;margin-bottom:1.2rem;line-height:1.6;">Contact us and we'll help you set up your fundraiser.</p>
+            <a href="{% url 'cosma_development:contact' %}" class="btn btn-green rounded-pill px-4 py-2 fw-semibold w-100 mb-2">
+              <i class="bi bi-send-fill me-2"></i>Start a Fundraiser
+            </a>
+            <a href="{% url 'cosma_development:donate_page' %}" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold w-100" style="color:#fff;">
+              <i class="bi bi-heart-fill me-2"></i>Donate Directly
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DOWNLOAD MATERIALS ══ -->
 <section class="sec-pad bg-cream">
   <div class="container">
     <div class="text-center mb-5 reveal">
-      <div class="section-label text-green justify-content-center"><span class="dot bg-green"></span>Spread the Word</div>
-      <h2 class="section-title">Share on <em class="text-red">Social Media</em></h2>
-      <div class="title-bar bg-red mx-auto mt-2"></div>
-      <p class="text-muted mx-auto mt-3" style="max-width:500px;">Use these ready-made posts or create your own. Tag us so we can reshare!</p>
-    </div>
-
-    <div class="row g-4 justify-content-center">
-      <!-- Facebook -->
-      <div class="col-md-6 col-lg-5 reveal-left">
-        <div class="hf-card p-4">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <div class="d-flex align-items-center justify-content-center rounded-3 flex-shrink-0" style="width:46px;height:46px;background:#1877F2;color:#fff;font-size:1.3rem;"><i class="bi bi-facebook"></i></div>
-            <h5 class="mb-0">Facebook</h5>
-          </div>
-          <p class="text-muted mb-3" style="font-size:.9rem;background:var(--cream);padding:1rem;border-radius:10px;line-height:1.65;">
-            "cosma development Uganda is transforming lives across 12 districts through education, agriculture, and clean water. Help them reach even more families — donate or share today! 🌱 cosmadevelopments.org #CommunityImpact #Uganda"
-          </p>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://cosmadevelopments.org" target="_blank" rel="noopener"
-             class="btn btn-red rounded-pill px-4 py-2 fw-semibold w-100">
-            <i class="bi bi-facebook me-2"></i>Share on Facebook
-          </a>
-        </div>
-      </div>
-
-      <!-- Twitter/X -->
-      <div class="col-md-6 col-lg-5 reveal-right">
-        <div class="hf-card p-4">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <div class="d-flex align-items-center justify-content-center rounded-3 flex-shrink-0" style="width:46px;height:46px;background:#111;color:#fff;font-size:1.3rem;"><i class="bi bi-twitter-x"></i></div>
-            <h5 class="mb-0">Twitter / X</h5>
-          </div>
-          <p class="text-muted mb-3" style="font-size:.9rem;background:var(--cream);padding:1rem;border-radius:10px;line-height:1.65;">
-            "125,000+ lives transformed by @CosmaDevelopment Uganda 🌍 Education · Agriculture · Clean Water. Help them reach more communities — support now: cosmadevelopments.org #Uganda #NGO #Impact"
-          </p>
-          <a href="https://twitter.com/intent/tweet?text=125%2C000%2B+lives+transformed+by+%40CosmaDevelopment+Uganda+%F0%9F%8C%8D+Support+them+here%3A+https%3A%2F%2Fcosmadevelopments.org&hashtags=Uganda,NGO,Impact"
-             target="_blank" rel="noopener"
-             class="btn btn-red rounded-pill px-4 py-2 fw-semibold w-100">
-            <i class="bi bi-twitter-x me-2"></i>Share on X
-          </a>
-        </div>
-      </div>
-
-      <!-- WhatsApp -->
-      <div class="col-md-6 col-lg-5 reveal-left">
-        <div class="hf-card p-4">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <div class="d-flex align-items-center justify-content-center rounded-3 flex-shrink-0" style="width:46px;height:46px;background:#25D366;color:#fff;font-size:1.3rem;"><i class="bi bi-whatsapp"></i></div>
-            <h5 class="mb-0">WhatsApp</h5>
-          </div>
-          <p class="text-muted mb-3" style="font-size:.9rem;background:var(--cream);padding:1rem;border-radius:10px;line-height:1.65;">
-            "Have you heard about cosma development Uganda? They are doing incredible work supporting over 125,000 people across Uganda with education, agriculture, and clean water. Check them out and consider donating — cosmadevelopments.org 🙏"
-          </p>
-          <a href="https://wa.me/?text=Check+out+cosma+development+Uganda+%E2%80%94+transforming+lives+through+education%2C+agriculture+%26+clean+water%3A+https%3A%2F%2Fcosmadevelopments.org"
-             target="_blank" rel="noopener"
-             class="btn btn-green rounded-pill px-4 py-2 fw-semibold w-100">
-            <i class="bi bi-whatsapp me-2"></i>Share on WhatsApp
-          </a>
-        </div>
-      </div>
-
-      <!-- LinkedIn -->
-      <div class="col-md-6 col-lg-5 reveal-right">
-        <div class="hf-card p-4">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <div class="d-flex align-items-center justify-content-center rounded-3 flex-shrink-0" style="width:46px;height:46px;background:#0A66C2;color:#fff;font-size:1.3rem;"><i class="bi bi-linkedin"></i></div>
-            <h5 class="mb-0">LinkedIn</h5>
-          </div>
-          <p class="text-muted mb-3" style="font-size:.9rem;background:var(--cream);padding:1rem;border-radius:10px;line-height:1.65;">
-            "Proud to support cosma development Uganda — a remarkable NGO working to build resilient, self-sustaining communities across 12 Ugandan districts. If your organisation is looking for a meaningful CSR partner, look no further. cosmadevelopments.org"
-          </p>
-          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://cosmadevelopments.org"
-             target="_blank" rel="noopener"
-             class="btn btn-red rounded-pill px-4 py-2 fw-semibold w-100">
-            <i class="bi bi-linkedin me-2"></i>Share on LinkedIn
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Download resources -->
-<section class="sec-pad" style="background:#fff;">
-  <div class="container">
-    <div class="text-center mb-5 reveal">
       <div class="section-label text-red justify-content-center"><span class="dot bg-red"></span>Resources</div>
-      <h2 class="section-title">Download & <em class="text-green">Share Materials</em></h2>
+      <h2 class="section-title">Download &amp; <em class="text-green">Share Materials</em></h2>
       <div class="title-bar bg-green mx-auto mt-2"></div>
     </div>
     <div class="row g-4 justify-content-center">
       <div class="col-md-4 reveal">
         <div class="hf-card p-4 text-center">
           <i class="bi bi-file-earmark-pdf fs-1 text-red mb-3 d-block"></i>
-          <h5>Annual Report 2024</h5>
+          <h5>Annual Report</h5>
           <p class="text-muted mb-3" style="font-size:.88rem;">Full impact data, financials, and programme highlights.</p>
-          <a href="#" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">
-            <i class="bi bi-download me-1"></i> Download PDF
-          </a>
+          <a href="{% url 'cosma_development:resources' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold"><i class="bi bi-download me-1"></i> View Reports</a>
         </div>
       </div>
       <div class="col-md-4 reveal" style="transition-delay:100ms">
         <div class="hf-card p-4 text-center">
           <i class="bi bi-image fs-1 text-green mb-3 d-block"></i>
-          <h5>Press & Media Kit</h5>
+          <h5>Press &amp; Media Kit</h5>
           <p class="text-muted mb-3" style="font-size:.88rem;">Logos, photos, and brand assets for media use.</p>
-          <a href="#" class="btn btn-outline-green rounded-pill px-4 py-2 fw-semibold">
-            <i class="bi bi-download me-1"></i> Download Kit
-          </a>
+          <a href="{% url 'cosma_development:resources' %}" class="btn btn-outline-green rounded-pill px-4 py-2 fw-semibold"><i class="bi bi-download me-1"></i> Download Kit</a>
         </div>
       </div>
       <div class="col-md-4 reveal" style="transition-delay:200ms">
@@ -134,12 +265,11 @@
           <i class="bi bi-card-text fs-1 text-red mb-3 d-block"></i>
           <h5>One-Page Summary</h5>
           <p class="text-muted mb-3" style="font-size:.88rem;">A quick overview of who we are and what we do.</p>
-          <a href="#" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">
-            <i class="bi bi-download me-1"></i> Download
-          </a>
+          <a href="{% url 'cosma_development:resources' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold"><i class="bi bi-download me-1"></i> Download</a>
         </div>
       </div>
     </div>
   </div>
 </section>
+
 {% endblock %}
