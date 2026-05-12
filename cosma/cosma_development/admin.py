@@ -189,7 +189,7 @@ class HomeSlideAdmin(admin.ModelAdmin):
         return 'No image set'
 
 
-# ─── Home Stats ──────────────────────────────────────────────────────────────
+# ─── Home Stats ──────────────────────────────────────────────────────────────z
 
 @admin.register(HomeStat, site=cosma_admin)
 class HomeStatAdmin(admin.ModelAdmin):

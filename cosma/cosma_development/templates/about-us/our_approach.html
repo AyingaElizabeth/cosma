@@ -95,6 +95,371 @@
   flex-shrink: 0;
   margin-top: 2px;
 }
+/* =========================================================
+   APPROACH SECTION
+========================================================= */
+
+.approach-section{
+    max-width: 1250px;
+    margin: auto;
+    padding: 2rem 1rem 5rem;
+    position: relative;
+}
+
+/* =========================================================
+   TITLE AREA
+========================================================= */
+
+.top-title{
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+}
+
+.top-title h2{
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    max-width: 900px;
+    margin: 0 auto 1.2rem;
+}
+
+.top-title p{
+    max-width: 760px;
+    margin: auto;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.top-center-icon{
+    width: 62px;
+    height: 62px;
+    margin: 2rem auto 0;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--green);
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.top-center-icon i{
+    font-size: 1.4rem;
+}
+
+/* =========================================================
+   MODEL CARDS
+========================================================= */
+
+.approach-card{
+    position: relative;
+    background: #fff;
+    border-radius: 22px;
+    overflow: hidden;
+    height: 100%;
+    box-shadow: 0 10px 40px rgba(0,0,0,.08);
+    transition: all .35s ease;
+}
+
+.approach-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 18px 50px rgba(0,0,0,.12);
+}
+
+.green-card{
+    border: 2px solid rgba(59,173,110,.25);
+}
+
+.blue-card{
+    border: 2px solid rgba(13,91,181,.2);
+}
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.card-header-custom{
+    padding: 2rem 2rem 1.6rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-header-custom::before{
+    content:'';
+    position:absolute;
+    top:-80px;
+    right:-80px;
+    width:200px;
+    height:200px;
+    border-radius:50%;
+    background: rgba(255,255,255,.08);
+}
+
+.green-header{
+    background: linear-gradient(135deg, var(--green), #2b945c);
+}
+
+.blue-header{
+    background: linear-gradient(135deg, #0d5bb5, #08438a);
+}
+
+.card-header-custom h4{
+    color:#fff;
+    font-size:1.45rem;
+    font-weight:700;
+    margin-bottom:.35rem;
+}
+
+.card-header-custom span{
+    color:rgba(255,255,255,.85);
+    font-size:.92rem;
+    letter-spacing:.5px;
+    font-weight:500;
+}
+
+/* =========================================================
+   FLOATING ICON
+========================================================= */
+
+.floating-icon{
+    width:72px;
+    height:72px;
+    border-radius:18px;
+    background:#fff;
+    position:absolute;
+    top:1.5rem;
+    right:1.5rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+    z-index:5;
+}
+
+.floating-icon.green{
+    color:var(--green);
+}
+
+.floating-icon.blue{
+    color:#0d5bb5;
+}
+
+.floating-icon i{
+    font-size:1.8rem;
+}
+
+/* =========================================================
+   CARD BODY
+========================================================= */
+
+.approach-body{
+    padding: 2rem;
+}
+
+.approach-item{
+    display:flex;
+    gap:1rem;
+    align-items:flex-start;
+    padding:1rem 0;
+    border-bottom:1px solid rgba(0,0,0,.06);
+}
+
+.approach-item:last-child{
+    border-bottom:none;
+}
+
+.approach-item i{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    font-size:1rem;
+}
+
+.green-text{
+    background: rgba(59,173,110,.1);
+    color: var(--green);
+}
+
+.blue-text{
+    background: rgba(13,91,181,.1);
+    color: #0d5bb5;
+}
+
+.approach-item span{
+    font-size:.95rem;
+    line-height:1.7;
+    color:#444;
+}
+
+/* =========================================================
+   CONNECTOR LINES
+========================================================= */
+
+.middle-connectors{
+    position:relative;
+    height:90px;
+}
+
+.left-line,
+.right-line{
+    position:absolute;
+    top:0;
+    width:2px;
+    height:65px;
+}
+
+.left-line{
+    left:25%;
+    background:var(--green);
+}
+
+.right-line{
+    right:25%;
+    background:#0d5bb5;
+}
+
+.middle-horizontal{
+    position:absolute;
+    bottom:22px;
+    left:25%;
+    width:50%;
+    height:2px;
+    background:#c8d6ea;
+}
+
+.center-arrow{
+    position:absolute;
+    left:50%;
+    bottom:-2px;
+    transform:translateX(-50%);
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#0d5bb5;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+/* =========================================================
+   RESULTS
+========================================================= */
+
+.result-wrapper{
+    max-width:900px;
+    margin:auto;
+}
+
+.result-box{
+    background:#fff;
+    border-radius:18px;
+    padding:1.4rem 4rem;
+    position:relative;
+    text-align:center;
+    font-weight:700;
+    font-size:1.1rem;
+    margin-bottom:1.5rem;
+    box-shadow:0 5px 24px rgba(0,0,0,.06);
+}
+
+.result-green{
+    border:2px solid rgba(59,173,110,.2);
+    color:var(--green);
+}
+
+.result-blue{
+    border:2px solid rgba(13,91,181,.18);
+    color:#0d5bb5;
+}
+
+.result-box i{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1rem;
+}
+
+.result-green i{
+    background:rgba(59,173,110,.1);
+}
+
+.result-blue i{
+    background:rgba(13,91,181,.1);
+}
+
+.left-icon{
+    left:1rem;
+}
+
+.right-icon{
+    right:1rem;
+}
+
+.vertical-arrow{
+    display:flex;
+    justify-content:center;
+    margin:-6px 0 10px;
+}
+
+.vertical-arrow i{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#0d5bb5;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:991px){
+
+    .approach-card{
+        margin-top:1rem;
+    }
+
+    .floating-icon{
+        position:relative;
+        top:auto;
+        right:auto;
+        margin:1.5rem auto -.5rem;
+    }
+
+    .left-line,
+    .right-line,
+    .middle-horizontal{
+        display:none;
+    }
+
+    .middle-connectors{
+        height:50px;
+    }
+
+    .result-box{
+        padding:1.2rem 1.2rem 1.2rem 4rem;
+        text-align:left;
+    }
+
+}
 </style>
 {% endblock %}
 
@@ -174,74 +539,198 @@
 
 <!-- ══ TWO DELIVERY MODELS ══ -->
 <section class="sec-pad bg-cream">
-  <div class="container">
-    <div class="text-center mb-5 reveal">
-      <div class="section-label text-green justify-content-center"><span class="dot bg-green"></span>Our Delivery Models</div>
-      <h2 class="section-title">Two Models, <em class="text-red">One Mission</em></h2>
-      <div class="title-bar bg-red mx-auto mt-2 mb-3"></div>
-      <p class="text-muted mx-auto" style="max-width:580px;">This approach is delivered through two complementary models designed to build resilient livelihoods.</p>
-    </div>
-    <div class="row g-4">
+  <div class="approach-section">
 
-      <!-- Model 1: Agriculture -->
-      <div class="col-lg-6 reveal-left">
-        <div class="model-card">
-          <div class="model-card-top" style="background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);">
-            <span class="model-number">01</span>
-            <div class="model-icon-wrap"><i class="bi bi-flower1"></i></div>
-            <h3>Village Cooperative Model</h3>
-            <p>Agriculture Programme</p>
-          </div>
-          <div class="model-card-body">
-            <p class="text-muted mb-3" style="font-size:.93rem;line-height:1.75;">
-              We organise farmers into structured groups — Village Cooperatives — to collectively improve productivity, strengthen financial literacy, and access markets.
-            </p>
-            <ul>
-              <li><i class="bi bi-check-circle-fill text-green"></i>Improve agricultural productivity through climate-smart practices</li>
-              <li><i class="bi bi-check-circle-fill text-green"></i>Expand access to finance and strengthen financial literacy</li>
-              <li><i class="bi bi-check-circle-fill text-green"></i>Strengthen market access and build collective enterprises</li>
-              <li><i class="bi bi-check-circle-fill text-green"></i>Support farmers to manage inputs and sell at better prices</li>
-              <li><i class="bi bi-check-circle-fill text-green"></i>Enable year-round production through irrigation support</li>
-            </ul>
-            <div class="mt-3">
-              <a href="{% url 'cosma_development:agri_why' %}" class="btn btn-green rounded-pill px-4 py-2 fw-semibold">
-                Learn About Agriculture <i class="bi bi-arrow-right ms-1"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- TITLE -->
+  <div class="top-title">
 
-      <!-- Model 2: Education -->
-      <div class="col-lg-6 reveal-right">
-        <div class="model-card">
-          <div class="model-card-top" style="background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%);">
-            <span class="model-number">02</span>
-            <div class="model-icon-wrap"><i class="bi bi-mortarboard"></i></div>
-            <h3>Enterprise-to-Education Model</h3>
-            <p>Education Programme</p>
-          </div>
-          <div class="model-card-body">
-            <p class="text-muted mb-3" style="font-size:.93rem;line-height:1.75;">
-              We mobilise vulnerable households — particularly those with limited access to land — into income-generating activities, linking enterprise income directly to children's education.
-            </p>
-            <ul>
-              <li><i class="bi bi-check-circle-fill text-red"></i>Provide hands-on skills training (e.g. book production)</li>
-              <li><i class="bi bi-check-circle-fill text-red"></i>Organise participants into structured production groups</li>
-              <li><i class="bi bi-check-circle-fill text-red"></i>Support access to markets for their products</li>
-              <li><i class="bi bi-check-circle-fill text-red"></i>Strengthen household incomes to co-finance education</li>
-              <li><i class="bi bi-check-circle-fill text-red"></i>Enable vulnerable children to access and stay in school</li>
-            </ul>
-            <div class="mt-3">
-              <a href="{% url 'cosma_development:sponsor_why' %}" class="btn btn-red rounded-pill px-4 py-2 fw-semibold">
-                Learn About Education <i class="bi bi-arrow-right ms-1"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+     <div class="section-label text-green"><span class="dot bg-green"></span>Our Approach Models</div>
+
+     <h2>
+       Two Integrated Delivery Models, One Holistic Approach to Community Transformation
+       <em class="text-red">COSMA’s Approach</em>
+     </h2>
+
+    <p class="text-muted mb-0" style="line-height:1.75;font-size:1.05rem;">
+      We place communities at the center of their own transformation.
+      We organize, empower, and equip communities to lead their own development
+      and sustain lasting change.
+    </p>
+
+    <div class="top-center-icon">
+      <i class="bi bi-people-fill"></i>
     </div>
+
   </div>
+
+  <!-- CARDS -->
+  <div class="row g-4  position-relative">
+
+    <!-- LEFT -->
+    <div class="col-lg-6">
+
+      <div class="approach-card green-card">
+
+        <div class="floating-icon green">
+          <i class="bi bi-flower1"></i>
+        </div>
+
+        <div class="card-header-custom green-header">
+          <h4>VILLAGE COOPERATIVE MODEL</h4>
+          <span>(AGRICULTURE)</span>
+        </div>
+
+        <div class="approach-body">
+
+          <div class="approach-item">
+            <i class="bi bi-people-fill green-text"></i>
+            <span>
+              Organizing farmers into structured farmers’ groups
+              (Village Cooperatives)
+            </span>
+          </div>
+
+          <div class="approach-item">
+            <i class="bi bi-journal-bookmark-fill green-text"></i>
+            <span>Agronomic training</span>
+          </div>
+
+          <div class="approach-item">
+            <i class="bi bi-graph-up-arrow green-text"></i>
+            <span>Improved agricultural production</span>
+          </div>
+
+          <div class="approach-item">
+            <i class="bi bi-cash-coin green-text"></i>
+            <span>
+              Building financial literacy and access to financing
+            </span>
+          </div>
+
+          <div class="approach-item">
+            <i class="bi bi-handshake-fill green-text"></i>
+            <span>
+              Strengthening collective market participation
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col-lg-6">
+
+      <div class="approach-card blue-card">
+
+        <div class="floating-icon blue">
+          <i class="bi bi-book-half"></i>
+        </div>
+
+        <div class="card-header-custom blue-header">
+          <h4>ENTERPRISE-TO-EDUCATION MODEL</h4>
+          <span>(EDUCATION)</span>
+        </div>
+
+        <div class="approach-body">
+
+          <div class="approach-item">
+            <i class="bi bi-people-fill blue-text"></i>
+            <span>
+              Mobilizing vulnerable households,
+              particularly the land constrained ones
+            </span>
+          </div>
+
+          <div class="approach-item">
+            <i class="bi bi-briefcase-fill blue-text"></i>
+            <span>
+              Engaging in income-generating activities
+            </span>
+          </div>
+
+          <div class="approach-item">
+            <i class="bi bi-coin blue-text"></i>
+            <span>
+              Generating income and strengthening livelihoods
+            </span>
+          </div>
+
+          <div class="approach-item">
+            <i class="bi bi-mortarboard-fill blue-text"></i>
+            <span>
+              (Co-)financing and sustaining children’s education
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- CONNECTOR LINES -->
+  <div class="middle-connectors">
+
+    <div class="left-line"></div>
+
+    <div class="right-line"></div>
+
+    <div class="middle-horizontal"></div>
+
+    <div class="center-arrow">
+      <i class="bi bi-arrow-down"></i>
+    </div>
+
+  </div>
+
+  <!-- RESULTS -->
+  <div class="result-wrapper">
+
+    <div class="result-box result-green">
+
+      <i class="bi bi-graph-up-arrow left-icon"></i>
+
+      INCREASED HOUSEHOLD INCOME & RESILIENCE
+
+      <i class="bi bi-people-fill right-icon"></i>
+
+    </div>
+
+    <div class="vertical-arrow">
+      <i class="bi bi-arrow-down"></i>
+    </div>
+
+    <div class="result-box result-blue">
+
+      <i class="bi bi-mortarboard-fill left-icon"></i>
+
+      CHILDREN ACCESS & STAY IN SCHOOL — IMPROVED LIVELIHOODS
+
+      <i class="bi bi-person-hearts right-icon"></i>
+
+    </div>
+
+    <div class="vertical-arrow">
+      <i class="bi bi-arrow-down"></i>
+    </div>
+
+    <div class="result-box result-green">
+
+      <i class="bi bi-people-fill left-icon"></i>
+
+      STRONGER, SELF-RELIANT COMMUNITIES
+
+      <i class="bi bi-house-heart-fill right-icon"></i>
+
+    </div>
+
+  </div>
+
 </section>
 
 <!-- ══ HOW WE DELIVER ══ -->

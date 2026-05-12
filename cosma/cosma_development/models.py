@@ -504,7 +504,7 @@ class TeamMember(models.Model):
             return self.photo.url
         if self.image_url:
             return self.image_url
-        return ''
+        return 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500&q=80'
 
 
 class Partner(models.Model):

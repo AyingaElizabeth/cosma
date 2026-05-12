@@ -1,64 +1,298 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Impact Stories - cosma development Uganda{% endblock %}
+{% block title %}Impact Stories — {% if site %}{{ site.site_name }}{% else %}cosma development Uganda{% endif %}{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ── STORY CARD ── */
+.story-card {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform .3s, box-shadow .3s;
+}
+.story-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 50px rgba(0,0,0,.14);
+}
+
+/* Image area */
+.story-card-img {
+  position: relative;
+  overflow: hidden;
+  height: 260px;
+}
+.story-card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+.story-card:hover .story-card-img img {
+  transform: scale(1.06);
+}
+.story-card-tag {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 50px;
+  color: #fff;
+}
+.story-card-programme {
+  position: absolute;
+  bottom: 1rem; right: 1rem;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  color: rgba(255,255,255,.9);
+  font-size: .72rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 50px;
+}
+
+/* Body */
+.story-card-body {
+  padding: 1.8rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.story-card-body h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: .6rem;
+  color: var(--charcoal);
+}
+.story-card-body .excerpt {
+  font-size: .93rem;
+  line-height: 1.75;
+  color: #555;
+  flex: 1;
+  margin-bottom: 1.2rem;
+}
+
+/* Person row */
+.story-person {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--cream);
+  margin-bottom: 1.2rem;
+}
+.story-person-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--green-light);
+  flex-shrink: 0;
+}
+.story-person-name  { font-size: .9rem; font-weight: 700; color: var(--charcoal); }
+.story-person-place { font-size: .78rem; color: var(--muted); }
+
+/* Read more CTA */
+.story-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.story-cta a {
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--green);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  transition: gap .2s;
+}
+.story-cta a:hover { gap: .7rem; color: var(--green-dark); }
+.story-cta-author {
+  font-size: .75rem;
+  color: var(--muted);
+}
+
+/* ── FILTER PILLS ── */
+.filter-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: .45rem 1.1rem; border-radius: 50px;
+  font-size: .82rem; font-weight: 600;
+  border: 2px solid rgba(0,0,0,.1);
+  background: #fff; color: var(--muted);
+  cursor: pointer; transition: all .22s;
+  text-decoration: none;
+}
+.filter-pill:hover, .filter-pill.active {
+  background: var(--red); color: #fff; border-color: var(--red);
+}
+.filter-pill.active-green {
+  background: var(--green); color: #fff; border-color: var(--green);
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center; padding: 5rem 2rem; color: var(--muted);
+}
+.empty-state i { font-size: 3rem; opacity: .25; display: block; margin-bottom: 1rem; }
+</style>
+{% endblock %}
+
 {% block content %}
+
+{# ══ HERO ══ #}
+{% if hero and hero.bg_image_url %}
+<section style="background-image:url('{{ hero.bg_image_url }}');background-size:cover;background-position:center;position:relative;min-height:380px;display:flex;align-items:flex-end;margin-top:69px;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,{{ hero.overlay_opacity|default:'0.58' }});"></div>
+  <div class="container py-5" style="position:relative;z-index:2;">
+    <nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}" style="color:rgba(255,255,255,.7);">Home</a></li>
+      <li class="breadcrumb-item active" style="color:#fff;">Impact Stories</li>
+    </ol></nav>
+    <div class="page-hero-tag"><i class="bi {{ hero.tag_icon|default:'bi-chat-quote' }}"></i> {{ hero.tag_text|default:'Real People, Real Change' }}</div>
+    <h1 style="color:#fff;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;max-width:750px;line-height:1.1;margin-bottom:.8rem;">{{ hero.heading|default:'Impact Stories' }}</h1>
+    <p style="color:rgba(255,255,255,.88);font-size:1.05rem;max-width:580px;line-height:1.75;">{{ hero.subheading|default:'Behind every statistic is a person. These are their stories.' }}</p>
+  </div>
+</section>
+{% else %}
 <section class="page-hero">
   <div class="container" style="position:relative;z-index:1;">
     <nav aria-label="breadcrumb"><ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
       <li class="breadcrumb-item active">Impact Stories</li>
     </ol></nav>
-    <div class="page-hero-tag"><i class="bi {% if active_filter %}{{ active_filter.icon }}{% else %}bi-chat-quote{% endif %}"></i> Real People, Real Change</div>
-    <h1>{{ hero_title }}</h1>
-    <p>{{ hero_description }}</p>
+    <div class="page-hero-tag"><i class="bi bi-chat-quote"></i> Real People, Real Change</div>
+    <h1>{{ hero_title|default:'Impact Stories' }}</h1>
+    <p>{{ hero_description|default:'Behind every statistic is a person. These are their stories.' }}</p>
   </div>
 </section>
+{% endif %}
 
+{# ══ FILTER BAR ══ #}
 <section class="sec-pad" style="background:#F7F7F7;">
   <div class="container">
+
     <div class="d-flex flex-wrap gap-2 justify-content-center mb-5 reveal">
-      <a href="{% url 'cosma_development:impact_stories' %}" class="btn {% if not active_program %}btn-red{% else %}btn-outline-red{% endif %} rounded-pill px-4">All Stories</a>
+      <a href="{% url 'cosma_development:impact_stories' %}"
+         class="filter-pill {% if not active_program %}active{% endif %}">
+        <i class="bi bi-grid-3x3-gap"></i> All Stories
+      </a>
       {% for key, config in filters.items %}
-      <a href="{% url 'cosma_development:impact_stories' %}?program={{ key }}" class="btn {% if active_program == key %}btn-green{% else %}btn-outline-green{% endif %} rounded-pill px-4">
-        <i class="bi {{ config.icon }} me-1"></i>{{ config.label }}
+      <a href="{% url 'cosma_development:impact_stories' %}?program={{ key }}"
+         class="filter-pill {% if active_program == key %}active{% endif %}">
+        <i class="bi {{ config.icon }}"></i>{{ config.label }}
       </a>
       {% endfor %}
     </div>
 
+    {# ══ STORY CARDS GRID ══ #}
+    {% if stories %}
     <div class="row g-4">
       {% for story in stories %}
-      <div class="col-md-6 col-lg-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
-        <div class="hf-card overflow-hidden h-100">
-          <div style="overflow:hidden;height:230px;">
-            <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image.url %}{{ story.image.url }}{% elif story.image %}{% static story.image %}{% endif %}" alt="{{ story.name }}" class="w-100 h-100" style="object-fit:cover;transition:transform .5s;"/>
-          </div>
-          <div class="p-4">
-            <span class="badge rounded-pill mb-2" style="background:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' %};">{{ story.tag }}</span>
-            <h3 class="h5 mb-2">{% if story.display_title %}{{ story.display_title }}{% elif story.headline %}{{ story.headline }}{% else %}{{ story.name }}'s Story{% endif %}</h3>
-            <p style="font-style:italic;font-size:.96rem;line-height:1.65;color:#333;" class="mb-3">"{% if story.narrative %}{{ story.narrative }}{% elif story.quote %}{{ story.quote }}{% else %}{{ story.story }}{% endif %}"</p>
-            {% if story.outcome %}
-            <div class="mb-3 p-3 rounded-3" style="background:rgba(59,173,110,.08);font-size:.86rem;line-height:1.55;">
-              <strong class="text-green d-block mb-1">What changed</strong>
-              <span class="text-muted">{{ story.outcome }}</span>
-            </div>
+      <div class="col-md-6 col-lg-4 reveal" style="transition-delay:{{ forloop.counter0 }}0ms">
+        <div class="story-card">
+
+          {# Image #}
+          <div class="story-card-img">
+            {% if story.image_url %}
+            <img src="{{ story.image_url }}" alt="{{ story.display_title }}"/>
+            {% elif story.image %}
+            <img src="{% if story.image.url %}{{ story.image.url }}{% else %}{% static story.image %}{% endif %}" alt="{{ story.display_title }}"/>
+            {% else %}
+            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&q=80" alt="{{ story.display_title }}"/>
             {% endif %}
-            <div class="d-flex align-items-center gap-2">
-              <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image.url %}{{ story.image.url }}{% elif story.image %}{% static story.image %}{% endif %}" alt="" style="width:38px;height:38px;border-radius:50%;object-fit:cover;"/>
+            <span class="story-card-tag" style="background:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' 'var(--green)' 'var(--red)' %};">
+              {{ story.tag }}
+            </span>
+            <span class="story-card-programme">
+              <i class="bi bi-geo-alt me-1"></i>{{ story.location }}
+            </span>
+          </div>
+
+          {# Body #}
+          <div class="story-card-body">
+            <h3>{{ story.display_title }}</h3>
+            <p class="excerpt">
+              {% if story.card_excerpt %}{{ story.card_excerpt }}
+              {% elif story.excerpt %}{{ story.excerpt }}
+              {% else %}{{ story.story|truncatechars:180 }}{% endif %}
+            </p>
+
+            {# Person row #}
+            <div class="story-person">
+              {% if story.image_url %}
+              <img src="{{ story.image_url }}" alt="{{ story.name }}" class="story-person-avatar"/>
+              {% elif story.image %}
+              <img src="{% if story.image.url %}{{ story.image.url }}{% else %}{% static story.image %}{% endif %}" alt="{{ story.name }}" class="story-person-avatar"/>
+              {% else %}
+              <div class="story-person-avatar d-flex align-items-center justify-content-center" style="background:linear-gradient(135deg,var(--red),#c0392b);color:#fff;font-size:.85rem;font-weight:700;">
+                {{ story.name|slice:":2"|upper }}
+              </div>
+              {% endif %}
               <div>
-                <div class="fw-semibold" style="font-size:.9rem;">{{ story.name }}</div>
-                <div class="text-muted" style="font-size:.8rem;"><i class="bi bi-geo-alt me-1"></i>{{ story.location }}</div>
-                <div class="text-muted" style="font-size:.72rem;">By {{ story.author|default:"Webadmin" }}</div>
+                <div class="story-person-name">{{ story.name }}</div>
+                <div class="story-person-place"><i class="bi bi-geo-alt me-1"></i>{{ story.location }}</div>
               </div>
             </div>
+
+            {# CTA #}
+            <div class="story-cta">
+              {% if story.has_full_story and story.slug %}
+              <a href="{% url 'cosma_development:story_detail' story.slug %}">
+                Read Full Story <i class="bi bi-arrow-right"></i>
+              </a>
+              {% else %}
+              <a href="{% url 'cosma_development:impact_stories' %}">
+                More Stories <i class="bi bi-arrow-right"></i>
+              </a>
+              {% endif %}
+              <span class="story-cta-author">By {{ story.author|default:'Webadmin' }}</span>
+            </div>
           </div>
+
         </div>
-      </div>
-      {% empty %}
-      <div class="col-12 text-center py-5">
-        <p class="text-muted">Impact stories will appear here after they are published by the webadmin.</p>
       </div>
       {% endfor %}
     </div>
+
+    {% else %}
+    <div class="empty-state">
+      <i class="bi bi-chat-quote"></i>
+      <h5>No stories yet in this category</h5>
+      <p>Check back soon or <a href="{% url 'cosma_development:impact_stories' %}" class="text-green">view all stories</a>.</p>
+    </div>
+    {% endif %}
+
   </div>
 </section>
+
+{# ══ CTA ══ #}
+<section class="sec-pad" style="background:#fff;">
+  <div class="container text-center reveal">
+    <h2 class="section-title mb-2">Help Write the <em class="text-red">Next Story</em></h2>
+    <p class="text-muted mx-auto mb-4" style="max-width:480px;">
+      Your donation, volunteer hours, or partnership directly creates stories like these.
+    </p>
+    <div class="d-flex flex-wrap gap-3 justify-content-center">
+      <a href="{{ donation_url|default:'https://www.globalgiving.org' }}" target="_blank" rel="noopener"
+         class="btn btn-red rounded-pill px-4 py-2 fw-semibold">
+        <i class="bi bi-heart-fill me-2"></i>Donate Now
+      </a>
+      <a href="{% url 'cosma_development:sponsor_child' %}" class="btn btn-outline-green rounded-pill px-4 py-2 fw-semibold">
+        <i class="bi bi-person-plus me-2"></i>Sponsor a Child
+      </a>
+      <a href="{% url 'cosma_development:fund_project' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">
+        <i class="bi bi-bullseye me-2"></i>Fund a Project
+      </a>
+    </div>
+  </div>
+</section>
+
 {% endblock %}

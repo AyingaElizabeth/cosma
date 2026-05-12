@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Contact Us — cosma development{% endblock %}
+{% block title %}Contact Us — cosma development Uganda{% endblock %}
 {% block content %}
 <section class="page-hero">
   <div class="container" style="position:relative;z-index:1;">
@@ -19,37 +19,84 @@
         <div class="d-flex flex-column gap-4">
           <div class="d-flex align-items-start gap-3">
             <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:50px;height:50px;background:rgba(142,0,5,.1);"><i class="bi bi-geo-alt-fill fs-4 text-red"></i></div>
-            <div><strong>Office</strong><p class="mb-0 text-muted" style="font-size:.92rem;">Plot 45, Kampala Road,<br>Kampala, Uganda</p></div>
+            <div>
+              <strong>Office</strong>
+              <p class="mb-0 text-muted" style="font-size:.92rem;">
+                {% if site and site.office_address %}
+                  {{ site.office_address }}
+                {% else %}
+                  Maria House, Katana Rise,<br>Bugolobi, Kampala, Uganda
+                {% endif %}
+              </p>
+            </div>
           </div>
           <div class="d-flex align-items-start gap-3">
             <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:50px;height:50px;background:rgba(59,173,110,.1);"><i class="bi bi-telephone-fill fs-4 text-green"></i></div>
-            <div><strong>Phone</strong><p class="mb-0 text-muted" style="font-size:.92rem;">+256 700 123 456</p></div>
+            <div>
+              <strong>Phone</strong>
+              <p class="mb-0 text-muted" style="font-size:.92rem;">
+                {% if site and site.phone %}
+                  {{ site.phone }}
+                {% else %}
+                  +256 782 983532 / +256 772 194119
+                {% endif %}
+              </p>
+            </div>
           </div>
           <div class="d-flex align-items-start gap-3">
             <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:50px;height:50px;background:rgba(142,0,5,.1);"><i class="bi bi-envelope-fill fs-4 text-red"></i></div>
-            <div><strong>Email</strong><p class="mb-0 text-muted" style="font-size:.92rem;">info@hopeforward.ug</p></div>
+            <div>
+              <strong>Email</strong>
+              <p class="mb-0 text-muted" style="font-size:.92rem;">
+                {% if site and site.email %}
+                  <a href="mailto:{{ site.email }}" style="color:inherit;">{{ site.email }}</a>
+                {% else %}
+                  <a href="mailto:cosmasrd@gmail.com" style="color:inherit;">cosmasrd@gmail.com</a>
+                {% endif %}
+              </p>
+            </div>
           </div>
           <div class="d-flex align-items-start gap-3">
             <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:50px;height:50px;background:rgba(59,173,110,.1);"><i class="bi bi-clock-fill fs-4 text-green"></i></div>
-            <div><strong>Hours</strong><p class="mb-0 text-muted" style="font-size:.92rem;">Mon–Fri: 8am – 5pm<br>Sat: 9am – 1pm</p></div>
+            <div>
+              <strong>Hours</strong>
+              <p class="mb-0 text-muted" style="font-size:.92rem;">
+                {% if site and site.office_hours %}
+                  {{ site.office_hours }}
+                {% else %}
+                  Mon–Fri: 8am – 5pm<br>Sat: 9am – 1pm
+                {% endif %}
+              </p>
+            </div>
+          </div>
+          <div class="d-flex align-items-start gap-3">
+            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:50px;height:50px;background:rgba(142,0,5,.1);"><i class="bi bi-globe fs-4 text-red"></i></div>
+            <div>
+              <strong>Website</strong>
+              <p class="mb-0 text-muted" style="font-size:.92rem;">
+                <a href="https://www.cosmadevelopments.org" target="_blank" rel="noopener" style="color:var(--green);">www.cosmadevelopments.org</a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
       <div class="col-lg-8 reveal-right">
         <div class="hf-card p-5">
           <h3 class="mb-4">Send Us a Message</h3>
-          <form id="contactForm" novalidate>
+          <form id="contactForm" novalidate >
             {% csrf_token %}
             <div class="row g-3">
               <div class="col-sm-6"><input name="name" type="text" class="form-control rounded-pill" placeholder="Your full name" required/></div>
               <div class="col-sm-6"><input name="email" type="email" class="form-control rounded-pill" placeholder="Email address" required/></div>
               <div class="col-sm-6"><input name="phone" type="text" class="form-control rounded-pill" placeholder="Phone number (optional)"/></div>
               <div class="col-sm-6">
-                <select name="subject" class="form-select rounded-pill">
+                <select name="subject" class="form-select rounded-pill" required>
                   <option>General Enquiry</option>
                   <option>Partnership</option>
                   <option>Volunteering</option>
                   <option>Donations</option>
+                  <option>Education Program</option>
+                  <option>Agriculture Program</option>
                   <option>Media</option>
                 </select>
               </div>
@@ -65,16 +112,42 @@
 {% endblock %}
 {% block extra_js %}
 <script>
-document.getElementById('contactForm').addEventListener('submit',async e=>{
+document.getElementById('contactForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const f=e.target;
-  const payload={name:f.querySelector('[name=name]').value,email:f.querySelector('[name=email]').value,subject:f.querySelector('[name=subject]').value,message:f.querySelector('[name=message]').value};
-  try{
-    const r=await fetch("{% url 'cosma_development:contact' %}",{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':document.querySelector('[name=csrfmiddlewaretoken]').value},body:JSON.stringify(payload)});
-    const d=await r.json();
-    showToast(d.message,d.status);
-    if(d.status==='success')f.reset();
-  }catch{showToast('Something went wrong.','error');}
+  const f = e.target;
+
+  // ✅ trigger browser validation
+  if (!f.checkValidity()) {
+    f.reportValidity();
+    return;
+  }
+
+  const payload = {
+    name: f.querySelector('[name=name]').value,
+    email: f.querySelector('[name=email]').value,
+    subject: f.querySelector('[name=subject]').value,
+    message: f.querySelector('[name=message]').value
+  };
+
+  try {
+    const r = await fetch("{% url 'cosma_development:contact_submit' %}", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!r.ok) throw new Error('Server error');
+    const d = await r.json();
+    showToast(d.message, d.status);
+
+    if (d.status === 'success') f.reset();
+
+  } catch {
+    showToast('Something went wrong.', 'error');
+  }
 });
 </script>
 {% endblock %}

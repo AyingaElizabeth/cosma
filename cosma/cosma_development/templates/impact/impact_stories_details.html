@@ -1,0 +1,583 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ story.display_title }} — {% if site %}{{ site.site_name }}{% else %}cosma development Uganda{% endif %}{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ══ STORY HERO ══ */
+.story-hero {
+  min-height: 520px;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  margin-top: 69px;
+}
+.story-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.82) 0%,
+    rgba(0,0,0,.45) 45%,
+    rgba(0,0,0,.15) 100%
+  );
+}
+.story-hero-body {
+  position: relative;
+  z-index: 2;
+  padding: 3rem 0 2.5rem;
+  width: 100%;
+}
+
+/* ══ CONTENT SECTIONS ══ */
+.story-section {
+  padding: 4.5rem 0;
+}
+.story-section:nth-child(even) {
+  background: var(--cream);
+}
+.story-section:nth-child(odd) {
+  background: #fff;
+}
+
+/* Section label pill */
+.section-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 50px;
+  margin-bottom: 1rem;
+}
+.section-pill.red   { background: rgba(142,0,5,.1);    color: var(--red); }
+.section-pill.green { background: rgba(59,173,110,.1); color: var(--green); }
+
+/* Story body text */
+.story-body-text {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: #3a3a3a;
+}
+.story-body-text p { margin-bottom: 1.3rem; }
+.story-body-text p:last-child { margin-bottom: 0; }
+
+/* ══ STORY IMAGE ══ */
+.story-img-wrap {
+  position: relative;
+}
+.story-img-wrap img {
+  width: 100%;
+  border-radius: 18px;
+  object-fit: cover;
+  box-shadow: 0 12px 40px rgba(0,0,0,.14);
+  transition: transform .5s ease, box-shadow .5s ease;
+}
+.story-img-wrap:hover img {
+  transform: scale(1.02);
+  box-shadow: 0 20px 60px rgba(0,0,0,.2);
+}
+
+/* Decorative accent on images */
+.story-img-accent-right { padding-bottom: 1.5rem; padding-right: 1.5rem; }
+.story-img-accent-right::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: calc(100% - 1.5rem);
+  height: calc(100% - 1.5rem);
+  border-radius: 18px;
+  background: var(--green);
+  z-index: -1;
+}
+.story-img-accent-left { padding-bottom: 1.5rem; padding-left: 1.5rem; }
+.story-img-accent-left::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: calc(100% - 1.5rem);
+  height: calc(100% - 1.5rem);
+  border-radius: 18px;
+  background: var(--red);
+  z-index: -1;
+}
+
+/* ══ PULL QUOTE ══ */
+.pull-quote {
+  position: relative;
+  padding: 2rem 2.5rem 2rem 4rem;
+  background: var(--cream);
+  border-left: 5px solid var(--green);
+  border-radius: 0 16px 16px 0;
+  margin: 2rem 0;
+}
+.pull-quote::before {
+  content: '\201C';
+  font-family: var(--font-display);
+  font-size: 6rem;
+  color: var(--green);
+  opacity: .25;
+  position: absolute;
+  top: -1.5rem;
+  left: .8rem;
+  line-height: 1;
+}
+.pull-quote p {
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.75;
+  color: var(--charcoal);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+.pull-quote cite {
+  display: block;
+  font-size: .85rem;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--green);
+  margin-top: .75rem;
+}
+
+/* ══ OUTCOME HIGHLIGHT BOX ══ */
+.outcome-box {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  border-radius: 18px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.outcome-box::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  pointer-events: none;
+}
+.outcome-box h4 { color: #fff; font-size: 1.5rem; margin-bottom: .8rem; }
+.outcome-box p  { color: rgba(255,255,255,.88); font-size: .97rem; line-height: 1.8; margin: 0; }
+
+/* ══ PERSON CARD ══ */
+.person-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.8rem;
+  box-shadow: 0 4px 22px rgba(0,0,0,.09);
+  text-align: center;
+}
+.person-card img {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--green-light);
+  margin-bottom: 1rem;
+}
+.person-card-name  { font-size: 1.2rem; font-weight: 700; margin-bottom: .2rem; }
+.person-card-place { font-size: .85rem; color: var(--muted); margin-bottom: .3rem; }
+.person-card-prog  {
+  display: inline-block;
+  font-size: .72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .09em; padding: 3px 12px; border-radius: 50px;
+  background: rgba(59,173,110,.1); color: var(--green);
+}
+
+/* ══ RELATED STORIES ══ */
+.related-card {
+  border-radius: 16px; overflow: hidden; background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,.08); height: 100%;
+  display: flex; flex-direction: column;
+  text-decoration: none; color: inherit;
+  transition: transform .3s, box-shadow .3s;
+}
+.related-card:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(0,0,0,.13); }
+.related-card img   { width: 100%; height: 180px; object-fit: cover; }
+.related-card-body  { padding: 1.2rem; flex: 1; display: flex; flex-direction: column; }
+.related-card-body h5 { font-size: 1rem; font-weight: 700; line-height: 1.3; margin-bottom: .4rem; }
+
+/* ══ SHARE STRIP ══ */
+.share-strip {
+  display: flex; flex-wrap: wrap; gap: .6rem; align-items: center;
+}
+.share-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: .5rem 1.1rem; border-radius: 50px;
+  font-size: .82rem; font-weight: 600;
+  border: 2px solid; text-decoration: none; transition: .2s;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+{# ══ STORY HERO — full-bleed cover photo ══ #}
+<div class="story-hero" style="background-image:url('{% if story.image %}{{ story.image.url }}{% elif story.image_url %}{{ story.image_url }}{% else %}https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1800&q=80{% endif %}');">
+  <div class="container story-hero-body">
+
+    <nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url 'cosma_development:index' %}" style="color:rgba(255,255,255,.65);">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="{% url 'cosma_development:impact_stories' %}" style="color:rgba(255,255,255,.65);">Stories</a>
+      </li>
+      <li class="breadcrumb-item active" style="color:#fff;">{{ story.display_title|truncatewords:6 }}</li>
+    </ol></nav>
+
+    <span class="page-hero-tag">{{ story.tag }}</span>
+
+    <h1 style="color:#fff;font-size:clamp(1.9rem,4.5vw,3.4rem);font-weight:700;
+               max-width:780px;line-height:1.15;margin:.8rem 0 1.2rem;">
+      {{ story.display_title }}
+    </h1>
+
+    {# Person row in hero #}
+    <div class="d-flex align-items-center gap-3 flex-wrap">
+      {% if story.image %}
+      <img src="{{ story.image.url }}" alt="{{ story.name }}"
+           style="width:52px;height:52px;border-radius:50%;object-fit:cover;
+                  border:3px solid var(--green-light);flex-shrink:0;"/>
+      {% else %}
+      <div style="width:52px;height:52px;border-radius:50%;
+                  background:linear-gradient(135deg,var(--red),#c0392b);
+                  display:flex;align-items:center;justify-content:center;
+                  color:#fff;font-size:1rem;font-weight:700;flex-shrink:0;">
+        {{ story.name|slice:":2"|upper }}
+      </div>
+      {% endif %}
+      <div>
+        <div style="color:#fff;font-weight:700;font-size:1.05rem;">{{ story.name }}</div>
+        <div style="color:rgba(255,255,255,.7);font-size:.83rem;">
+          <i class="bi bi-geo-alt me-1"></i>{{ story.location }}
+          &nbsp;·&nbsp;
+          <i class="bi bi-tag me-1"></i>{{ story.get_programme_display }}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+{# ══ SECTION 1: The Story (opening + challenge) ══ #}
+{% if story.story or story.challenge %}
+<section class="story-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      {# Left: text #}
+      <div class="col-lg-6 reveal-left">
+        {% if story.challenge %}
+        <span class="section-pill red"><i class="bi bi-exclamation-circle-fill"></i>The Challenge</span>
+        <h2 class="section-title mb-3" style="font-size:clamp(1.8rem,3vw,2.5rem);">
+          The Problem <em class="text-red">They Faced</em>
+        </h2>
+        <div class="title-bar bg-red mb-4"></div>
+        <div class="story-body-text">
+          {% if story.story %}<p>{{ story.story }}</p>{% endif %}
+          <p>{{ story.challenge }}</p>
+        </div>
+        {% else %}
+        <span class="section-pill green"><i class="bi bi-chat-quote-fill"></i>Their Story</span>
+        <h2 class="section-title mb-3" style="font-size:clamp(1.8rem,3vw,2.5rem);">
+          <em class="text-green">{{ story.name }}'s</em> Story
+        </h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <div class="story-body-text"><p>{{ story.story }}</p></div>
+        {% endif %}
+      </div>
+
+      {# Right: image #}
+      <div class="col-lg-5 offset-lg-1 reveal-right">
+        {% if story.image %}
+        <div class="story-img-wrap story-img-accent-right" style="position:relative;">
+          <img src="{{ story.image.url }}" alt="{{ story.name }}"
+               style="aspect-ratio:4/3;"/>
+        </div>
+        {% elif story.image_two %}
+        <div class="story-img-wrap story-img-accent-right" style="position:relative;">
+          <img src="{{ story.image_two.url }}" alt="{{ story.display_title }}"
+               style="aspect-ratio:4/3;"/>
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+{# ══ SECTION 2: COSMA's Intervention (image left, text right) ══ #}
+{% if story.intervention %}
+<section class="story-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      {# Left: image #}
+      {% if story.image_two %}
+      <div class="col-lg-5 reveal-left">
+        <div class="story-img-wrap story-img-accent-left" style="position:relative;">
+          <img src="{{ story.image_two.url }}" alt="COSMA's intervention"
+               style="aspect-ratio:4/3;"/>
+        </div>
+      </div>
+      {% elif story.image_three %}
+      <div class="col-lg-5 reveal-left">
+        <div class="story-img-wrap story-img-accent-left" style="position:relative;">
+          <img src="{{ story.image_three.url }}" alt="COSMA's intervention"
+               style="aspect-ratio:4/3;"/>
+        </div>
+      </div>
+      {% endif %}
+
+      {# Right: text #}
+      <div class="col-lg-{% if story.image_two or story.image_three %}6 offset-lg-1{% else %}10 offset-lg-1{% endif %} reveal-right">
+        <span class="section-pill green"><i class="bi bi-tools"></i>What COSMA Did</span>
+        <h2 class="section-title mb-3" style="font-size:clamp(1.8rem,3vw,2.5rem);">
+          How We <em class="text-green">Stepped In</em>
+        </h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <div class="story-body-text"><p>{{ story.intervention }}</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+{# ══ SECTION 3: Outcome (text left, image right) ══ #}
+{% if story.outcome %}
+<section class="story-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      {# Left: text + outcome highlight box #}
+      <div class="col-lg-6 reveal-left">
+        <span class="section-pill green"><i class="bi bi-graph-up-arrow"></i>The Change</span>
+        <h2 class="section-title mb-3" style="font-size:clamp(1.8rem,3vw,2.5rem);">
+          What <em class="text-green">Changed</em>
+        </h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <div class="outcome-box">
+          <h4><i class="bi bi-stars me-2"></i>The Outcome</h4>
+          <p>{{ story.outcome }}</p>
+        </div>
+      </div>
+
+      {# Right: image #}
+      <div class="col-lg-5 offset-lg-1 reveal-right">
+        {% if story.image_three %}
+        <div class="story-img-wrap story-img-accent-right" style="position:relative;">
+          <img src="{{ story.image_three.url }}" alt="{{ story.name }} outcome"
+               style="aspect-ratio:4/3;"/>
+        </div>
+        {% elif story.image_four %}
+        <div class="story-img-wrap story-img-accent-right" style="position:relative;">
+          <img src="{{ story.image_four.url }}" alt="{{ story.name }} outcome"
+               style="aspect-ratio:4/3;"/>
+        </div>
+        {% elif story.image %}
+        <div class="story-img-wrap story-img-accent-right" style="position:relative;">
+          <img src="{{ story.image.url }}" alt="{{ story.name }}"
+               style="aspect-ratio:4/3;"/>
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+{# ══ SECTION 4: Quote + fourth image ══ #}
+{% if story.quote %}
+<section class="story-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      {% if story.image_four %}
+      <div class="col-lg-5 reveal-left">
+        <div class="story-img-wrap story-img-accent-left" style="position:relative;">
+          <img src="{{ story.image_four.url }}" alt="{{ story.name }}"
+               style="aspect-ratio:3/4;"/>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="col-lg-{% if story.image_four %}6 offset-lg-1{% else %}8 offset-lg-2{% endif %} reveal-right">
+        <span class="section-pill red"><i class="bi bi-chat-quote-fill"></i>In Their Own Words</span>
+        <div class="pull-quote mt-3">
+          <p>{{ story.quote }}</p>
+          <cite>— {{ story.name }}, {{ story.location }}</cite>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+{# ══ PERSON SUMMARY + SHARE ══ #}
+<section class="sec-pad" style="background:var(--cream);">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+
+      {# Person card #}
+      <div class="col-md-4 col-lg-3 reveal">
+        <div class="person-card">
+          {% if story.image %}
+          <img src="{{ story.image.url }}" alt="{{ story.name }}"/>
+          {% else %}
+          <div class="mx-auto mb-3" style="width:100px;height:100px;border-radius:50%;
+               background:linear-gradient(135deg,var(--red),#c0392b);
+               display:flex;align-items:center;justify-content:center;
+               color:#fff;font-size:2rem;font-weight:700;">
+            {{ story.name|slice:":2"|upper }}
+          </div>
+          {% endif %}
+          <div class="person-card-name">{{ story.name }}</div>
+          <div class="person-card-place"><i class="bi bi-geo-alt me-1"></i>{{ story.location }}</div>
+          <span class="person-card-prog">{{ story.get_programme_display }}</span>
+          {% if story.author %}
+          <p class="text-muted mt-2 mb-0" style="font-size:.78rem;">
+            Story by {{ story.author }}
+          </p>
+          {% endif %}
+        </div>
+      </div>
+
+      {# Right side: share + actions #}
+      <div class="col-md-8 col-lg-9 reveal-right">
+
+        {# Share this story #}
+        <div class="mb-4">
+          <h5 class="mb-3">Share This Story</h5>
+          <div class="share-strip">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+               target="_blank" rel="noopener"
+               class="share-btn" style="color:#1877F2;border-color:#1877F2;">
+              <i class="bi bi-facebook"></i> Facebook
+            </a>
+            <a href="https://twitter.com/intent/tweet?text={{ story.display_title|urlencode }}&url={{ request.build_absolute_uri }}"
+               target="_blank" rel="noopener"
+               class="share-btn" style="color:#111;border-color:#111;">
+              <i class="bi bi-twitter-x"></i> Share
+            </a>
+            {% if site and site.whatsapp_number %}
+            <a href="https://wa.me/?text={{ story.display_title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}"
+               target="_blank" rel="noopener"
+               class="share-btn" style="color:#25D366;border-color:#25D366;">
+              <i class="bi bi-whatsapp"></i> WhatsApp
+            </a>
+            {% else %}
+            <a href="https://wa.me/?text={{ story.display_title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}"
+               target="_blank" rel="noopener"
+               class="share-btn" style="color:#25D366;border-color:#25D366;">
+              <i class="bi bi-whatsapp"></i> WhatsApp
+            </a>
+            {% endif %}
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}"
+               target="_blank" rel="noopener"
+               class="share-btn" style="color:#0A66C2;border-color:#0A66C2;">
+              <i class="bi bi-linkedin"></i> LinkedIn
+            </a>
+          </div>
+        </div>
+
+        {# Donate / sponsor CTA #}
+        <div class="p-4 rounded-4" style="background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%);position:relative;overflow:hidden;">
+          <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none;"></div>
+          <div class="row align-items-center g-3" style="position:relative;z-index:1;">
+            <div class="col-lg-7">
+              <h5 style="color:#fff;margin-bottom:.4rem;">Help Create the Next Story Like This</h5>
+              <p style="color:rgba(255,255,255,.78);font-size:.88rem;margin:0;line-height:1.6;">
+                Stories like {{ story.name }}'s happen because of donors and partners who believe in community transformation.
+              </p>
+            </div>
+            <div class="col-lg-5 d-flex flex-wrap gap-2">
+              <a href="{{ donation_url|default:'https://www.globalgiving.org' }}"
+                 target="_blank" rel="noopener"
+                 class="btn btn-green rounded-pill px-4 py-2 fw-semibold">
+                <i class="bi bi-heart-fill me-2"></i>Donate Now
+              </a>
+              <a href="{% url 'cosma_development:sponsor_child' %}"
+                 class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold" style="color:#fff;">
+                Sponsor a Child
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {# Back + leave testimonial #}
+        <div class="d-flex flex-wrap gap-3 mt-3">
+          <a href="{% url 'cosma_development:impact_stories' %}"
+             class="btn btn-outline-green rounded-pill px-4 py-2 fw-semibold">
+            <i class="bi bi-arrow-left me-2"></i>All Stories
+          </a>
+          <a href="{% url 'cosma_development:submit_testimonial' %}"
+             class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">
+            <i class="bi bi-chat-quote me-2"></i>Share Your Experience
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{# ══ RELATED STORIES ══ #}
+{% if related %}
+<section class="sec-pad" style="background:#fff;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label text-red justify-content-center">
+        <span class="dot bg-red"></span>More Stories
+      </div>
+      <h2 class="section-title">More <em class="text-green">Impact Stories</em></h2>
+      <div class="title-bar bg-green mx-auto mt-2"></div>
+    </div>
+    <div class="row g-4">
+      {% for r in related %}
+      <div class="col-md-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
+        <a href="{% url 'cosma_development:story_detail' r.slug %}" class="related-card">
+          {% if r.image %}
+          <img src="{{ r.image.url }}" alt="{{ r.display_title }}"/>
+          {% else %}
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&q=80" alt="{{ r.display_title }}"/>
+          {% endif %}
+          <div class="related-card-body">
+            <span style="font-size:.68rem;font-weight:700;text-transform:uppercase;
+                         letter-spacing:.09em;color:var(--red);display:block;margin-bottom:.4rem;">
+              {{ r.tag }}
+            </span>
+            <h5>{{ r.display_title }}</h5>
+            <p class="text-muted mb-0" style="font-size:.85rem;line-height:1.6;flex:1;">
+              {{ r.card_excerpt|truncatechars:120 }}
+            </p>
+            <div class="mt-2" style="font-size:.8rem;font-weight:700;color:var(--green);">
+              Read Story <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}

@@ -19,15 +19,15 @@
         </h2>
 
         <p class="text-muted">
-          COSMA Sustainable Rural Development is a Ugandan NGO committed to building prosperous and self-reliant rural communities.
+          COSMA Sustainable Rural Development (COSMA) is a Ugandan non-governmental organization established in 2017, committed to building prosperous and self-reliant rural communities in Uganda.
         </p>
 
         <p class="text-muted">
-          We deliver integrated agriculture and education programs through a community-driven approach that strengthens incomes and expands opportunities for vulnerable households.
+          We deliver integrated agriculture and education programs through a community-driven development approach that strengthens the incomes of vulnerable rural households. By organizing communities into village cooperatives and enterprise groups, we improve agricultural production and expand income-generating opportunities, enabling families to increase their incomes, improve their livelihoods, and sustainably support their children’s education.
         </p>
 
         <p class="text-muted">
-          Since our establishment, we have reached thousands of farmers and supported children to stay in school.
+         Since our establishment, COSMA has reached over 1,750 farmers directly and 7,000+ individuals indirectly, and supported 120+ children to access and stay in school—strengthening livelihoods and expanding educational opportunities across rural communities
         </p>
       </div>
 
@@ -69,7 +69,7 @@
 
       <div class="col-md-4">
         <div class="hf-card p-4 h-100">
-          <h5>Purpose</h5>
+          <h5 class="text-red">Purpose</h5>
           <p class="text-muted">{{ mvp.purpose }}</p>
         </div>
       </div>
@@ -91,12 +91,16 @@
       What Guides <em class="text-red">Our Work</em>
     </h2>
 
+    <p class="text-muted mb-5">
+      COSMA’s core values define how we work, how we make decisions, and how we engage with our partners and the communities we serve. They guide our commitment to inclusive, transparent, and sustainable development.
+    </p>  
+
     <div class="row g-4">
       {% for v in values %}
       <div class="col-md-6 col-lg-3">
         <div class="hf-card p-4 h-100 text-center">
           <i class="bi {{ v.icon }} fs-2 mb-3 text-green"></i>
-          <h6>{{ v.title }}</h6>
+          <h6 class="text-red mb-3">{{ v.title }}</h6>
           <p class="text-muted small">{{ v.description }}</p>
         </div>
       </div>
@@ -118,37 +122,28 @@
       <h2 class="section-title">
         How We Deliver <em class="text-green">Our Mission</em>
       </h2>
+      <p class="text-muted mt-3">
+       We advance our mission through integrated, community-driven interventions that:
+       </p> 
     </div>
 
     <div class="row g-4">
 
-      <div class="col-md-6">
+      <div class="col">
         <div class="hf-card p-4">
-          <h6>Agricultural Productivity</h6>
-          <p class="text-muted">Climate-smart farming and improved techniques.</p>
+          <ul>
+            <li class=" text-muted mb-3">Increase agricultural productivity through climate-smart agricultural practices. </li>
+            <li class="text-muted mb-3">Expand access to finance and strengthen financial literacy among rural households. </li>
+            <li class="text-muted mb-3">Strengthen market access and build collective enterprises for smallholder farmers. </li>
+            <li class="text-muted mb-3">Equip vulnerable households – particularly those with limited access to land – with practical, income-generating skills. </li>
+            <li class="text-muted mb-3">Enable vulnerable children to access and stay in school.</li>
+          </ul>
         </div>
       </div>
 
-      <div class="col-md-6">
-        <div class="hf-card p-4">
-          <h6>Financial Literacy</h6>
-          <p class="text-muted">Access to savings and financial education.</p>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="hf-card p-4">
-          <h6>Market Access</h6>
-          <p class="text-muted">Connecting farmers to better markets.</p>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="hf-card p-4">
-          <h6>Education Support</h6>
-          <p class="text-muted">Helping children access and stay in school.</p>
-        </div>
-      </div>
+       <p class="text-muted mb-3" style="font-size:.78rem;color:var(--muted);">
+              By linking livelihoods to education, we empower households to not only improve their incomes – but to sustain long-term progress for their children and communities.  <a href="{% url 'cosma_development:our_approach' %}" class="text-green fw-semibold">Learn more about Our Work </a>
+            </p>
 
     </div>
 
