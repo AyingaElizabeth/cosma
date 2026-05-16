@@ -244,12 +244,12 @@
 
             {# CTA #}
             <div class="story-cta">
-              {% if story.has_full_story and story.slug %}
-              <a href="{% url 'cosma_development:story_detail' story.slug %}">
+              {% if story.slug %}
+              <a href="{% url 'cosma_development:impact_story_detail' story.slug %}">
                 Read Full Story <i class="bi bi-arrow-right"></i>
               </a>
               {% else %}
-              <a href="{% url 'cosma_development:impact_stories' %}">
+              <a href="{% url 'cosma_development:impact_story_detail' story.slug %}">
                 More Stories <i class="bi bi-arrow-right"></i>
               </a>
               {% endif %}

@@ -1,6 +1,6 @@
 from django.db import models
 import os
-
+from django.utils.text import slugify
 
 # ═══════════════════════════════════════════════════════════════
 #  SITE SETTINGS — global admin-controlled content
@@ -418,6 +418,7 @@ class ImpactStory(models.Model):
         ('community',         'Community Development'),
     ]
     name         = models.CharField(max_length=120)
+    slug = models.SlugField(unique=True, blank=True)
     location     = models.CharField(max_length=120)
     headline     = models.CharField(max_length=180, blank=True)
     programme    = models.CharField(max_length=30, choices=PROGRAMME_CHOICES, default='community')
@@ -435,6 +436,11 @@ class ImpactStory(models.Model):
     class Meta:
         verbose_name_plural = 'Impact Stories'
         ordering = ['-created_at']
+        
+    def save(self, *args, **kwargs):
+     if not self.slug:
+        self.slug = slugify(f"{self.name}-{self.location}")
+     super().save(*args, **kwargs)    
 
     def __str__(self):
         return f'{self.name} — {self.location}'

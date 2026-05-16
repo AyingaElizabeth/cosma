@@ -34,7 +34,7 @@ urlpatterns = [
     # ── Impact ─────────────────────────────────────────────────────────────
     path('impact/numbers/', views.impact_numbers, name='impact_numbers'),
     path('impact/stories/', views.impact_stories, name='impact_stories'),
-    path('impact/stories/<slug:slug>/', views.story_detail, name='story_detail'),
+    path('impact/stories/<slug:slug>/', views.impact_story_detail, name='impact_story_detail'),
     path('impact/gallery/', views.gallery,         name='gallery'),
 
     # ── Get Involved ───────────────────────────────────────────────────────

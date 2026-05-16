@@ -1,25 +1,52 @@
 {% extends "base.html" %}
-{% block title %}Sponsor a Child — HopeForward{% endblock %}
+{% block title %}Education Program — cosma development Uganda{% endblock %}
 {% block content %}
-<section class="page-hero">
-  <div class="container" style="position:relative;z-index:1;">
-    <nav aria-label="breadcrumb"><ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
-      <li class="breadcrumb-item">Our Programs</li>
-      <li class="breadcrumb-item active">Sponsor a Child</li>
-    </ol></nav>
-    <div class="page-hero-tag"><i class="bi bi-person-plus"></i> Take Action</div>
-    <h1>Sponsor a Child</h1>
-    <p>For as little as UGX 150,000 per month you can keep a child in school and change their trajectory forever.</p>
-  </div>
-</section>
+{% include "partials/_hero.html" %}
 <section class="sec-pad">
   <div class="container">
     <div class="row g-5 align-items-center">
       <div class="col-lg-6 reveal-left">
-        <div class="section-label text-red"><span class="dot bg-red"></span>How It Works</div>
-        <h2 class="section-title mb-3">Simple Steps to <em class="text-green">Change a Life</em></h2>
+        <div class="section-label text-red"><span class="dot bg-red"></span>About the Program</div>
+        <h2 class="section-title mb-3">Education + Livelihoods for Lasting Change</h2>
         <div class="title-bar bg-green mb-4"></div>
+        <p class="text-muted mb-3" style="line-height:1.8;">This is the same Education Program described on the site: a child sponsorship programme designed around COSMA’s Enterprise-to-Education model. Sponsorship keeps children in school while household income support creates the conditions for long-term sustainability.</p>
+        <p class="text-muted mb-4" style="line-height:1.8;">The programme supports school fees, learning materials, mentorship, and wellbeing, while also helping families build income through enterprise activities and savings groups.</p>
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <div class="hf-card p-4" style="border-radius:18px;">
+              <strong>Protect Education</strong>
+              <p class="text-muted mb-0" style="font-size:.95rem;">Cover school costs, materials, and mentoring support.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="hf-card p-4" style="border-radius:18px;">
+              <strong>Strengthen Incomes</strong>
+              <p class="text-muted mb-0" style="font-size:.95rem;">Help households access practical livelihood opportunities.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="hf-card p-4" style="border-radius:18px;">
+              <strong>Build Savings</strong>
+              <p class="text-muted mb-0" style="font-size:.95rem;">Households join savings groups and improve financial planning.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="hf-card p-4" style="border-radius:18px;">
+              <strong>Transition to Self-Reliance</strong>
+              <p class="text-muted mb-0" style="font-size:.95rem;">Families gradually take on more school costs as incomes grow.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 reveal-right">
+        <img src="https://images.unsplash.com/photo-1508253578933-1e32a5c8f9de?w=700&q=80" alt="Family support" class="img-fluid rounded-4" style="box-shadow:20px 20px 0 var(--green);"/>
+      </div>
+    </div>
+    <div class="row g-5 mt-5">
+      <div class="col-lg-6 reveal-left">
+        <div class="section-label text-green"><span class="dot bg-green"></span>How It Works</div>
+        <h2 class="section-title mb-3">Simple Steps to Support a Child</h2>
+        <div class="title-bar bg-red mb-4"></div>
         <div class="d-flex flex-column gap-3">
           {% for step in sponsor_steps %}
           <div class="d-flex align-items-start gap-3">
@@ -31,11 +58,17 @@
           </div>
           {% endfor %}
         </div>
-        <a href="{% url 'cosma_development:index' %}#donate" class="btn btn-red rounded-pill px-4 py-2 fw-semibold mt-4"><i class="bi bi-heart-fill me-2"></i>Start Sponsoring</a>
       </div>
       <div class="col-lg-6 reveal-right">
-        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=700&q=80" alt="Children learning" class="img-fluid rounded-4" style="box-shadow:20px 20px 0 var(--green);"/>
+        <div class="section-label text-red"><span class="dot bg-red"></span>Programme Impact</div>
+        <h2 class="section-title mb-3">Education with a Path to Independence</h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <p class="text-muted mb-3" style="line-height:1.8;">Through this programme, we are shifting from one-off sponsorship to an integrated household solution. Children stay in school while families build the skills and savings needed to support their education long-term.</p>
+        <p class="text-muted" style="line-height:1.8;">Your sponsorship becomes part of a holistic system that links income generation, education support, and financial resilience—so families can thrive beyond the sponsorship period.</p>
       </div>
+    </div>
+    <div class="text-center mt-5">
+      <a href="{% url 'cosma_development:index' %}#donate" class="btn btn-red rounded-pill px-4 py-2 fw-semibold"><i class="bi bi-heart-fill me-2"></i>Start Sponsoring</a>
     </div>
   </div>
 </section>

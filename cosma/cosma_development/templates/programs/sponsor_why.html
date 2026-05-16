@@ -1,32 +1,190 @@
 {% extends "base.html" %}
-{% block title %}Why Sponsorship — HopeForward{% endblock %}
+{% block title %}Education Program — cosma development Uganda{% endblock %}
 {% block content %}
-<section class="page-hero">
-  <div class="container" style="position:relative;z-index:1;">
-    <nav aria-label="breadcrumb"><ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
-      <li class="breadcrumb-item">Our Programs</li>
-      <li class="breadcrumb-item active">Why Sponsorship?</li>
-    </ol></nav>
-    <div class="page-hero-tag"><i class="bi bi-mortarboard"></i> Sponsorship Program</div>
-    <h1>Why Sponsorship?</h1>
-    <p>Education is the most powerful tool we can give a child to change their world.</p>
+{% include "partials/_hero.html" %}
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <div class="section-label text-red"><span class="dot bg-red"></span>Overview</div>
+        <h2 class="section-title mb-3">From Sponsorship to <em class="text-green">Self-Reliance</em></h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <p class="text-muted mb-4" style="line-height:1.85;">We keep children in school through targeted education support while strengthening household livelihoods — so families can sustainably finance their children’s education over time.</p>
+        <p class="text-muted mb-4" style="line-height:1.85;">At COSMA, we believe every child deserves not only access to education, but the opportunity to stay, progress, and complete their education journey. In many rural communities in Uganda, children drop out of school not because they lack potential, but because their families lack the financial means to sustain their education.</p>
+        <p class="text-muted mb-4" style="line-height:1.85;">For years, we supported vulnerable children through a traditional child sponsorship model, covering school fees and essential needs. While this improved access, it did not fully address a critical challenge: when external support ends, many families are unable to continue financing their children’s education.</p>
+        <p class="text-muted mb-4" style="line-height:1.85;">To address this, we evolved our approach. Today, our Education Program goes beyond sponsorship to help families build the means to sustain education on their own.</p>
+      </div>
+    </div>
   </div>
 </section>
 <section class="sec-pad">
   <div class="container">
-    <div class="row align-items-center g-5">
+    <div class="row g-5">
       <div class="col-lg-6 reveal-left">
-        <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=700&q=80" alt="Children" class="img-fluid rounded-4" style="box-shadow:20px 20px 0 var(--red);"/>
+        <div class="section-label text-green"><span class="dot bg-green"></span>Why the Program Matters</div>
+        <h2 class="section-title mb-3">Keeping Children in School Means Staying in Life</h2>
+        <div class="title-bar bg-red mb-4"></div>
+        <p class="text-muted mb-4" style="line-height:1.85;">Education is not simply about getting children into school — it is about enabling them to stay and complete their education. While school enrollment in Uganda is high, retention and completion remain major challenges, particularly among vulnerable rural households.</p>
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <div class="hf-card p-4" style="border-radius:18px;">
+              <strong>90%+</strong>
+              <p class="text-muted mb-0">More than 90% of children enroll in primary school.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="hf-card p-4" style="border-radius:18px;">
+              <strong>60%</strong>
+              <p class="text-muted mb-0">Only about 6 in 10 children complete the primary cycle.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="hf-card p-4" style="border-radius:18px;">
+              <strong>30%</strong>
+              <p class="text-muted mb-0">Secondary enrollment remains below 30%.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="hf-card p-4" style="border-radius:18px;">
+              <strong>50%</strong>
+              <p class="text-muted mb-0">Fewer than 5 in 10 complete lower secondary education.</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-lg-6 reveal-right">
-        <div class="section-label text-red"><span class="dot bg-red"></span>The Need</div>
-        <h2 class="section-title mb-3">Every Child Deserves a <em class="text-green">Chance to Learn</em></h2>
+        <div class="section-label text-red"><span class="dot bg-red"></span>Household Poverty</div>
+        <h2 class="section-title mb-3">The Root Cause of Dropout</h2>
         <div class="title-bar bg-green mb-4"></div>
-        <p class="text-muted mb-3" style="line-height:1.8;">In Uganda, thousands of children drop out of school each year due to school fees, lack of materials, and family economic pressures. Sponsorship breaks this barrier directly.</p>
-        <p class="text-muted mb-4" style="line-height:1.8;">Each sponsored child receives school fees, uniforms, books, mentorship, and psychosocial support — giving them the foundation to thrive.</p>
-        <a href="{% url 'cosma_development:sponsor_child' %}" class="btn btn-red rounded-pill px-4 py-2 fw-semibold"><i class="bi bi-person-plus me-2"></i>Sponsor a Child</a>
+        <ul class="list-unstyled text-muted" style="line-height:1.9;font-size:.96rem;">
+          <li class="mb-3"><strong>47.6%</strong> of rural households fall within the bottom 40% of the national consumption distribution.</li>
+          <li class="mb-3"><strong>41.8%</strong> of female-headed households fall within the poorest 40% nationally.</li>
+          <li class="mb-3"><strong>80%</strong> of households cite lack of income as the primary reason children drop out of school.</li>
+        </ul>
+        <p class="text-muted" style="line-height:1.85;">For many children, the challenge is not starting school — it is staying in school. Without addressing household poverty, dropout cycles are likely to continue.</p>
       </div>
+    </div>
+  </div>
+</section>
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 reveal-left">
+        <div class="section-label text-green"><span class="dot bg-green"></span>The Solution</div>
+        <h2 class="section-title mb-3">The Enterprise-to-Education (E2E) Model</h2>
+        <div class="title-bar bg-red mb-4"></div>
+        <p class="text-muted mb-4" style="line-height:1.85;">The Enterprise-to-Education Model is COSMA’s integrated livelihoods–education approach, designed to address the root cause of school dropout: household poverty.</p>
+        <p class="text-muted mb-4" style="line-height:1.85;">Rather than focusing only on the child, we work with the entire household so families can sustainably support their children’s education over time. Our model links income generation, savings, and education support in one coordinated system.</p>
+      </div>
+      <div class="col-lg-6 reveal-right">
+        <img src="https://images.unsplash.com/photo-1544717305-996b815c338c?w=700&q=80" alt="Education and livelihoods" class="img-fluid rounded-4" style="box-shadow:20px 20px 0 var(--red);"/>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec-pad">
+  <div class="container">
+    <div class="section-label text-red"><span class="dot bg-red"></span>How the Model Works</div>
+    <h2 class="section-title mb-3">Four Interconnected Components</h2>
+    <div class="title-bar bg-green mb-4"></div>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <h5 class="mb-3">Education Protection</h5>
+          <p class="text-muted mb-0">Children receive immediate support to stay in school through school fee support, learning materials, mentorship, and regular monitoring.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <h5 class="mb-3">Community Social Enterprise Development</h5>
+          <p class="text-muted mb-0">Caregivers, especially women, form social enterprises with hands-on skills training in activities such as book production, entrepreneurship, and business management.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <h5 class="mb-3">Savings & Financial Inclusion</h5>
+          <p class="text-muted mb-0">Households join savings and loan groups to build savings, access small loans, and strengthen financial planning and resilience.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <h5 class="mb-3">Household Transition to Self-Reliance</h5>
+          <p class="text-muted mb-0">As incomes improve, families gradually contribute more toward school costs. Over time, external support reduces as households move toward independent education financing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6 reveal-left">
+        <div class="section-label text-red"><span class="dot bg-red"></span>What Makes It Different</div>
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <ul class="text-muted mb-0" style="line-height:1.9;">
+            <li>Addresses the root cause of school dropout, not just the symptoms.</li>
+            <li>Builds self-reliant families, not just supported children.</li>
+            <li>Links livelihoods directly to education outcomes.</li>
+            <li>Reduces long-term dependency on external support.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-6 reveal-right">
+        <div class="section-label text-green"><span class="dot bg-green"></span>What It Achieves</div>
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <ul class="text-muted mb-0" style="line-height:1.9;">
+            <li>Sustained school retention and completion.</li>
+            <li>Increased and stable household incomes.</li>
+            <li>Strong savings culture among families.</li>
+            <li>Transition from dependency to education self-reliance.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec-pad">
+  <div class="container">
+    <div class="section-label text-red"><span class="dot bg-red"></span>SDG Alignment</div>
+    <h2 class="section-title mb-3">Our Education Program and the Global Goals</h2>
+    <div class="title-bar bg-green mb-4"></div>
+    <div class="row g-4">
+      <div class="col-md-6 reveal-left">
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <strong>SDG 4: Quality Education</strong>
+          <p class="text-muted mb-0">We support children to access, stay, and complete school by addressing the financial barriers driving dropout.</p>
+        </div>
+      </div>
+      <div class="col-md-6 reveal-right">
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <strong>SDG 1: No Poverty</strong>
+          <p class="text-muted mb-0">By strengthening household incomes, families are better able to reduce vulnerability and finance their children’s education.</p>
+        </div>
+      </div>
+      <div class="col-md-6 reveal-left">
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <strong>SDG 5: Gender Equality</strong>
+          <p class="text-muted mb-0">We promote girls’ education and empower women caregivers through income-generating opportunities and financial inclusion.</p>
+        </div>
+      </div>
+      <div class="col-md-6 reveal-right">
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <strong>SDG 8: Decent Work & Economic Growth</strong>
+          <p class="text-muted mb-0">Through enterprise development and practical skills training, households build sustainable livelihoods that support education outcomes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec-pad bg-cream text-center">
+  <div class="container">
+    <div class="section-label text-red"><span class="dot bg-red"></span>Get Involved</div>
+    <h2 class="section-title mb-3">Move From Sponsorship to Self-Reliance</h2>
+    <div class="title-bar bg-green mx-auto mb-4"></div>
+    <p class="text-muted mb-4" style="max-width:720px;margin:auto;line-height:1.85;">We are building a future where families can educate their children without relying on long-term external support. Together, we can move from sponsorship to self-reliance.</p>
+    <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
+      <a href="{% url 'cosma_development:partner_with_us' %}" class="btn btn-outline-green rounded-pill px-4 py-2 fw-semibold"><i class="bi bi-handshake me-2"></i>Partner with Us</a>
+      <a href="{% url 'cosma_development:sponsor_child' %}" class="btn btn-red rounded-pill px-4 py-2 fw-semibold"><i class="bi bi-heart-fill me-2"></i>Invest in Sustainable Education</a>
     </div>
   </div>
 </section>

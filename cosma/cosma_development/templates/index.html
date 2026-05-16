@@ -4,83 +4,7 @@
 {% block title %}Home — Cosma Development{% endblock %}
 
 {% block extra_css %}
-<style>
-/* ═══ HERO ═══ */
-#hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;}
-.hero-slider{position:absolute;inset:0;z-index:0;}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.5s ease-in-out;filter:contrast(1.1) brightness(0.9) saturate(1.1);}
-.hero-slide.active{opacity:1;}
-.hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.35) 40%,rgba(0,0,0,.15) 70%);}
-.hero-content{position:relative;z-index:2;color:#fff;}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:6px 18px;border-radius:50px;margin-bottom:1.3rem;animation:fadeUp .8s .2s both;}
-.hero-title{font-size:clamp(2.8rem,6vw,5.6rem);font-weight:700;line-height:1.06;animation:fadeUp .8s .4s both;}
-.hero-title em{color:var(--green-light);font-style:italic;}
-.hero-sub{font-size:1.1rem;font-weight:300;max-width:530px;line-height:1.75;opacity:.92;animation:fadeUp .8s .6s both;}
-.hero-ctas{animation:fadeUp .8s .8s both;}
-.hero-dots{position:absolute;bottom:5.8rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:10px;}
-.hero-dot{width:10px;height:10px;border-radius:50%;cursor:pointer;border:none;background:rgba(255,255,255,.35);transition:background .3s,transform .3s;}
-.hero-dot.active{background:var(--green);transform:scale(1.35);}
-.hero-stats{position:absolute;bottom:0;left:0;right:0;z-index:3;background:rgba(0,0,0,.35);backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.12);}
-.hero-stat{text-align:center;padding:1.1rem 0;color:#fff;}
-.hero-stat .val{display:block;font-family:var(--font-display);font-size:2.1rem;font-weight:700;color:var(--green-light);}
-.hero-stat .lbl{font-size:.73rem;text-transform:uppercase;letter-spacing:.1em;opacity:.82;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
-
-/* ═══ ABOUT ═══ */
-.about-img{width:100%;height:460px;object-fit:cover;border-radius:18px;box-shadow:22px 22px 0 var(--red);}
-.about-badge{position:absolute;bottom:-20px;right:-20px;background:var(--green);color:#fff;border-radius:14px;padding:1.1rem 1.6rem;text-align:center;box-shadow:0 10px 28px rgba(59,173,110,.35);}
-.about-badge .num{font-family:var(--font-display);font-size:2.6rem;font-weight:700;display:block;}
-.about-badge .lbl{font-size:.75rem;letter-spacing:.08em;opacity:.9;}
-
-/* ═══ STORY CARDS ═══ */
-.story-card{border:none;border-radius:18px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);height:100%;transition:transform .3s,box-shadow .3s;}
-.story-card:hover{transform:translateY(-7px);box-shadow:0 14px 40px rgba(0,0,0,.14);}
-.story-img{width:100%;height:240px;object-fit:cover;transition:transform .5s;}
-.story-card:hover .story-img{transform:scale(1.05);}
-.story-tag{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:50px;}
-.story-quote{font-size:1rem;font-style:italic;line-height:1.65;color:#333;}
-.story-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;}
-
-/* ═══ PROGRAM CARDS ═══ */
-.program-card{border:none;border-radius:18px;padding:2.2rem 1.8rem;background:#fff;height:100%;box-shadow:0 2px 18px rgba(0,0,0,.07);transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden;}
-.program-card:hover{transform:translateY(-6px);box-shadow:0 12px 36px rgba(0,0,0,.13);}
-.prog-icon-wrap{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;margin-bottom:1.3rem;}
-.prog-stat-pill{display:inline-block;font-size:.75rem;font-weight:600;padding:4px 14px;border-radius:50px;margin-top:1rem;letter-spacing:.05em;}
-.prog-bottom-bar{position:absolute;bottom:0;left:0;right:0;height:4px;}
-.program-theme-green .prog-icon-wrap{background:rgba(59,173,110,.125);color:var(--green);}
-.program-theme-green .prog-stat-pill{background:rgba(59,173,110,.09);color:var(--green);}
-.program-theme-green .prog-bottom-bar{background:var(--green);}
-.program-theme-red .prog-icon-wrap{background:rgba(142,0,5,.125);color:var(--red);}
-.program-theme-red .prog-stat-pill{background:rgba(142,0,5,.09);color:var(--red);}
-.program-theme-red .prog-bottom-bar{background:var(--red);}
-
-/* ═══ PARTNERS SCROLL ═══ */
-.partners-track-wrap{overflow:hidden;}
-.partners-track{display:flex;align-items:center;gap:4rem;animation:scroll-x 20s linear infinite;width:max-content;}
-.partners-track:hover{animation-play-state:paused;}
-.partner-logo{height:50px;filter:grayscale(1);opacity:.5;transition:filter .3s,opacity .3s;}
-.partner-logo:hover{filter:none;opacity:1;}
-@keyframes scroll-x{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-
-/* ═══ DONATE SECTION ═══ */
-#donate{background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 55%,#2d0002 100%);position:relative;overflow:hidden;padding:5.5rem 0;}
-#donate::before{content:'';position:absolute;top:-100px;right:-100px;width:440px;height:440px;border-radius:50%;background:rgba(255,255,255,.04);}
-#donate::after{content:'';position:absolute;bottom:-80px;left:-60px;width:320px;height:320px;border-radius:50%;background:rgba(59,173,110,.1);}
-.donate-impact-item{display:flex;align-items:flex-start;gap:1rem;padding:.9rem 0;border-bottom:1px solid rgba(255,255,255,.1);}
-.donate-impact-item:last-child{border-bottom:none;}
-.donate-impact-emoji{font-size:1.5rem;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.donate-impact-text strong{color:#fff;display:block;font-size:.93rem;margin-bottom:.15rem;}
-.donate-impact-text span{color:rgba(255,255,255,.65);font-size:.83rem;line-height:1.5;}
-.gg-cta-card{background:#fff;border-radius:22px;box-shadow:0 28px 80px rgba(0,0,0,.25);overflow:hidden;}
-.gg-cta-top{background:linear-gradient(135deg,#1a7a4a 0%,#138a42 100%);padding:1.6rem 2rem;}
-.gg-cta-body{padding:2rem;}
-.btn-gg-main{display:flex;align-items:center;justify-content:center;gap:.7rem;background:var(--green);color:#fff;border-radius:50px;padding:1rem 2rem;font-size:1.05rem;font-weight:700;border:none;box-shadow:0 8px 28px rgba(59,173,110,.4);transition:all .25s;text-decoration:none;width:100%;}
-.btn-gg-main:hover{background:var(--green-dark);color:#fff;transform:translateY(-2px);}
-.gg-logo-badge{background:#fff;color:var(--green);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;flex-shrink:0;}
-.trust-row{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem;}
-.trust-item-sm{display:flex;align-items:center;gap:5px;font-size:.76rem;color:rgba(255,255,255,.55);}
-.trust-item-sm i{color:var(--green-light);}
-</style>
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -91,7 +15,7 @@
     {% if slides %}
       {% for slide in slides %}
       <div class="hero-slide {% if forloop.first %}active{% endif %}"
-           style="background-image:url('{{ slide.bg_url }}')"></div>
+           style="background-image:url('{{ slide.bg_url }}')"cd></div>
       {% endfor %}
     {% else %}
       {# Fallback static slides #}
@@ -191,22 +115,27 @@
     <div class="row g-4">
       {% for story in stories %}
       <div class="col-md-4 reveal" style="transition-delay:{{ forloop.counter0 }}00ms">
-        <div class="story-card card">
-          <div style="overflow:hidden;">
-            <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image %}{% if story.image.url %}{{ story.image.url }}{% else %}{% static story.image %}{% endif %}{% endif %}" alt="{{ story.name }}" class="story-img"/>
-          </div>
-          <div class="card-body p-4">
-            <span class="story-tag text-white mb-3 d-inline-block" style="background:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' %}">{{ story.tag }}</span>
-            <p class="story-quote mb-3">"{% if story.narrative %}{{ story.narrative }}{% elif story.quote %}{{ story.quote }}{% else %}{{ story.story }}{% endif %}"</p>
-            <div class="d-flex align-items-center gap-3">
-              <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image %}{% if story.image.url %}{{ story.image.url }}{% else %}{% static story.image %}{% endif %}{% endif %}" alt="" class="story-avatar"/>
-              <div>
-                <div style="font-size:.93rem;font-weight:600;">{{ story.name }}</div>
-                <div class="text-muted" style="font-size:.82rem;"><i class="bi bi-geo-alt me-1"></i>{{ story.location }}</div>
+        <a href="{% url 'cosma_development:impact_story_detail' story.slug %}" class="text-decoration-none">
+          <div class="story-card card">
+            <div style="overflow:hidden;">
+              <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image %}{% if story.image.url %}{{ story.image.url }}{% else %}{% static story.image %}{% endif %}{% endif %}" alt="{{ story.name }}" class="story-img"/>
+            </div>
+            <div class="card-body p-4">
+              <span class="story-tag text-white mb-3 d-inline-block" style="background:{% cycle 'var(--green)' 'var(--red)' 'var(--green)' %}">{{ story.tag }}</span>
+              <p class="story-quote mb-3">"{% if story.narrative %}{{ story.narrative }}{% elif story.quote %}{{ story.quote }}{% else %}{{ story.story }}{% endif %}"</p>
+              <div class="d-flex align-items-center gap-3">
+                <img src="{% if story.image_url %}{{ story.image_url }}{% elif story.image %}{% if story.image.url %}{{ story.image.url }}{% else %}{% static story.image %}{% endif %}{% endif %}" alt="" class="story-avatar"/>
+                <div>
+                  <div style="font-size:.93rem;font-weight:600;">{{ story.name }}</div>
+                  <div class="text-muted" style="font-size:.82rem;"><i class="bi bi-geo-alt me-1"></i>{{ story.location }}</div>
+                </div>
+              </div>
+              <div class="mt-3 text-end">
+                <span class="text-green fw-semibold" style="font-size:.85rem;">Read Full Story <i class="bi bi-arrow-right ms-1"></i></span>
               </div>
             </div>
           </div>
-        </div>
+        </a>
       </div>
       {% endfor %}
     </div>
@@ -253,11 +182,11 @@
     </div>
     <div class="partners-track-wrap py-3">
       <div class="partners-track" id="partnerTrack">
-        {% for p in partners %}{% for _ in "xx" %}
+        {% for p in partners %}
         <a href="{{ p.website|default:'#' }}" target="_blank" rel="noopener" title="{{ p.name }}">
           <img src="{{ p.get_logo }}" alt="{{ p.name }}" class="partner-logo"/>
         </a>
-        {% endfor %}{% endfor %}
+        {% endfor %}
       </div>
     </div>
     <div class="text-center mt-4 reveal">
@@ -371,69 +300,52 @@
 </section>
 
 <!-- ══ DONATE ══ -->
-<section id="donate">
-  <div class="container" style="position:relative;z-index:1;">
-    <div class="row align-items-center g-5">
-      <div class="col-lg-6 reveal-left">
-        <div class="section-label" style="color:rgba(255,255,255,.55);"><span class="dot" style="background:var(--green-light);"></span>Make A Difference</div>
-        <h2 style="font-size:clamp(2rem,4.5vw,3.6rem);font-weight:700;color:#fff;line-height:1.1;" class="mb-3">
-          Your Gift <em style="color:var(--green-light);">Changes Lives</em> Today
+<section id="donate" class="donate-strip">
+
+  <div class="container">
+
+    <div class="row align-items-center g-4">
+
+      <div class="col-lg-7">
+
+        <div class="section-label text-white">
+          <span class="dot bg-green"></span>
+          Support Our Mission
+        </div>
+
+        <h2 class="donate-title">
+          Help Build <em>Brighter Futures</em>
         </h2>
-        <p style="color:rgba(255,255,255,.75);font-size:.98rem;line-height:1.85;max-width:460px;" class="mb-4">
-          Every contribution reaches families across Uganda directly. Here is what donations have already achieved:
+
+        <p class="donate-text">
+          Your contribution helps families access education,
+          sustainable livelihoods, healthcare, and hope.
         </p>
-        <div class="mb-4">
-          {% for item in impact_items %}
-          <div class="donate-impact-item">
-            <div class="donate-impact-emoji">{{ item.emoji }}</div>
-            <div class="donate-impact-text">
-              <strong>{{ item.figure }} {{ item.desc|truncatewords:4 }}</strong>
-              <span>{{ item.desc }}</span>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-        <div class="trust-row">
-          <div class="trust-item-sm"><i class="bi bi-patch-check-fill"></i> Verified on GlobalGiving</div>
-          <div class="trust-item-sm"><i class="bi bi-shield-check"></i> 98% reaches programmes</div>
-          <div class="trust-item-sm"><i class="bi bi-receipt"></i> Tax receipt provided</div>
-          <div class="trust-item-sm"><i class="bi bi-arrow-repeat"></i> Monthly giving available</div>
-        </div>
+
       </div>
-      <div class="col-lg-5 offset-lg-1 reveal-right">
-        <div class="gg-cta-card">
-          <div class="gg-cta-top">
-            <div class="d-flex align-items-center gap-2 mb-3">
-              <div class="gg-logo-badge" style="width:32px;height:32px;font-size:.8rem;">GG</div>
-              <div><div style="color:#fff;font-weight:700;font-size:.9rem;">GlobalGiving</div>
-              <div style="color:rgba(255,255,255,.65);font-size:.75rem;">Verified non-profit platform</div></div>
-            </div>
-            <h3 style="color:#fff;font-size:1.5rem;margin-bottom:.3rem;">Donate to cosma development</h3>
-            <p style="color:rgba(255,255,255,.72);font-size:.87rem;margin:0;">Securely processed by GlobalGiving — trusted by 1M+ donors worldwide.</p>
-          </div>
-          <div class="gg-cta-body">
-            <p class="text-muted mb-3" style="font-size:.88rem;line-height:1.7;">Choose your amount, frequency, and payment method on our verified GlobalGiving campaign page. All major cards, PayPal, and more are accepted.</p>
-            <a href="{{ globalgiving_url|default:'https://www.globalgiving.org/donate/11831/cosma-sustainable-rural-development/' }}"
-               target="_blank" rel="noopener" class="btn-gg-main mb-3">
-              <span class="gg-logo-badge">GG</span>
-              Donate on GlobalGiving
-              <i class="bi bi-box-arrow-up-right" style="font-size:.8rem;opacity:.75;"></i>
-            </a>
-            <div class="d-flex flex-wrap gap-2 justify-content-center">
-              <span class="badge rounded-pill px-3 py-2" style="background:rgba(59,173,110,.1);color:var(--green);font-size:.76rem;"><i class="bi bi-lock-fill me-1"></i>Secure</span>
-              <span class="badge rounded-pill px-3 py-2" style="background:rgba(59,173,110,.1);color:var(--green);font-size:.76rem;"><i class="bi bi-globe me-1"></i>Any currency</span>
-              <span class="badge rounded-pill px-3 py-2" style="background:rgba(59,173,110,.1);color:var(--green);font-size:.76rem;"><i class="bi bi-receipt me-1"></i>Tax receipt</span>
-              <span class="badge rounded-pill px-3 py-2" style="background:rgba(59,173,110,.1);color:var(--green);font-size:.76rem;"><i class="bi bi-arrow-repeat me-1"></i>Monthly option</span>
-            </div>
-            <hr style="border-color:rgba(0,0,0,.08);margin:1.2rem 0;"/>
-            <p class="text-center mb-0" style="font-size:.78rem;color:var(--muted);">
-              Prefer bank transfer? <a href="{% url 'cosma_development:contact' %}" class="text-green fw-semibold">Contact us</a>
-            </p>
-          </div>
+
+      <div class="col-lg-5 text-lg-end">
+
+        <a href="{{ globalgiving_url }}"
+           target="_blank"
+           rel="noopener"
+           class="btn btn-green btn-lg rounded-pill px-5 fw-semibold">
+
+          <i class="bi bi-heart-fill me-2"></i>
+          Donate Now
+
+        </a>
+
+        <div class="donate-trust">
+          Secure donations via GlobalGiving
         </div>
+
       </div>
+
     </div>
+
   </div>
+
 </section>
 
 <!-- ══ CONTACT ══ -->

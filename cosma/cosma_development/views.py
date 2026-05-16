@@ -121,6 +121,7 @@ def _impact_story_queryset(program_key='', featured_only=False):
 
 FALLBACK_STORIES = [
     {"name": "Grace Mutesi", "location": "Mbarara, Uganda",
+     "slug": "grace-mutesi-mbarara-uganda", "has_full_story": True,
      "headline": "Grace turned one acre into a reliable family income",
      "programme": "agriculture", "story": "Grace joined a COSMA-supported farmer group after two failed planting seasons.",
      "challenge": "Unpredictable rainfall kept Grace's farm income unstable.",
@@ -129,6 +130,7 @@ FALLBACK_STORIES = [
      "quote": "The training helped me plan before planting.", "author": "Webadmin",
      "image": "imgs/hero2.jpg", "tag": "Agriculture"},
     {"name": "David Ochieng", "location": "Gulu, Uganda",
+    "slug": "david-ochieng-gulu-uganda", "has_full_story": True,
      "headline": "Sponsorship kept David learning after his family lost income",
      "programme": "child_sponsorship", "story": "COSMA child sponsorship covered fees, books, uniform, and mentorship.",
      "challenge": "School costs were pushing David toward dropout.",
@@ -137,6 +139,7 @@ FALLBACK_STORIES = [
      "quote": "I want to become an engineer.", "author": "Webadmin",
      "image": "imgs/kids.png", "tag": "Child Sponsorship"},
     {"name": "Amara Nkosi", "location": "Kampala, Uganda",
+     "slug": "amara-nkosi-kampala-uganda", "has_full_story": True,
      "headline": "Skills training helped Amara create work for others",
      "programme": "vocational", "story": "After tailoring training, Amara now runs a small workshop.",
      "challenge": "Amara had talent but no certified skills.",
@@ -309,8 +312,13 @@ DONATE_FAQS = [
 
 FALLBACK_FAQS = [
     {"category": "agriculture", "q": "Who can join the agriculture programme?", "a": "Smallholder farmers in COSMA-supported communities."},
-    {"category": "child_sponsorship", "q": "What does child sponsorship cover?", "a": "Fees, uniforms, materials, mentorship and wellbeing support."},
-    {"category": "donations", "q": "How is my donation processed?", "a": "Securely through GlobalGiving with an instant receipt."},
+    {"category": "agriculture", "q": "What is the Village Cooperative Model?", "a": "A community-led system that organizes farmers into cooperatives for shared training, financing, input access, and collective market participation."},
+    {"category": "agriculture", "q": "How does COSMA support farmers to access finance?", "a": "Through village savings groups, deferred-input financing, and training in financial planning so households can invest in productivity."},
+    {"category": "child_sponsorship", "q": "Is the Education Program the same as Sponsor a Child?", "a": "Yes. In this website, the Education Program is delivered through our child sponsorship programme, which helps children stay in school while also strengthening household livelihoods."},
+    {"category": "child_sponsorship", "q": "What does the Education Program cover?", "a": "It combines school fee support, learning materials, mentorship, wellbeing care, and household income support through the Enterprise-to-Education model."},
+    {"category": "child_sponsorship", "q": "How does sponsorship help a family become self-reliant?", "a": "Families receive income-generation support alongside education support so they can gradually begin contributing to school costs on their own."},
+    {"category": "child_sponsorship", "q": "Can I receive updates about the child I sponsor?", "a": "Yes. Sponsors receive progress reports, photos, and stories that keep you connected to the child’s education journey."},
+    {"category": "donations", "q": "Can I donate to a specific programme?", "a": "Yes. Contact us to discuss directed support for the Education Program, Agriculture Programme, or specific project wishlist items."},
 ]
 
 
@@ -582,6 +590,28 @@ def impact_stories(request):
     ctx.update(get_seo('impact_stories'))
     return render(request, 'impact/impact_stories.html', ctx)
 
+
+def impact_story_detail(request, slug):
+
+    story = get_object_or_404(
+        ImpactStory,
+        slug=slug
+    )
+
+    related_stories = ImpactStory.objects.filter(
+        programme=story.programme
+    ).exclude(id=story.id)[:3]
+
+    context = {
+        'story': story,
+        'related_stories': related_stories,
+    }
+
+    return render(
+        request,
+        'impact/impact_story_detail.html',
+        context
+    )
 
 def gallery(request):
     try:

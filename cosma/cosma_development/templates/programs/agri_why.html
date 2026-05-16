@@ -1,44 +1,152 @@
 {% extends "base.html" %}
-{% block title %}Why Agriculture — HopeForward{% endblock %}
+{% block title %}Agriculture Program — cosma development Uganda{% endblock %}
 {% block content %}
-<section class="page-hero">
-  <div class="container" style="position:relative;z-index:1;">
-    <nav aria-label="breadcrumb"><ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'cosma_development:index' %}">Home</a></li>
-      <li class="breadcrumb-item">Our Programs</li>
-      <li class="breadcrumb-item active">Why Agriculture?</li>
-    </ol></nav>
-    <div class="page-hero-tag"><i class="bi bi-flower1"></i> Agriculture Program</div>
-    <h1>Why Agriculture?</h1>
-    <p>Over 70% of Ugandans depend on agriculture. It is the engine of food security, income, and community resilience.</p>
+{% include "partials/_hero.html" %}
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 reveal-left">
+        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=700&q=80" alt="Smallholder farmers in Uganda" class="img-fluid rounded-4" style="box-shadow:20px 20px 0 var(--green);"/>
+      </div>
+      <div class="col-lg-6 reveal-right">
+        <div class="section-label text-green"><span class="dot bg-green"></span>The Challenge</div>
+        <h2 class="section-title mb-3">Transforming Smallholder Farming into Sustainable Livelihoods</h2>
+        <div class="title-bar bg-red mb-4"></div>
+        <p class="text-muted mb-4" style="line-height:1.85;">We empower smallholder farmers through village cooperative systems that combine climate-smart agriculture, access to finance, and market linkages – enabling households to increase incomes and build resilience.</p>
+        <p class="text-muted mb-4" style="line-height:1.85;">Smallholder farmers in rural Uganda face persistent challenges such as erratic rainfall patterns, prolonged dry spells, limited access to quality inputs, weak market systems, and restricted access to finance. These barriers keep productivity low and incomes unstable.</p>
+        <p class="text-muted mb-4" style="line-height:1.85;">COSMA’s Agricultural Program addresses these challenges through a structured, community-driven development approach that strengthens how farmers produce, finance, and sell.</p>
+      </div>
+    </div>
   </div>
 </section>
 <section class="sec-pad">
   <div class="container">
-    <div class="row align-items-center g-5">
+    <div class="row g-5">
       <div class="col-lg-6 reveal-left">
-        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=700&q=80" alt="Agriculture" class="img-fluid rounded-4" style="box-shadow:20px 20px 0 var(--green);"/>
+        <div class="section-label text-red"><span class="dot bg-red"></span>Why This Program Matters</div>
+        <h2 class="section-title mb-3">Agriculture is the backbone of rural livelihoods</h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <p class="text-muted mb-4" style="line-height:1.85;">Agriculture is the backbone of rural livelihoods in Uganda, yet many smallholder farmers remain trapped in low productivity and low-income cycles.</p>
+        <ul class="list-unstyled text-muted" style="line-height:1.9;font-size:.96rem;">
+          <li class="mb-3"><strong>62.3%</strong> of households are engaged in agriculture nationally.</li>
+          <li class="mb-3"><strong>Over 70%</strong> of Ugandans depend on agriculture for their livelihoods.</li>
+          <li class="mb-3"><strong>80.2%</strong> of agricultural households primarily farm for subsistence.</li>
+          <li class="mb-3"><strong>Over 60%</strong> of smallholder farmers experience low crop productivity.</li>
+          <li class="mb-3"><strong>Fewer than 30%</strong> of farmers have access to formal or affordable agricultural financing.</li>
+        </ul>
+        <p class="text-muted" style="line-height:1.85;">The biggest challenge is not lack of effort but rather the system within which farmers operate. Without addressing the systemic barriers, smallholder farming remains a subsistence activity rather than a viable pathway out of poverty for many rural households in Uganda.</p>
       </div>
       <div class="col-lg-6 reveal-right">
-        <div class="section-label text-green"><span class="dot bg-green"></span>The Challenge</div>
-        <h2 class="section-title mb-3">Feeding Families, <em class="text-red">Building Futures</em></h2>
+        <div class="section-label text-green"><span class="dot bg-green"></span>Our Approach</div>
+        <h2 class="section-title mb-3">The Village Cooperative Model</h2>
         <div class="title-bar bg-red mb-4"></div>
-        <p class="text-muted mb-3" style="line-height:1.8;">Smallholder farmers in Uganda face low yields, unpredictable weather, limited market access, and lack of affordable inputs. These challenges trap families in cycles of poverty.</p>
-        <p class="text-muted mb-4" style="line-height:1.8;">HopeForward's agriculture programme equips farmers with modern techniques, climate-smart practices, and market connections to break that cycle permanently.</p>
-        <div class="d-flex flex-wrap gap-3">
-          <a href="{% url 'cosma_development:agri_approach' %}" class="btn btn-green rounded-pill px-4 py-2 fw-semibold">Our Approach <i class="bi bi-arrow-right ms-1"></i></a>
-          <a href="{% url 'cosma_development:agri_support' %}" class="btn btn-outline-red rounded-pill px-4 py-2 fw-semibold">Support a Farmer</a>
-        </div>
+        <p class="text-muted mb-4" style="line-height:1.85;">At the core of our program is the Village Cooperative Model — a community-driven development approach that organizes farmers into structured groups (Village Cooperatives, VCs) to improve how they produce, access finance, and engage with markets.</p>
+        <p class="text-muted mb-4" style="line-height:1.85;">Through these cooperatives, farmers move from working individually to operating as organized economic actors — strengthening their voice and capacity to drive their own development.</p>
+        <p class="text-muted mb-4" style="line-height:1.85;">Village Cooperatives serve as platforms through which farmers access bundled support, combining production, financing, and market engagement.</p>
       </div>
     </div>
   </div>
 </section>
 <section class="sec-pad bg-cream">
   <div class="container">
-    <div class="row g-4 text-center">
-      <div class="col-md-4 reveal"><div class="hf-card p-4"><i class="bi bi-people-fill fs-1 mb-3 d-block text-green"></i><h3 style="font-family:var(--font-display);font-size:2.2rem;font-weight:700;color:var(--red);">4,200+</h3><p class="text-muted mb-0">Farmers Supported</p></div></div>
-      <div class="col-md-4 reveal" style="transition-delay:100ms"><div class="hf-card p-4"><i class="bi bi-graph-up-arrow fs-1 mb-3 d-block text-red"></i><h3 style="font-family:var(--font-display);font-size:2.2rem;font-weight:700;color:var(--green);">60%</h3><p class="text-muted mb-0">Average Yield Increase</p></div></div>
-      <div class="col-md-4 reveal" style="transition-delay:200ms"><div class="hf-card p-4"><i class="bi bi-geo-alt-fill fs-1 mb-3 d-block text-green"></i><h3 style="font-family:var(--font-display);font-size:2.2rem;font-weight:700;color:var(--red);">8</h3><p class="text-muted mb-0">Districts Covered</p></div></div>
+    <div class="section-label text-red"><span class="dot bg-red"></span>How the Model Works</div>
+    <h2 class="section-title mb-3">Integrated support across production, finance, and markets</h2>
+    <div class="title-bar bg-green mb-4"></div>
+    <div class="row g-4">
+      <div class="col-lg-4 reveal-left">
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <h5 class="mb-3">Production Improvement</h5>
+          <p class="text-muted mb-3">Farmers are supported to increase yields and improve soil health through practical, climate-smart agricultural practices.</p>
+          <ul class="list-unstyled text-muted" style="line-height:1.8;font-size:.95rem;">
+            <li class="mb-2">• Training in climate-smart crop production and agronomic practices</li>
+            <li class="mb-2">• Access to quality inputs such as drought-resilient and fast-maturing seeds, and fertilizers</li>
+            <li class="mb-2">• Soil health management and advisory services</li>
+            <li class="mb-2">• Demonstration farms and seasonal technical support</li>
+          </ul>
+          <p class="text-muted mb-0">The result: higher yields, improved crop quality, and greater resilience to climate variability.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 reveal-up" style="transition-delay:100ms">
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <h5 class="mb-3">Agricultural Financing & Financial Literacy</h5>
+          <p class="text-muted mb-3">Through Village Cooperatives, farmers participate in savings and loan activities — meeting regularly to save money, build capital, access credit, and strengthen their financial skills.</p>
+          <ul class="list-unstyled text-muted" style="line-height:1.8;font-size:.95rem;">
+            <li class="mb-2">• Agricultural input financing on deferred payment</li>
+            <li class="mb-2">• Village-based savings and loan systems</li>
+            <li class="mb-2">• Training in financial management and planning</li>
+          </ul>
+          <p class="text-muted mb-0">These interventions lead to improved access to capital, stronger financial discipline, and increased farm investment.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 reveal-right" style="transition-delay:200ms">
+        <div class="hf-card p-4" style="border-radius:18px;">
+          <h5 class="mb-3">Connecting Farmers to Profitable Markets</h5>
+          <p class="text-muted mb-3">Farmers are supported to sell collectively and access better market opportunities.</p>
+          <ul class="list-unstyled text-muted" style="line-height:1.8;font-size:.95rem;">
+            <li class="mb-2">• Post-harvest handling and crop quality assurance</li>
+            <li class="mb-2">• Aggregation of produce through the village cooperatives</li>
+            <li class="mb-2">• Linkages to reliable buyers</li>
+            <li class="mb-2">• Real-time market information and price updates</li>
+            <li class="mb-2">• Collective selling to strengthen bargaining power</li>
+          </ul>
+          <p class="text-muted mb-0">This targeted support leads to better prices, increased sales, and more stable incomes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec-pad">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-6 reveal-left">
+        <div class="section-label text-green"><span class="dot bg-green"></span>A Fully Integrated Livelihood System</div>
+        <h2 class="section-title mb-3">A coordinated system for real income growth</h2>
+        <div class="title-bar bg-red mb-4"></div>
+        <p class="text-muted mb-4" style="line-height:1.85;">What sets COSMA apart is the integration of production, financing, and market access into one coordinated system.</p>
+        <p class="text-muted mb-4" style="line-height:1.85;">Rather than addressing these challenges in isolation, we support farmers to:</p>
+        <ul class="list-unstyled text-muted" style="line-height:1.9;font-size:.96rem;">
+          <li class="mb-2">• Produce more through climate-smart agricultural practices</li>
+          <li class="mb-2">• Invest confidently through accessible agricultural financing and strengthened financial inclusion</li>
+          <li class="mb-2">• Sell better through structured market linkages</li>
+        </ul>
+        <p class="text-muted" style="line-height:1.85;">By connecting these elements, we ensure that productivity gains translate into real and sustained income growth — moving farmers beyond subsistence to viable livelihoods.</p>
+      </div>
+      <div class="col-lg-6 reveal-right">
+        <div class="section-label text-red"><span class="dot bg-red"></span>The Impact We Seek</div>
+        <h2 class="section-title mb-3">Transforming rural economies</h2>
+        <div class="title-bar bg-green mb-4"></div>
+        <ul class="list-unstyled text-muted" style="line-height:1.9;font-size:.96rem;">
+          <li class="mb-3"><strong>Increased and more stable rural household incomes</strong></li>
+          <li class="mb-3"><strong>Greater resilience to economic and climate-related shocks</strong> among smallholder farmers</li>
+          <li class="mb-3"><strong>Improved food security</strong></li>
+          <li class="mb-3"><strong>Strengthened capacity of households to invest in education</strong></li>
+          <li class="mb-3"><strong>Sustainable, community-driven economic systems</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row g-4 mt-4">
+      <div class="col-lg-4 reveal"><div class="hf-card p-4"><div class="section-label text-green mb-2"><span class="dot bg-green"></span>SDG 1</div><h5>No Poverty</h5><p class="text-muted mb-0" style="line-height:1.75;">Increasing incomes and strengthening livelihoods helps families move beyond subsistence and reduce vulnerability.</p></div></div>
+      <div class="col-lg-4 reveal" style="transition-delay:100ms"><div class="hf-card p-4"><div class="section-label text-red mb-2"><span class="dot bg-red"></span>SDG 2</div><h5>Zero Hunger</h5><p class="text-muted mb-0" style="line-height:1.75;">Improved productivity and food systems enhance food security at household and community levels.</p></div></div>
+      <div class="col-lg-4 reveal" style="transition-delay:200ms"><div class="hf-card p-4"><div class="section-label text-green mb-2"><span class="dot bg-green"></span>SDG 8</div><h5>Decent Work & Economic Growth</h5><p class="text-muted mb-0" style="line-height:1.75;">Village cooperatives and market access help farmers participate more effectively in local economies.</p></div></div>
+      <div class="col-lg-4 reveal" style="transition-delay:300ms"><div class="hf-card p-4"><div class="section-label text-red mb-2"><span class="dot bg-red"></span>SDG 13</div><h5>Climate Action</h5><p class="text-muted mb-0" style="line-height:1.75;">Climate-smart practices help farmers adapt to changing weather patterns and build resilience to shocks.</p></div></div>
+    </div>
+  </div>
+</section>
+<section class="sec-pad bg-cream">
+  <div class="container">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-8 reveal-left">
+        <div class="section-label text-green"><span class="dot bg-green"></span>Get Involved</div>
+        <h2 class="section-title mb-3">Support smallholder farmers to build sustainable livelihoods</h2>
+        <div class="title-bar bg-red mb-4"></div>
+        <p class="text-muted mb-4" style="line-height:1.85;">Support smallholder farmers to build sustainable livelihoods and transform rural economies. Together, we can unlock the potential of rural communities in Uganda.</p>
+      </div>
+      <div class="col-lg-4 reveal-right">
+        <div class="d-grid gap-3">
+          <a href="{% url 'cosma_development:agri_support' %}" class="btn btn-green rounded-pill px-4 py-3 fw-semibold">Support an Agricultural Initiative</a>
+          <a href="{% url 'cosma_development:partner_with_us' %}" class="btn btn-outline-red rounded-pill px-4 py-3 fw-semibold">Partner with Us</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>

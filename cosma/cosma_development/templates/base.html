@@ -40,44 +40,374 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-display);}
 .btn-outline-red{border:2px solid var(--red);color:var(--red);background:transparent;}.btn-outline-red:hover{background:var(--red);color:#fff;}
 .btn-outline-green{border:2px solid var(--green);color:var(--green);background:transparent;}.btn-outline-green:hover{background:var(--green);color:#fff;}
 
-/* ── NAVBAR ── */
-#mainNav{background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,0,0,.05);transition:.3s;z-index:1050;}
-#mainNav.scrolled{box-shadow:0 6px 25px rgba(0,0,0,.09);}
-.nav-link{font-size:.88rem;font-weight:500;color:var(--charcoal)!important;padding:6px 10px!important;display:flex;align-items:center;gap:4px;position:relative;transition:.25s;white-space:nowrap;}
-.nav-link:hover{color:var(--green)!important;}
-.nav-link::after{content:'';position:absolute;bottom:0;left:10px;width:0;height:2px;background:var(--green);transition:.3s;}
-.nav-link:hover::after,.nav-link.active-page::after{width:calc(100% - 20px);}
-.nav-link.dropdown-toggle::after{display:none;}
-.nav-caret{font-size:.62rem;transition:transform .25s;margin-left:1px;}
-.nav-item.dropdown:hover .nav-caret{transform:rotate(180deg);}
-.dropdown-menu{border:none;border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.13);padding:.6rem 0;min-width:240px;opacity:0;visibility:hidden;transform:translateY(14px);transition:all .25s ease;}
-.dropdown-item{font-size:.86rem;padding:.65rem 1.1rem;display:flex;align-items:center;gap:10px;color:var(--charcoal);transition:.18s;}
-.di-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;transition:.18s;}
-.dropdown-item:hover{background:var(--cream);color:var(--red);}
-.dropdown-item:hover .di-icon{transform:scale(1.1);}
-.di-label{line-height:1.2;}
-.di-label-main{display:block;font-weight:600;}
-.di-label-sub{display:block;font-size:.73rem;color:var(--muted);}
-.dropdown-divider{margin:.3rem .8rem;border-color:rgba(0,0,0,.07);}
-.programs-mega{width:min(860px,calc(100vw - 2rem));padding:1rem!important;}
-.programs-mega-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem;}
-.programs-mega-col{border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:.55rem;background:#fff;}
-.programs-mega-head{display:flex;align-items:center;gap:.75rem;padding:.7rem .75rem .85rem;text-decoration:none;color:var(--charcoal);border-bottom:1px solid rgba(0,0,0,.06);margin-bottom:.35rem;}
-.programs-mega-head:hover{color:var(--red);}
-.programs-mega-head .di-icon{width:38px;height:38px;}
-.programs-mega-link{display:flex;align-items:center;gap:.55rem;padding:.55rem .75rem;border-radius:9px;text-decoration:none;color:var(--charcoal);font-size:.84rem;font-weight:500;transition:.18s;}
-.programs-mega-link:hover{background:var(--cream);color:var(--red);}
-.programs-mega-link i{width:20px;color:var(--green);text-align:center;}
-.programs-mega-footer{display:flex;justify-content:center;border-top:1px solid rgba(0,0,0,.06);margin-top:.85rem;padding-top:.85rem;}
-@media(min-width:992px){.nav-item.dropdown:hover>.dropdown-menu{opacity:1;visibility:visible;transform:translateY(0);}}
-@media(max-width:991px){
-  .dropdown-menu{opacity:1!important;visibility:visible!important;transform:none!important;box-shadow:none;}
-  .programs-mega{width:100%;padding:.4rem 0!important;}
-  .programs-mega-grid{grid-template-columns:1fr;gap:.45rem;}
-  .programs-mega-col{border:none;border-radius:0;padding:.25rem .5rem;}
-  .programs-mega-footer{justify-content:flex-start;padding-left:.5rem;}
+/* ─────────────────────────
+   NAVBAR
+───────────────────────── */
+
+#mainNav{
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(0,0,0,.05);
+  transition:.3s ease;
+  z-index:1050;
 }
-@media(min-width:992px){.nav-item.dropdown.programs-nav:hover>.programs-mega{opacity:1;visibility:visible;transform:translateY(0);}}
+
+#mainNav.scrolled{
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
+
+.navbar-brand img{
+  height:72px;
+  width:auto;
+}
+
+/* NAV LINKS */
+
+.navbar-nav{
+  gap:.2rem;
+}
+
+.nav-link{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  padding:10px 14px !important;
+  font-size:.92rem;
+  font-weight:600;
+  color:var(--charcoal)!important;
+  transition:.25s;
+  white-space:nowrap;
+}
+
+.nav-link:hover{
+  color:var(--green)!important;
+}
+
+.nav-link::after{
+  content:'';
+  position:absolute;
+  left:14px;
+  bottom:4px;
+  width:0;
+  height:2px;
+  border-radius:10px;
+  background:var(--green);
+  transition:.25s;
+}
+
+.nav-link:hover::after,
+.nav-link.active-page::after{
+  width:calc(100% - 28px);
+}
+
+.nav-link.dropdown-toggle::after{
+  display:none;
+}
+
+.nav-caret{
+  font-size:.62rem;
+  transition:.25s;
+}
+
+.nav-item.dropdown:hover .nav-caret{
+  transform:rotate(180deg);
+}
+
+/* DROPDOWNS */
+
+.dropdown-menu{
+  border:none;
+  border-radius:18px;
+  padding:.65rem;
+  box-shadow:0 18px 50px rgba(0,0,0,.12);
+  border:1px solid rgba(0,0,0,.05);
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(12px);
+  transition:.25s ease;
+}
+
+@media(min-width:992px){
+
+  .nav-item.dropdown:hover>.dropdown-menu{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+  }
+
+}
+
+/* STANDARD DROPDOWN */
+
+.dropdown-menu:not(.programs-mega){
+  min-width:270px;
+}
+
+.dropdown-item{
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+  padding:.8rem .9rem;
+  border-radius:12px;
+  transition:.2s;
+  color:var(--charcoal);
+  text-decoration:none;
+}
+
+.dropdown-item:hover{
+  background:var(--cream);
+  color:var(--red);
+}
+
+.di-icon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  font-size:.95rem;
+}
+
+.di-green{
+  background:rgba(59,173,110,.1);
+  color:var(--green);
+}
+
+.di-red{
+  background:rgba(142,0,5,.1);
+  color:var(--red);
+}
+
+.di-label{
+  line-height:1.15;
+}
+
+.di-label-main{
+  display:block;
+  font-size:.9rem;
+  font-weight:700;
+}
+
+.di-label-sub{
+  display:block;
+  font-size:.74rem;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+/* ─────────────────────────
+   PROGRAMS MEGA MENU
+───────────────────────── */
+
+.programs-mega{
+  width:auto;
+  padding:0 !important;
+  border-radius:20px;
+  display:flex;
+  flex-direction:column;
+}
+
+.programs-mega-grid{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+
+.programs-mega-col{
+  position:relative;
+  padding:0;
+  border-radius:0;
+  border:none;
+  background:transparent;
+  transition:.25s;
+  flex:1;
+}
+
+.programs-mega-col:first-child{
+  border-radius:20px 20px 0 0;
+}
+
+.programs-mega-col:last-child{
+  border-radius:0 0 20px 20px;
+}
+
+.programs-mega-col:hover{
+  transform:none;
+  border-color:transparent;
+}
+
+.programs-mega-head{
+  display:flex;
+  align-items:center;
+  gap:.85rem;
+  padding:1rem 1rem;
+  margin-bottom:0;
+  border-bottom:none;
+  text-decoration:none;
+  color:var(--charcoal);
+  background:#fff;
+  border-bottom:2px solid rgba(0,0,0,.06);
+  cursor:pointer;
+  position:relative;
+}
+
+.programs-mega-col:first-child .programs-mega-head{
+  border-radius:20px 20px 0 0;
+}
+
+.programs-mega-col:last-child .programs-mega-head{
+  border-radius:0;
+}
+
+.programs-mega-head:hover{
+  color:var(--red);
+  background:var(--cream);
+}
+
+.programs-mega-head .di-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+}
+
+.programs-mega-submenu{
+  display:none;
+  position:absolute;
+  top:0;
+  left:100%;
+  background:#fff;
+  border-radius:0 18px 18px 0;
+  flex-direction:column;
+  min-width:230px;
+  box-shadow:0 12px 30px rgba(0,0,0,.12);
+  z-index:1001;
+}
+
+.programs-mega-col:first-child .programs-mega-submenu{
+  border-radius:0 18px 18px 0;
+}
+
+.programs-mega-col:last-child .programs-mega-submenu{
+  border-radius:0 18px 18px 0;
+}
+
+.programs-mega-col:hover .programs-mega-submenu,
+.programs-mega-col:focus-within .programs-mega-submenu{
+  display:flex;
+}
+
+.programs-mega-link{
+  display:flex;
+  align-items:center;
+  gap:.75rem;
+  padding:.7rem 1.2rem;
+  border-radius:0;
+  text-decoration:none;
+  color:var(--charcoal);
+  font-size:.88rem;
+  font-weight:500;
+  transition:.2s;
+  background:#fff;
+  border-bottom:1px solid rgba(0,0,0,.05);
+}
+
+.programs-mega-link:last-child{
+  border-bottom:none;
+}
+
+.programs-mega-link:first-child{
+  padding-top:.9rem;
+}
+
+.programs-mega-link:last-child{
+  padding-bottom:.9rem;
+}
+
+.programs-mega-link:hover{
+  background:var(--cream);
+  color:var(--red);
+  transform:translateX(4px);
+}
+
+.programs-mega-link i{
+  width:18px;
+  text-align:center;
+  color:var(--green);
+}
+
+/* DONATE BUTTON */
+
+.btn-donate{
+  background:var(--red);
+  color:#fff;
+  border-radius:999px;
+  padding:10px 22px;
+  font-size:.9rem;
+  font-weight:700;
+  transition:.25s;
+  border:none;
+}
+
+.btn-donate:hover{
+  background:var(--green);
+  color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,.14);
+}
+
+/* MOBILE */
+
+@media(max-width:991px){
+
+  .navbar-collapse{
+    padding:1rem 0;
+  }
+
+  .nav-link{
+    padding:.85rem 0 !important;
+  }
+
+  .dropdown-menu{
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:none !important;
+    box-shadow:none;
+    border:none;
+    padding:0 0 .5rem;
+  }
+
+  .programs-mega{
+    width:100%;
+    padding:0 !important;
+  }
+
+  .programs-mega-grid{
+    grid-template-columns:1fr;
+    gap:.5rem;
+  }
+
+  .programs-mega-col{
+    position:relative;
+    border:none;
+    padding:.5rem 0;
+  }
+
+  .programs-mega-submenu{
+    position:static;
+    min-width:100%;
+    box-shadow:none;
+    border-radius:0;
+  }
+
+  .dropdown-item,
+  .programs-mega-link{
+    padding:.75rem 0;
+  }
+
+}
 
 /* ── DONATE BTN ── */
 .btn-donate{background:var(--red);color:#fff;border-radius:50px;padding:7px 20px;font-weight:600;font-size:.88rem;transition:.25s;}
@@ -136,7 +466,10 @@ footer a:hover{color:var(--green-light);}
 <nav id="mainNav" class="navbar navbar-expand-lg fixed-top py-2" role="navigation">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="{% url 'cosma_development:index' %}">
-      <img src="{% static 'logo/COSMA sustainable rural development logo.png' %}" alt="COSMA Logo" height="100" class="me-2">
+      <img src="{% static 'logo/COSMA sustainable rural development logo.png' %}"
+     alt="COSMA Logo"
+     height="72"
+     class="me-2">
     </a>
     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -144,114 +477,373 @@ footer a:hover{color:var(--green-light);}
     <div class="collapse navbar-collapse" id="navContent">
       <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
 
-        <li class="nav-item">
-          <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active-page{% endif %}" href="{% url 'cosma_development:index' %}">Home</a>
-        </li>
+  <!-- HOME -->
+  <li class="nav-item">
+    <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active-page{% endif %}"
+       href="{% url 'cosma_development:index' %}">
+      Home
+    </a>
+  </li>
 
-        <!-- ABOUT -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle {% if 'about' in request.path or 'story' in request.path or 'team' in request.path or 'resources' in request.path %}active-page{% endif %}" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-            About <i class="bi bi-chevron-down nav-caret"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'cosma_development:about-us' %}">
-              <span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-building-heart"></i></span>
-              <span class="di-label"><span class="di-label-main">Who We Are</span><span class="di-label-sub">Mission, vision &amp; values</span></span>
-            </a></li>
-            <li><div class="dropdown-divider"></div></li>
-            <li><a class="dropdown-item" href="{% url 'cosma_development:our_story' %}">
-              <span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-map"></i></span>
-              <span class="di-label"><span class="di-label-main">Our Story</span><span class="di-label-sub">Journey &amp; milestones</span></span>
-            </a></li>
-             <li><a class="dropdown-item" href="{% url 'cosma_development:our_approach' %}">
-              <span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-map"></i></span>
-              <span class="di-label"><span class="di-label-main">Our Approach</span><span class="di-label-sub">Journey &amp; milestones</span></span>
-            </a></li>
-            <li><a class="dropdown-item" href="{% url 'cosma_development:team_partners' %}">
-              <span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-people-fill"></i></span>
-              <span class="di-label"><span class="di-label-main">Team &amp; Partners</span><span class="di-label-sub">Who stands with us</span></span>
-            </a></li>
-            <li><div class="dropdown-divider"></div></li>
-            
-          </ul>
-        </li>
+  <!-- ABOUT -->
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle {% if 'about' in request.path or 'team' in request.path %}active-page{% endif %}"
+       href="#"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+      About <i class="bi bi-chevron-down nav-caret"></i>
+    </a>
 
-        <!-- PROGRAMS -->
-        <li class="nav-item dropdown programs-nav">
-          <a class="nav-link dropdown-toggle {% if 'programs' in request.path %}active-page{% endif %}" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-            Programs <i class="bi bi-chevron-down nav-caret"></i>
-          </a>
-          <ul class="dropdown-menu programs-mega">
-            <li>
-              <div class="programs-mega-grid">
-                <div class="programs-mega-col">
-                  <a class="programs-mega-head" href="{% url 'cosma_development:agri_why' %}">
-                    <span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-flower1"></i></span>
-                    <span class="di-label"><span class="di-label-main">Agriculture</span><span class="di-label-sub">Farmers &amp; food security</span></span>
-                  </a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:agri_why' %}"><i class="bi bi-question-circle"></i>Why Agriculture</a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:agri_approach' %}"><i class="bi bi-diagram-3"></i>Our Approach</a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:agri_support' %}"><i class="bi bi-person-heart"></i>Support a Farmer</a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:impact_stories' %}?program=agriculture"><i class="bi bi-chat-quote"></i>Impact Stories</a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:agri_faqs' %}"><i class="bi bi-patch-question"></i>Agriculture FAQs</a>
-                </div>
-                <div class="programs-mega-col">
-                  <a class="programs-mega-head" href="{% url 'cosma_development:sponsor_why' %}">
-                    <span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-person-plus"></i></span>
-                    <span class="di-label"><span class="di-label-main">Child Sponsorship</span><span class="di-label-sub">Education &amp; life skills</span></span>
-                  </a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:sponsor_why' %}"><i class="bi bi-question-circle"></i>Why Sponsorship</a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:vocational' %}"><i class="bi bi-tools"></i>Vocational &amp; Life Skills</a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:sponsor_child' %}"><i class="bi bi-mortarboard"></i>Sponsor a Child</a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:impact_stories' %}?program=child-sponsorship"><i class="bi bi-chat-quote"></i>Impact Stories</a>
-                  <a class="programs-mega-link" href="{% url 'cosma_development:sponsorship_faqs' %}"><i class="bi bi-patch-question"></i>Sponsorship FAQs</a>
-                </div>
-              </div>
-              <div class="programs-mega-footer">
-                <a class="programs-mega-link" href="{% url 'cosma_development:faqs' %}"><i class="bi bi-ui-checks"></i>View All FAQs</a>
-              </div>
-            </li>
-          </ul>
-        </li>
+    <ul class="dropdown-menu">
 
-        <!-- IMPACT -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle {% if 'impact' in request.path %}active-page{% endif %}" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-            Impact <i class="bi bi-chevron-down nav-caret"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'cosma_development:impact_numbers' %}"><span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-graph-up-arrow"></i></span>Impact in Numbers</a></li>
-            <li><a class="dropdown-item" href="{% url 'cosma_development:impact_stories' %}"><span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-chat-quote"></i></span>Stories</a></li>
-            <li><a class="dropdown-item" href="{% url 'cosma_development:gallery' %}"><span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-images"></i></span>Gallery</a></li>
-          </ul>
-        </li>
+      <li>
+        <a class="dropdown-item"
+           href="{% url 'cosma_development:about-us' %}">
+          <span class="di-icon di-green">
+            <i class="bi bi-building-heart"></i>
+          </span>
 
-        <!-- GET INVOLVED -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle {% if 'get-involved' in request.path %}active-page{% endif %}" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-            Get Involved <i class="bi bi-chevron-down nav-caret"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'cosma_development:partner_with_us' %}"><span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-handshake"></i></span>Partner With Us</a></li>
-            <li><a class="dropdown-item" href="{% url 'cosma_development:fund_project' %}"><span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-handshake"></i></span>Fund a Project</a></li>
-            <li><a class="dropdown-item" href="{% url 'cosma_development:share_story' %}"><span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-share"></i></span>Share Our Story</a></li>
-            <li><a class="dropdown-item" href="{% url 'cosma_development:volunteer' %}"><span class="di-icon" style="background:rgba(59,173,110,.1);color:var(--green);"><i class="bi bi-person-heart"></i></span>Volunteer With Us</a></li>
-            <li><a class="dropdown-item" href="{% url 'cosma_development:signup_updates' %}"><span class="di-icon" style="background:rgba(142,0,5,.1);color:var(--red);"><i class="bi bi-bell"></i></span>Sign Up for Updates</a></li>
-          </ul>
-        </li>
+          <span class="di-label">
+            <span class="di-label-main">About COSMA</span>
+            <span class="di-label-sub">
+              Who we are & what we stand for
+            </span>
+          </span>
+        </a>
+      </li>
 
-        <li class="nav-item">
-          <a class="nav-link dropdown-toggle {% if 'news' in request.path %}active-page{% endif %}" href="{% url 'cosma_development:news' %}">News and updates</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if 'contact' in request.path %}active-page{% endif %}" href="{% url 'cosma_development:contact' %}">Contact</a>
-        </li>
-        <li class="nav-item ms-lg-2">
-          <a class="btn btn-donate" href="{% url 'cosma_development:donate_page' %}">
-            <i class="bi bi-heart-fill me-1"></i> Donate
-          </a>
-        </li>
-      </ul>
+      <li>
+        <a class="dropdown-item"
+           href="{% url 'cosma_development:our_story' %}">
+          <span class="di-icon di-red">
+            <i class="bi bi-clock-history"></i>
+          </span>
+
+          <span class="di-label">
+            <span class="di-label-main">Our Story</span>
+            <span class="di-label-sub">
+              Journey & milestones
+            </span>
+          </span>
+        </a>
+      </li>
+
+      <li>
+        <a class="dropdown-item"
+           href="{% url 'cosma_development:our_approach' %}">
+          <span class="di-icon di-red">
+            <i class="bi bi-diagram-3"></i>
+          </span>
+
+          <span class="di-label">
+            <span class="di-label-main">Our Approach</span>
+            <span class="di-label-sub">
+              How we create impact
+            </span>
+          </span>
+        </a>
+      </li>
+
+      <li>
+        <a class="dropdown-item"
+           href="{% url 'cosma_development:team_partners' %}">
+          <span class="di-icon di-green">
+            <i class="bi bi-people-fill"></i>
+          </span>
+
+          <span class="di-label">
+            <span class="di-label-main">Team & Partners</span>
+            <span class="di-label-sub">
+              People behind the mission
+            </span>
+          </span>
+        </a>
+      </li>
+
+      <li>
+        <a class="dropdown-item"
+           href="{% url 'cosma_development:resources' %}">
+          <span class="di-icon di-red">
+            <i class="bi bi-folder2-open"></i>
+          </span>
+
+          <span class="di-label">
+            <span class="di-label-main">Resources</span>
+            <span class="di-label-sub">
+              Reports & publications
+            </span>
+          </span>
+        </a>
+      </li>
+
+    </ul>
+  </li>
+
+  <!-- PROGRAMS -->
+  <li class="nav-item dropdown programs-nav">
+
+    <a class="nav-link dropdown-toggle {% if 'programs' in request.path %}active-page{% endif %}"
+       href="#"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+
+      Programs <i class="bi bi-chevron-down nav-caret"></i>
+    </a>
+
+    <ul class="dropdown-menu programs-mega">
+
+      <li>
+        <div class="programs-mega-grid">
+
+          <!-- AGRICULTURE -->
+          <div class="programs-mega-col">
+
+            <a class="programs-mega-head"
+               href="{% url 'cosma_development:agri_why' %}">
+
+              <span class="di-icon di-green">
+                <i class="bi bi-flower1"></i>
+              </span>
+
+              <span class="di-label">
+                <span class="di-label-main">Agriculture</span>
+                <span class="di-label-sub">
+                  Farmers & food security
+                </span>
+              </span>
+
+            </a>
+
+            <div class="programs-mega-submenu">
+              <a class="programs-mega-link"
+                 href="{% url 'cosma_development:agri_why' %}">
+                <i class="bi bi-grid"></i>
+                Overview
+              </a>
+
+              <a class="programs-mega-link"
+                 href="{% url 'cosma_development:agri_support' %}">
+                <i class="bi bi-person-heart"></i>
+                Support a Farmer
+              </a>
+
+              <a class="programs-mega-link"
+                 href="{% url 'cosma_development:impact_stories' %}?program=agriculture">
+                <i class="bi bi-chat-quote"></i>
+                Impact Stories
+              </a>
+            </div>
+
+          </div>
+
+          <!-- SPONSORSHIP -->
+          <div class="programs-mega-col">
+
+            <a class="programs-mega-head"
+               href="{% url 'cosma_development:sponsor_why' %}">
+
+              <span class="di-icon di-red">
+                <i class="bi bi-person-plus"></i>
+              </span>
+
+              <span class="di-label">
+                <span class="di-label-main">
+                  Child Sponsorship
+                </span>
+
+                <span class="di-label-sub">
+                  Education & life skills
+                </span>
+              </span>
+
+            </a>
+
+            <div class="programs-mega-submenu">
+              <a class="programs-mega-link"
+                 href="{% url 'cosma_development:sponsor_why' %}">
+                <i class="bi bi-grid"></i>
+                Overview
+              </a>
+
+              <a class="programs-mega-link"
+                 href="{% url 'cosma_development:sponsor_child' %}">
+                <i class="bi bi-mortarboard"></i>
+                Sponsor a Child
+              </a>
+
+              <a class="programs-mega-link"
+                 href="{% url 'cosma_development:vocational' %}">
+                <i class="bi bi-tools"></i>
+                Vocational Training
+              </a>
+
+              <a class="programs-mega-link"
+                 href="{% url 'cosma_development:impact_stories' %}?program=child-sponsorship">
+                <i class="bi bi-chat-quote"></i>
+                Impact Stories
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </li>
+
+    </ul>
+  </li>
+
+  <!-- IMPACT -->
+  <li class="nav-item dropdown">
+
+    <a class="nav-link dropdown-toggle {% if 'impact' in request.path %}active-page{% endif %}"
+       href="#"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+
+      Impact <i class="bi bi-chevron-down nav-caret"></i>
+    </a>
+
+    <ul class="dropdown-menu">
+
+      <li>
+        <a class="dropdown-item"
+           href="{% url 'cosma_development:impact_numbers' %}">
+
+          <span class="di-icon di-red">
+            <i class="bi bi-graph-up-arrow"></i>
+          </span>
+
+          <span class="di-label">
+            <span class="di-label-main">Impact Numbers</span>
+            <span class="di-label-sub">
+              Results across communities
+            </span>
+          </span>
+
+        </a>
+      </li>
+
+      <li>
+        <a class="dropdown-item"
+           href="{% url 'cosma_development:impact_stories' %}">
+
+          <span class="di-icon di-green">
+            <i class="bi bi-chat-quote"></i>
+          </span>
+
+          <span class="di-label">
+            <span class="di-label-main">Impact Stories</span>
+            <span class="di-label-sub">
+              Real lives transformed
+            </span>
+          </span>
+
+        </a>
+      </li>
+
+      <li>
+        <a class="dropdown-item"
+           href="{% url 'cosma_development:gallery' %}">
+
+          <span class="di-icon di-red">
+            <i class="bi bi-images"></i>
+          </span>
+
+          <span class="di-label">
+            <span class="di-label-main">Gallery</span>
+            <span class="di-label-sub">
+              Photos from the field
+            </span>
+          </span>
+
+        </a>
+      </li>
+
+    </ul>
+  </li>
+
+  <!-- GET INVOLVED -->
+  <li class="nav-item dropdown">
+
+    <a class="nav-link dropdown-toggle {% if 'get-involved' in request.path %}active-page{% endif %}"
+       href="#"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+
+      Get Involved <i class="bi bi-chevron-down nav-caret"></i>
+    </a>
+
+    <ul class="dropdown-menu">
+
+      <li>
+        <a class="dropdown-item"
+           href="{% url 'cosma_development:volunteer' %}">
+          <span class="di-icon di-green">
+            <i class="bi bi-person-heart"></i>
+          </span>
+          Volunteer
+        </a>
+      </li>
+
+      <li>
+        <a class="dropdown-item"
+           href="{% url 'cosma_development:partner_with_us' %}">
+          <span class="di-icon di-red">
+            <i class="bi bi-handshake"></i>
+          </span>
+          Partner With Us
+        </a>
+      </li>
+
+      <li>
+        <a class="dropdown-item"
+           href="{% url 'cosma_development:fund_project' %}">
+          <span class="di-icon di-green">
+            <i class="bi bi-cash-stack"></i>
+          </span>
+          Fund a Project
+        </a>
+      </li>
+
+      <li>
+        <a class="dropdown-item"
+           href="{% url 'cosma_development:signup_updates' %}">
+          <span class="di-icon di-red">
+            <i class="bi bi-envelope-paper"></i>
+          </span>
+          Sign Up for Updates
+        </a>
+      </li>
+
+    </ul>
+  </li>
+
+  <!-- NEWS -->
+  <li class="nav-item">
+    <a class="nav-link {% if 'news' in request.path %}active-page{% endif %}"
+       href="{% url 'cosma_development:news' %}">
+      News
+    </a>
+  </li>
+
+  <!-- CONTACT -->
+  <li class="nav-item">
+    <a class="nav-link {% if 'contact' in request.path %}active-page{% endif %}"
+       href="{% url 'cosma_development:contact' %}">
+      Contact
+    </a>
+  </li>
+
+  <!-- DONATE -->
+  <li class="nav-item ms-lg-2">
+    <a class="btn btn-donate"
+       href="{% url 'cosma_development:donate_page' %}">
+      <i class="bi bi-heart-fill me-1"></i>
+      Donate
+    </a>
+  </li>
+
+</ul>
     </div>
   </div>
 </nav>

@@ -362,17 +362,51 @@ class ImpactStoryAdmin(admin.ModelAdmin):
     list_filter         = ('is_featured', 'programme', 'tag', 'created_at')
     search_fields       = ('headline', 'name', 'location', 'story', 'challenge', 'intervention', 'outcome', 'quote', 'tag', 'author')
     list_per_page       = 20
+    prepopulated_fields = {'slug': ('name', 'location')}
     date_hierarchy      = 'created_at'
     readonly_fields     = ('created_at', 'image_preview')
     list_display_links  = ('thumbnail', 'headline_col', 'name')
     ordering            = ('-created_at',)
     actions             = ['make_featured', 'remove_featured', 'export_csv_action']
     fieldsets = (
-        ('Person Details', {'fields': ('name', 'location', 'programme', 'tag')}),
-        ('Impact Story', {'fields': ('headline', 'story', 'challenge', 'intervention', 'outcome', 'quote', 'author')}),
-        ('Photo', {'fields': ('image', 'image_preview')}),
-        ('Settings', {'fields': ('is_featured', 'created_at'), 'classes': ('collapse',)}),
-    )
+    
+    ('👤 Person Details', {
+        'fields': (
+            'name',
+            'slug',
+            'location',
+            'programme',
+            'tag',
+        )
+    }),
+
+    ('📝 Story Content', {
+        'fields': (
+            'headline',
+            'story',
+            'challenge',
+            'intervention',
+            'outcome',
+            'quote',
+            'author',
+        )
+    }),
+
+    ('🖼 Photo', {
+        'fields': (
+            'image',
+            'image_preview',
+        )
+    }),
+
+    ('⚙ Settings', {
+        'fields': (
+            'is_featured',
+            'created_at',
+        ),
+        'classes': ('collapse',)
+    }),
+)
 
     @admin.display(description='Headline')
     def headline_col(self, obj): return obj.display_title
